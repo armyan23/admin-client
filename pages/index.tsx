@@ -44,6 +44,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Input UserName</h1>
+      For example
       <input type="text" value={userId} onChange={(e) => change(e)} />
       {userId}
       {/* <button onClick={searchUser}>search user id</button> */}
