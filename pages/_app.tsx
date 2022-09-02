@@ -1,14 +1,20 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
-// import { ApolloProvider } from '@apollo/client';
-import client from "../libs/apollo"
+import "../styles/globals.css";
+import Layout from "../components/layout/Layout";
+import "antd/dist/antd.css";
+import Head from "next/head";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    // <ApolloProvider client={client}>
-    <Component {...pageProps} />
-    // </ApolloProvider> 
-  )
+
+const MyApp = ({ Component, pageProps }: any) => {
+
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout || ((page: any) => page)
+  console.log(pageProps)
+
+  return getLayout(
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
 
-export default MyApp
+export default MyApp;
