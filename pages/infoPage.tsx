@@ -11,7 +11,8 @@ const InfoPage = () => {
 
   return (
     <div>
-      Info Page
+      Info Page:
+      <p>Created 01.09.22</p>
     </div>
   );
 }
