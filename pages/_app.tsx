@@ -1,20 +1,45 @@
-import "../styles/globals.css";
-import Layout from "../components/layout/Layout";
-import "antd/dist/antd.css";
-import Head from "next/head";
+import { FC } from "react";
+import { Provider } from "react-redux";
+import type { AppProps } from "next/app";
 
+import { SnackbarProvider } from "notistack";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
-const MyApp = ({ Component, pageProps }: any) => {
+// @ts-ignore
+import lightThemeOptions from "/styles/them/lightThemeOptions.ts";
+import { wrapper } from "store/store";
+import createEmotionCache from "util/createEmotionCache";
 
-  // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout || ((page: any) => page)
-  console.log(pageProps)
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import "styles/globals.css";
+
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
+const lightTheme = createTheme(lightThemeOptions);
+
+const App: FC<MyAppProps> = ({ Component, ...rest }: AppProps) => {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const clientSideEmotionCache = createEmotionCache();
+  const { emotionCache = clientSideEmotionCache, pageProps } = props;
+
+  const getLayout = (Component as any).getLayout || ((page: any) => page);
 
   return getLayout(
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider store={store}>
+      <SnackbarProvider>
+        <CacheProvider value={emotionCache}></CacheProvider>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </SnackbarProvider>
+    </Provider>
   );
-}
+};
 
-export default MyApp;
+export default App;
