@@ -33,8 +33,9 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
   // FOR DEVELOPMENT WITHOUT BACK_END
   useEffect(() => {
     const user: any = JSON.parse(localStorage.getItem("user") || "null");
-    if (user) {
+ssssssssssssssssssssssssssssssss    if (user) {
       setPageLoading(false);
+
     } else if (!user) {
       setTimeout(() => {
         Router.push("/login");
