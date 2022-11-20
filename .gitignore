@@ -11,8 +11,8 @@
 # next.js
 /.next/
 /out/
-# Shorm
-.idea
+# Shtorm
+#.idea
 
 # production
 /build

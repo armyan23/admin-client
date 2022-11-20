@@ -1,5 +1,8 @@
 import { handleActions } from "redux-actions";
 import {
+  postIsAuthenticatedFailure,
+  postIsAuthenticatedRequest,
+  postIsAuthenticatedSuccess,
   postLoginFailure,
   postLoginRequest,
   postLoginSuccess,
@@ -21,6 +24,10 @@ interface IAuth {
   loginRequest: boolean;
   loginSuccess: boolean;
   loginFailure: boolean;
+  isAuthenticatedRequest: boolean;
+  isAuthenticatedSuccess: boolean;
+  isAuthenticatedFailure: boolean;
+  isAuthenticated: boolean;
   data: object | [];
   successMessage: string;
   errorMessage: string;
@@ -35,6 +42,10 @@ const initialValue: IAuth = {
   loginRequest: false,
   loginSuccess: false,
   loginFailure: false,
+  isAuthenticatedRequest: false,
+  isAuthenticatedSuccess: false,
+  isAuthenticatedFailure: false,
+  isAuthenticated: false,
   data: {},
   successMessage: "",
   errorMessage: "",
@@ -93,18 +104,40 @@ const authReducer = handleActions(
       loginSuccess: false,
       loginFailure: false,
     }),
-    [postLoginSuccess]: (state: IAuth, { payload }: any) => ({
+    [postLoginSuccess]: (state: IAuth) => ({
       ...state,
       loginRequest: false,
       loginSuccess: true,
       loginFailure: false,
-      data: payload.data,
+      isAuthenticated: true,
     }),
     [postLoginFailure]: (state: IAuth, { payload }: any) => ({
       ...state,
       loginRequest: false,
       loginSuccess: false,
       loginFailure: true,
+      errorMessage: payload,
+    }),
+
+    //  Is Login reducer
+    [postIsAuthenticatedRequest]: (state: IAuth) => ({
+      ...state,
+      isAuthenticatedRequest: true,
+      isAuthenticatedSuccess: false,
+      isAuthenticatedFailure: false,
+    }),
+    [postIsAuthenticatedSuccess]: (state: IAuth) => ({
+      ...state,
+      isAuthenticatedRequest: false,
+      isAuthenticatedSuccess: true,
+      isAuthenticatedFailure: false,
+      isAuthenticated: true,
+    }),
+    [postIsAuthenticatedFailure]: (state: IAuth, { payload }: any) => ({
+      ...state,
+      isAuthenticatedRequest: false,
+      isAuthenticatedSuccess: false,
+      isAuthenticatedFailure: true,
       errorMessage: payload,
     }),
   },

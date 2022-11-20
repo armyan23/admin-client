@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import AuthLayout from "component/Layout/AuthLayout";
+import AuthLayout from "component/layout/AuthLayout";
 import styles from "styles/Home.module.css";
 
 const Home = () => {
