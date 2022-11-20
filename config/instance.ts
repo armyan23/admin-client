@@ -1,10 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 import { apiServer } from "./index";
 
-let headers = {};
+const headers = {};
 
-export const handleHeadersToken = (token: string) => {
-  headers = { ...headers, token };
+export const putHeadersToken = (token: string) => {
+  instance.defaults.headers["token"] = token;
 };
 
 const instance: AxiosInstance = axios.create({

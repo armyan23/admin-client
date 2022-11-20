@@ -1,8 +1,22 @@
 import { NextPage } from "next";
-import Dashboard from "component/Layout/Dashboard";
+import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { postIsAuthenticatedRequest } from "store/auth/action";
+import Dashboard from "component/layout/Dashboard";
 
 const Home = () => {
-  return <div>1111111111aaaaaaaaaaaaaaaaaaaaa</div>;
+  const dispatch = useDispatch();
+
+  const getAuth = () => {
+    dispatch(postIsAuthenticatedRequest());
+  };
+
+  return (
+    <div>
+      <h1>My page</h1>
+      <Button onClick={getAuth}>Is Authenticated</Button>
+    </div>
+  );
 };
 
 Home.getLayout = function getLayout(page: NextPage) {

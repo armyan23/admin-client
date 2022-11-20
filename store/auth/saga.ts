@@ -1,6 +1,9 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 import {
+  postIsAuthenticatedFailure,
+  postIsAuthenticatedRequest,
+  postIsAuthenticatedSuccess,
   postLoginFailure,
   postLoginRequest,
   postLoginSuccess,
@@ -11,7 +14,7 @@ import {
   postVerifyRequest,
   postVerifySuccess,
 } from "./action";
-import instance from "config/instance";
+import instance, { putHeadersToken } from "config/instance";
 
 function* registerFunction({ payload }: any) {
   try {
@@ -43,10 +46,11 @@ function* loginFunction({ payload }: any) {
     const response: AxiosResponse = yield call(() =>
       instance.post("/api/auth/sign-in", payload)
     );
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ token: response?.data?.data?.userToken })
-    );
+    const { userToken } = response?.data?.data || null;
+
+    localStorage.setItem("user", JSON.stringify({ token: userToken }));
+    putHeadersToken(userToken);
+
     yield put(postLoginSuccess(response.data));
   } catch (err: any) {
     const { data } = err.response;
@@ -54,8 +58,20 @@ function* loginFunction({ payload }: any) {
   }
 }
 
+function* IsAuthenticatedFunction({ payload }: any) {
+  try {
+    yield call(() => instance.post("/api/auth/is-login", payload));
+
+    yield put(postIsAuthenticatedSuccess());
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(postIsAuthenticatedFailure(data.message));
+  }
+}
+
 export default function* authSaga() {
   yield takeLatest(postRegisterRequest, registerFunction);
   yield takeLatest(postVerifyRequest, verifyFunction);
   yield takeLatest(postLoginRequest, loginFunction);
+  yield takeLatest(postIsAuthenticatedRequest, IsAuthenticatedFunction);
 }

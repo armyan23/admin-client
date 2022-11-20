@@ -21,7 +21,7 @@ import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
 import { RootState } from "store/rootReducer";
 import { postRegisterRequest } from "store/auth/action";
-import AuthLayout from "component/Layout/AuthLayout";
+import AuthLayout from "component/layout/AuthLayout";
 
 interface ILogin {
   firstName: string;

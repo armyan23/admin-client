@@ -20,7 +20,7 @@ import { useSnackbar } from "notistack";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
 
-import AuthLayout from "component/Layout/AuthLayout";
+import AuthLayout from "component/layout/AuthLayout";
 import { postLoginRequest } from "store/auth/action";
 import { RootState } from "store/rootReducer";
 

@@ -29,15 +29,17 @@ const App: FC<MyAppProps> = ({ Component, ...rest }: AppProps) => {
 
   const getLayout = (Component as any).getLayout || ((page: any) => page);
 
-  return getLayout(
+  return (
     <Provider store={store}>
-      <SnackbarProvider>
-        <CacheProvider value={emotionCache}></CacheProvider>
-        <ThemeProvider theme={lightTheme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </SnackbarProvider>
+      {getLayout(
+        <SnackbarProvider>
+          <CacheProvider value={emotionCache}></CacheProvider>
+          <ThemeProvider theme={lightTheme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </SnackbarProvider>
+      )}
     </Provider>
   );
 };
