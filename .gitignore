@@ -12,7 +12,7 @@
 /.next/
 /out/
 # Shtorm
-#.idea
+.idea
 
 # production
 /build

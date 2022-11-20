@@ -63,14 +63,15 @@ const Login = () => {
       setLoading(false);
     }
   }, [enqueueSnackbar, errorMessage, loginFailure]);
-  // TODO: I NEED DIVIDE ALL INTERFACE DIFFERENT FILES
-  // TODO: NEED CREATE NOTIFICATION FOR DIFFERENT RESPONSE MESSAGES AND DONT REPEATS
-  // TODO: NEED INTEGRATES VERIFY AND LOGIN API'S
-  // TODO: Create file for initial state
 
   const onFinish = (values: FormikValues) => {
     setLoading(true);
-    dispatch(postLoginRequest(values));
+    //FOR development
+    localStorage.setItem("user", JSON.stringify({ token: "dasdasdasdasd" }));
+    Router.push("/dashboard/home");
+    setLoading(false);
+    //Right code
+    // dispatch(postLoginRequest(values));
   };
 
   return (

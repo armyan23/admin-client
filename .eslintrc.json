@@ -5,7 +5,7 @@
     "next/core-web-vitals",
     "plugin:prettier/recommended"
     // TODO: dont work below code
-//    "plugin:react/recommended"
+    // "plugin:react/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

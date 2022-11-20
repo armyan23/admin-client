@@ -30,17 +30,31 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
 
   const [pageLoading, setPageLoading] = useState(true);
 
+  // FOR DEVELOPMENT WITHOUT BACK_END
   useEffect(() => {
     const user: any = JSON.parse(localStorage.getItem("user") || "null");
-    if (user && !isAuthenticated) {
-      putHeadersToken(user.token);
-      dispatch(postIsAuthenticatedRequest());
+ssssssssssssssssssssssssssssssss    if (user) {
+      setPageLoading(false);
+
     } else if (!user) {
       setTimeout(() => {
         Router.push("/login");
       }, 1000);
     }
   }, []);
+
+  // Right functionality
+  // useEffect(() => {
+  //   const user: any = JSON.parse(localStorage.getItem("user") || "null");
+  //   if (user && !isAuthenticated) {
+  //     putHeadersToken(user.token);
+  //     dispatch(postIsAuthenticatedRequest());
+  //   } else if (!user) {
+  //     setTimeout(() => {
+  //       Router.push("/login");
+  //     }, 1000);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (isAuthenticatedFailure && prevIsAuthenticatedFailure === false) {
