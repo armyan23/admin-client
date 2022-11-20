@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
