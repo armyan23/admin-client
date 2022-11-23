@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import Image from "next/image";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import {
@@ -14,23 +17,28 @@ import {
   ListItemText,
   Drawer,
   Button,
+  FormControl,
+  Select,
+  MenuItem,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material/styles";
 
-import { logoutAction } from "config/instance";
-import Logo from "public/assets/logo.png";
 import useWindowSize from "useHooks/useWindowSize";
+import { color } from "util/styleUtils";
+import Logo from "public/assets/logo.png";
+import { logoutAction } from "config/instance";
 import AuthMiddleware from "middleware/AuthMiddleware";
+import { footerList, ownerList } from "./UtilsDashboard";
+import { logout } from "store/auth/action";
 
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
+  width?: number;
 }
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -54,19 +62,25 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
+})<AppBarProps>(({ theme, open, width }) => ({
+  background: "transparent",
+  boxShadow: "none",
+  borderBottom: "0.5px solid grey",
+  color: "black",
   transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+  ...(open &&
+    width &&
+    width > 600 && {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: `${drawerWidth}px`,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
     }),
-  }),
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -80,25 +94,44 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
   children,
 }) => {
+  const router = useRouter();
   const size = useWindowSize();
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
-    if (!!size.width && size.width < 600) {
+    if (size.width && size.width < 600) {
       setOpen(false);
     } else {
       setOpen(true);
     }
   }, [size]);
 
+  const toggleDrawer = (open: boolean) => (event: any) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    } else if (size.width && size.width < 600) {
+      setOpen(open);
+    }
+  };
+
+  const handleChangeCompany = () => {
+    console.log("Change company");
+  };
+
   const logOut = () => {
+    dispatch(logout());
     logoutAction();
   };
 
   return (
     <AuthMiddleware>
       <Box sx={{ display: "flex" }}>
-        <AppBar position="fixed" open={open}>
+        <AppBar position="fixed" open={open} width={size.width}>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               {open ? (
@@ -138,42 +171,87 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
             width: drawerWidth,
             flexShrink: 0,
             "& .MuiDrawer-paper": {
+              border: 0,
               width: drawerWidth,
               boxSizing: "border-box",
             },
           }}
-          variant="persistent"
+          variant={size.width && size?.width > 600 ? "persistent" : "temporary"}
           anchor="left"
           open={open}
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
         >
           <DrawerHeader>
             <div style={{ width: drawerWidth }}>
               <Image src={Logo} alt="Logo" width={180} />
             </div>
           </DrawerHeader>
-          <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
+          <List style={{ height: "100vh", borderRight: "0.5px solid grey" }}>
+            <FormControl
+              sx={{
+                width: "100%",
+                mt: 3,
+                ".css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root":
+                  {
+                    width: "80%",
+                    margin: "0 auto",
+                  },
+              }}
+            >
+              <Select
+                value={""}
+                onChange={handleChangeCompany}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+              </Select>
+            </FormControl>
+            {ownerList.map((item) => (
+              <Link key={item.key} href={item.link}>
+                <ListItem
+                  disablePadding
+                  style={
+                    item.link === router.asPath
+                      ? { color: color.activeMenu }
+                      : {}
+                  }
+                >
+                  <ListItemButton>
+                    <ListItemIcon style={{ color: "black" }}>
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
             ))}
           </List>
           <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
+          <List style={{ borderRight: "0.5px solid" }}>
+            {footerList.map((item) => (
+              <Link key={item.key} href={item.link}>
+                <ListItem
+                  disablePadding
+                  style={
+                    item.link === router.asPath
+                      ? { color: color.activeMenu }
+                      : {}
+                  }
+                >
+                  <ListItemButton>
+                    <ListItemIcon style={{ color: "black" }}>
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
             ))}
           </List>
         </Drawer>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Router from "next/router";
 import LoadingPage from "component/loading/LoadingPage";
 
 const LoginMiddleware: ({ children }: { children: any }) => JSX.Element = ({
@@ -13,7 +12,7 @@ const LoginMiddleware: ({ children }: { children: any }) => JSX.Element = ({
     if (!user) {
       setPageLoading(false);
     } else {
-      Router.push("/dashboard/home");
+      setPageLoading(false);
     }
   }, []);
 

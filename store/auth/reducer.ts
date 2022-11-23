@@ -1,5 +1,6 @@
 import { handleActions } from "redux-actions";
 import {
+  logout,
   postIsAuthenticatedFailure,
   postIsAuthenticatedRequest,
   postIsAuthenticatedSuccess,
@@ -104,12 +105,13 @@ const authReducer = handleActions(
       loginSuccess: false,
       loginFailure: false,
     }),
-    [postLoginSuccess]: (state: IAuth) => ({
+    [postLoginSuccess]: (state: IAuth, { payload }: any) => ({
       ...state,
       loginRequest: false,
       loginSuccess: true,
       loginFailure: false,
       isAuthenticated: true,
+      data: payload,
     }),
     [postLoginFailure]: (state: IAuth, { payload }: any) => ({
       ...state,
@@ -139,6 +141,9 @@ const authReducer = handleActions(
       isAuthenticatedSuccess: false,
       isAuthenticatedFailure: true,
       errorMessage: payload,
+    }),
+    [logout]: () => ({
+      ...initialValue,
     }),
   },
   initialValue

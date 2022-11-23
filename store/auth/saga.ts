@@ -60,9 +60,15 @@ function* loginFunction({ payload }: any) {
 
 function* IsAuthenticatedFunction({ payload }: any) {
   try {
-    yield call(() => instance.post("/api/auth/is-login", payload));
+    const response: AxiosResponse = yield call(() =>
+      instance.post("/api/auth/is-login", payload)
+    );
 
-    yield put(postIsAuthenticatedSuccess());
+    if (response.data) {
+      yield put(postIsAuthenticatedSuccess());
+    } else {
+      yield put(postIsAuthenticatedFailure(""));
+    }
   } catch (err: any) {
     const { data } = err.response;
     yield put(postIsAuthenticatedFailure(data.message));

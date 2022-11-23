@@ -21,3 +21,5 @@ export const postIsAuthenticatedSuccess: any = createAction(
 export const postIsAuthenticatedFailure: any = createAction(
   "POST_IS_AUTHENTICATED_FAILURE"
 );
+
+export const logout: any = createAction("LOGOUT");

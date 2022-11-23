@@ -1,7 +1,6 @@
 import Router from "next/router";
 import axios, { AxiosInstance } from "axios";
 import { apiServer } from "./index";
-
 const headers = {};
 
 export const putHeadersToken = (token: string) => {
@@ -19,13 +18,24 @@ export const logoutAction = () => {
   Router.push("/");
 };
 
+export const loginAction = (data: any) => {
+  if (data.data.companyToken) {
+    Router.push("/dashboard/home");
+  } else {
+    Router.push("/dashboard/company/add");
+  }
+};
+
 instance.interceptors.response.use(
   function (response) {
     return response;
   },
   function (error) {
     // Router.push("/server-error");
-    console.log("Axios response error ", error);
+    if (error.response.data.message === "Invalid token.") {
+      Router.push("/login");
+      logoutAction();
+    }
     return error;
   }
 );

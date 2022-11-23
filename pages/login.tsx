@@ -20,9 +20,10 @@ import { useSnackbar } from "notistack";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
 
-import AuthLayout from "component/layout/AuthLayout";
+import { loginAction } from "config/instance";
 import { postLoginRequest } from "store/auth/action";
 import { RootState } from "store/rootReducer";
+import AuthLayout from "component/layout/AuthLayout";
 
 interface ILogin {
   email: string;
@@ -46,7 +47,7 @@ const Login = () => {
 
   useEffect(() => {
     if (loginSuccess) {
-      Router.push("/dashboard/home");
+      loginAction(data);
       setLoading(false);
     }
   }, [loginSuccess, enqueueSnackbar]);
@@ -66,12 +67,7 @@ const Login = () => {
 
   const onFinish = (values: FormikValues) => {
     setLoading(true);
-    //FOR development
-    localStorage.setItem("user", JSON.stringify({ token: "dasdasdasdasd" }));
-    Router.push("/dashboard/home");
-    setLoading(false);
-    //Right code
-    // dispatch(postLoginRequest(values));
+    dispatch(postLoginRequest(values));
   };
 
   return (
