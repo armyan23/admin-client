@@ -35,6 +35,8 @@ import { footerList, ownerList } from "./UtilsDashboard";
 import { logout } from "store/auth/action";
 
 const drawerWidth = 240;
+const headerHeight = 64;
+const headerMinHeight = 56;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -43,9 +45,13 @@ interface AppBarProps extends MuiAppBarProps {
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
-}>(({ theme, open }) => ({
+  width?: number;
+}>(({ theme, open, width }) => ({
+  backgroundColor: color.colorMain,
   flexGrow: 1,
   padding: theme.spacing(3),
+  marginTop: `${headerHeight}px`,
+  height: `calc(100vh - ${headerHeight}px)`,
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -58,6 +64,15 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
     }),
     marginLeft: 0,
   }),
+  ...(!open && {
+    marginTop: `${headerMinHeight}px`,
+    height: `calc(100vh - ${headerMinHeight}px)`,
+  }),
+  ...(!open &&
+    width &&
+    width < 600 && {
+      marginLeft: 0,
+    }),
 }));
 
 const AppBar = styled(MuiAppBar, {
@@ -256,8 +271,7 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
           </List>
         </Drawer>
 
-        <Main open={open}>
-          <DrawerHeader />
+        <Main open={open} width={size.width}>
           {children}
         </Main>
       </Box>

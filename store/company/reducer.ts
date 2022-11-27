@@ -10,25 +10,9 @@ import {
   getCompanyByIdSuccess,
   getCompanyByIdFailure,
 } from "./action";
+import { ICompany } from "types/iReducer";
 
-interface IAuth {
-  isCreateCompanyRequest: boolean;
-  isCreateCompanySuccess: boolean;
-  isCreateCompanyFailure: boolean;
-  isAllCompanyRequest: boolean;
-  isAllCompanySuccess: boolean;
-  isAllCompanyFailure: boolean;
-  isCompanyByIdRequest: boolean;
-  isCompanyByIdSuccess: boolean;
-  isCompanyByIdFailure: boolean;
-  companyByIdData: object | [];
-  createCompanyData: object | [];
-  allCompanyData: object | [];
-  successMessage: string;
-  errorMessage: string;
-}
-
-const initialValue: IAuth = {
+const initialValue: ICompany = {
   isCreateCompanyRequest: false,
   isCreateCompanySuccess: false,
   isCreateCompanyFailure: false,
@@ -48,20 +32,21 @@ const initialValue: IAuth = {
 const companyReducer = handleActions(
   {
     // Create company
-    [postCreateCompanyRequest]: (state: IAuth) => ({
+    [postCreateCompanyRequest]: (state: ICompany) => ({
       ...state,
       isCreateCompanyRequest: true,
       isCreateCompanySuccess: false,
       isCreateCompanyFailure: false,
     }),
-    [postCreateCompanySuccess]: (state: IAuth, { payload }: any) => ({
+    [postCreateCompanySuccess]: (state: ICompany, { payload }: any) => ({
       ...state,
       isCreateCompanyRequest: false,
       isCreateCompanySuccess: true,
       isCreateCompanyFailure: false,
       createCompanyData: payload,
+      successMessage: payload.message,
     }),
-    [postCreateCompanyFailure]: (state: IAuth, { payload }: any) => ({
+    [postCreateCompanyFailure]: (state: ICompany, { payload }: any) => ({
       ...state,
       isCreateCompanyRequest: false,
       isCreateCompanySuccess: false,
@@ -70,20 +55,20 @@ const companyReducer = handleActions(
     }),
 
     // Get all companies
-    [getAllCompaniesRequest]: (state: IAuth) => ({
+    [getAllCompaniesRequest]: (state: ICompany) => ({
       ...state,
       isAllCompanyRequest: true,
       isAllCompanySuccess: false,
       isAllCompanyFailure: false,
     }),
-    [getAllCompaniesSuccess]: (state: IAuth, { payload }: any) => ({
+    [getAllCompaniesSuccess]: (state: ICompany, { payload }: any) => ({
       ...state,
       isAllCompanyRequest: false,
       isAllCompanySuccess: true,
       isAllCompanyFailure: false,
       allCompanyData: payload.data,
     }),
-    [getAllCompaniesFailure]: (state: IAuth, { payload }: any) => ({
+    [getAllCompaniesFailure]: (state: ICompany, { payload }: any) => ({
       ...state,
       isAllCompanyRequest: false,
       isAllCompanySuccess: false,
@@ -92,20 +77,20 @@ const companyReducer = handleActions(
     }),
 
     // Get Company by Id
-    [getCompanyByIdRequest]: (state: IAuth) => ({
+    [getCompanyByIdRequest]: (state: ICompany) => ({
       ...state,
       isCompanyByIdRequest: true,
       isCompanyByIdSuccess: false,
       isCompanyByIdFailure: false,
     }),
-    [getCompanyByIdSuccess]: (state: IAuth, { payload }: any) => ({
+    [getCompanyByIdSuccess]: (state: ICompany, { payload }: any) => ({
       ...state,
       isCompanyByIdRequest: false,
       isCompanyByIdSuccess: true,
       isCompanyByIdFailure: false,
       companyByIdData: payload,
     }),
-    [getCompanyByIdFailure]: (state: IAuth, { payload }: any) => ({
+    [getCompanyByIdFailure]: (state: ICompany, { payload }: any) => ({
       ...state,
       isCompanyByIdRequest: false,
       isCompanyByIdSuccess: false,

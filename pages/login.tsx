@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
-import Router from "next/router";
 import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 
@@ -22,13 +21,9 @@ import SendIcon from "@mui/icons-material/Send";
 
 import { loginAction } from "config/instance";
 import { postLoginRequest } from "store/auth/action";
-import { RootState } from "store/rootReducer";
+import { RootState } from "types/iReducer";
+import { ILogin } from "types/iForm";
 import AuthLayout from "component/layout/AuthLayout";
-
-interface ILogin {
-  email: string;
-  password: string;
-}
 
 const initialLogin: ILogin = {
   email: "",

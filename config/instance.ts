@@ -26,17 +26,17 @@ export const loginAction = (data: any) => {
   }
 };
 
-instance.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    // Router.push("/server-error");
-    if (error.response.data.message === "Invalid token.") {
-      Router.push("/login");
-      logoutAction();
-    }
-    return error;
-  }
-);
+// instance.interceptors.response.use(
+//   function (response) {
+//     return response;
+//   },
+//   function (error) {
+//     // Router.push("/server-error");
+//     if (error.response.data.message === "Invalid token.") {
+//       Router.push("/login");
+//       logoutAction();
+//     }
+//     return error;
+//   }
+// );
 export default instance;

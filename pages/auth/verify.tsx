@@ -18,7 +18,7 @@ import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
 
 import { postVerifyRequest } from "store/auth/action";
-import { RootState } from "store/rootReducer";
+import { RootState } from "types/iReducer";
 
 interface IVerify {
   code: string;

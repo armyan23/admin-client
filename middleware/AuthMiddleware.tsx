@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Router from "next/router";
 import usePreviousList from "useHooks/usePreviousList";
-import { RootState } from "store/rootReducer";
+import { RootState } from "types/iReducer";
 import { putHeadersToken } from "config/instance";
 import { postIsAuthenticatedRequest } from "store/auth/action";
 import LoadingPage from "component/loading/LoadingPage";

@@ -3,6 +3,8 @@ import { Provider } from "react-redux";
 import type { AppProps } from "next/app";
 
 import { SnackbarProvider } from "notistack";
+import { LocalizationProvider } from "@mui/x-date-pickers-pro";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
@@ -33,11 +35,13 @@ const App: FC<MyAppProps> = ({ Component, ...rest }: AppProps) => {
     <Provider store={store}>
       {getLayout(
         <SnackbarProvider>
-          <CacheProvider value={emotionCache}></CacheProvider>
-          <ThemeProvider theme={lightTheme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CacheProvider value={emotionCache}></CacheProvider>
+            <ThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </LocalizationProvider>
         </SnackbarProvider>
       )}
     </Provider>

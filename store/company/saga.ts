@@ -39,7 +39,9 @@ function* getAllCompany() {
   }
 }
 
-function* getCompanyById({ payload = "1a3567c1-a6a4-4ecc-9e44-60e98a530eb8" }) {
+function* getCompanyById({
+  payload = "1a3567c1-a6a4-4ecc-9e44-60e98a530eb8",
+}: any) {
   try {
     const response: AxiosResponse = yield call(() =>
       instance.get(`/api/company/${payload}`)

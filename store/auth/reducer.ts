@@ -14,25 +14,8 @@ import {
   postVerifyRequest,
   postVerifySuccess,
 } from "./action";
+import { IAuth } from "types/iReducer";
 
-interface IAuth {
-  registerRequest: boolean;
-  registerSuccess: boolean;
-  registerFailure: boolean;
-  verifyRequest: boolean;
-  verifySuccess: boolean;
-  verifyFailure: boolean;
-  loginRequest: boolean;
-  loginSuccess: boolean;
-  loginFailure: boolean;
-  isAuthenticatedRequest: boolean;
-  isAuthenticatedSuccess: boolean;
-  isAuthenticatedFailure: boolean;
-  isAuthenticated: boolean;
-  data: object | [];
-  successMessage: string;
-  errorMessage: string;
-}
 const initialValue: IAuth = {
   registerRequest: false,
   registerSuccess: false,

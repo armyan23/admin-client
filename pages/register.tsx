@@ -19,24 +19,19 @@ import {
 import { useSnackbar } from "notistack";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
-import { RootState } from "store/rootReducer";
+import { RootState } from "types/iReducer";
+import { IRegister } from "types/iForm";
 import { postRegisterRequest } from "store/auth/action";
 import AuthLayout from "component/layout/AuthLayout";
 
-interface ILogin {
-  firstName: string;
-  lastName: string;
-  email: string;
-  confirmPassword: string;
-  password: string;
-}
-const initialLogin: ILogin = {
+const initialLogin: IRegister = {
   firstName: "",
   lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
 };
+
 const Register = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();

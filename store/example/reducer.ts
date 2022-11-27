@@ -4,7 +4,7 @@ import {
   getExampleSuccess,
 } from "./actions";
 import { handleActions } from "redux-actions";
-import { IExample } from "./interface";
+import { IExample } from "types/iReducer";
 
 const initialState: IExample = {
   data: 0,
