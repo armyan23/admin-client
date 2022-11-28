@@ -109,7 +109,6 @@ const Login = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}

@@ -3,7 +3,13 @@ import { TextField } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs, { Dayjs } from "dayjs";
 
-const DateCustomField = ({ handleChange, handleBlur, values }: any) => {
+const DateCustomField = ({
+  handleChange,
+  handleBlur,
+  values,
+  name,
+  label,
+}: any) => {
   const [value, setValue] = useState<Dayjs | null>(null);
 
   const handleChangeValues = (createdDate: Dayjs | null) => {
@@ -13,16 +19,15 @@ const DateCustomField = ({ handleChange, handleBlur, values }: any) => {
 
   return (
     <DesktopDatePicker
-      label="Date desktop"
       inputFormat="dd/MM/yyyy"
       value={value}
       onChange={handleChangeValues}
       renderInput={(params) => (
         <TextField
           {...params}
-          id="createdDate"
-          name="createdDate"
-          label="Created company date"
+          id={name}
+          name={name}
+          label={label}
           fullWidth
           required
           onChange={handleChange}

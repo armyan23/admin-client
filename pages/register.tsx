@@ -142,7 +142,6 @@ const Register = () => {
                       fullWidth
                       id="firstName"
                       label="First Name"
-                      autoFocus
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.firstName}
@@ -196,7 +195,6 @@ const Register = () => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
-                      autoFocus
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.email}

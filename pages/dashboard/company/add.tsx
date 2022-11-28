@@ -167,7 +167,6 @@ const AddCompany = () => {
                         label="Phone number"
                         autoComplete="phone"
                         required
-                        autoFocus
                         fullWidth
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -193,13 +192,12 @@ const AddCompany = () => {
                       <FormControl fullWidth>
                         <InputLabel id="typeCompany">Type company</InputLabel>
                         <Select
-                          labelId="demo-simple-select-label"
+                          labelId="type-company-select-label"
                           id="typeCompany"
                           name="typeCompany"
                           label="Type company"
                           required
                           fullWidth
-                          autoFocus
                           onBlur={handleBlur}
                           onChange={handleChange}
                           value={values.typeCompany}
@@ -234,6 +232,8 @@ const AddCompany = () => {
                     <Grid item xs={12}>
                       <Grid item sm={6}>
                         <DateCustomField
+                          name="createdDate"
+                          label="Created company date"
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                           values={values}
