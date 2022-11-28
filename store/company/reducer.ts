@@ -24,7 +24,7 @@ const initialValue: ICompany = {
   isCompanyByIdFailure: false,
   companyByIdData: {},
   createCompanyData: {},
-  allCompanyData: {},
+  allCompanyData: [],
   successMessage: "",
   errorMessage: "",
 };

@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,17 +15,17 @@ import {
 } from "@mui/material";
 import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
+import { useSnackbar } from "notistack";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
 
+import usePreviousList from "useHooks/usePreviousList";
+import { typeCompany } from "util/utils";
 import { postCreateCompanyRequest } from "store/company/action";
 import { RootState } from "types/iReducer";
 import { ICreateCompany } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
-import { typeCompany } from "util/utils";
 import DateCustomField from "component/formField/DateCustomField";
-import { useSnackbar } from "notistack";
-import usePreviousList from "useHooks/usePreviousList";
 
 const initialCreateCompany: ICreateCompany = {
   nameCompany: "",
@@ -53,20 +54,22 @@ const AddCompany = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isCreateCompanySuccess && !prevIsCreateCompanySuccess) {
+    if (isCreateCompanySuccess && prevIsCreateCompanySuccess === false) {
       enqueueSnackbar(successMessage, {
         variant: "success",
         anchorOrigin: {
           vertical: "top",
           horizontal: "center",
         },
+        autoHideDuration: 1000,
       });
+      Router.push("/dashboard/company");
       setLoading(false);
     }
-  }, [isCreateCompanySuccess, prevIsCreateCompanySuccess]);
+  }, [successMessage, isCreateCompanySuccess, prevIsCreateCompanySuccess]);
 
   useEffect(() => {
-    if (isCreateCompanyFailure && !prevIsCreateCompanyFailure) {
+    if (isCreateCompanyFailure && prevIsCreateCompanyFailure === false) {
       enqueueSnackbar(errorMessage, {
         variant: "error",
         anchorOrigin: {
@@ -76,7 +79,7 @@ const AddCompany = () => {
       });
       setLoading(false);
     }
-  }, [isCreateCompanyFailure, prevIsCreateCompanyFailure]);
+  }, [errorMessage, isCreateCompanyFailure, prevIsCreateCompanyFailure]);
 
   const onFinish = (values: FormikValues) => {
     setLoading(true);

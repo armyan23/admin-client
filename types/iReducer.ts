@@ -12,7 +12,7 @@ export interface ICompany {
   isCompanyByIdFailure: boolean;
   companyByIdData: object | [];
   createCompanyData: object | [];
-  allCompanyData: object | [];
+  allCompanyData: [];
   successMessage: string;
   errorMessage: string;
 }

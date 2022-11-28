@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 
 const DateCustomField = ({
   handleChange,
@@ -14,7 +14,7 @@ const DateCustomField = ({
 
   const handleChangeValues = (createdDate: Dayjs | null) => {
     setValue(createdDate);
-    values.createdDate = dayjs(createdDate).format("DD/MM/YYYY");
+    values.createdDate = createdDate;
   };
 
   return (
