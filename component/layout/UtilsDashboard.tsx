@@ -54,12 +54,12 @@ export const ownerList = [
     icon: <BusinessIcon />,
     link: "/dashboard/company",
   },
-  {
-    key: 7,
-    name: "Create company",
-    icon: <DomainAddIcon />,
-    link: "/dashboard/company/add",
-  },
+  // {
+  //   key: 7,
+  //   name: "Create company",
+  //   icon: <DomainAddIcon />,
+  //   link: "/dashboard/company/add",
+  // },
   {
     key: 8,
     name: "Celebration",
