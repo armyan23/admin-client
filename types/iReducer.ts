@@ -16,7 +16,17 @@ export interface ICompany {
   successMessage: string;
   errorMessage: string;
 }
-
+export interface IEmployee {
+  isCreateEmployeeRequest: boolean;
+  isCreateEmployeeSuccess: boolean;
+  isCreateEmployeeFailure: boolean;
+  isGetEmployeesRequest: boolean;
+  isGetEmployeesSuccess: boolean;
+  isGetEmployeesFailure: boolean;
+  data: [];
+  successMessage: string;
+  errorMessage: string;
+}
 export interface IAuth {
   registerRequest: boolean;
   registerSuccess: boolean;

@@ -1,3 +1,5 @@
+import { date } from "yup";
+
 export interface IRegister {
   firstName: string;
   lastName: string;
@@ -19,4 +21,21 @@ export interface ICreateCompany {
   email: string;
   website: string;
   createdDate: Date | null | number;
+}
+
+export interface ICreateEmployee {
+  email: string;
+  firstName: string;
+  lastName: string;
+  patronymic: string;
+  role: string;
+  skills: string;
+  phoneNumber: string;
+  gender: string;
+  country: string;
+  city: string;
+  streetAddress: string;
+  birthDate: Date | null | number;
+  startWork: Date | null | number;
+  endWork: Date | null | number;
 }

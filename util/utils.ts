@@ -13,6 +13,19 @@ export const typeCompany: ITypeMap[] = [
   },
 ];
 
+export const typeGender: ITypeMap[] = [
+  {
+    key: 1,
+    name: "Male",
+    type: "male",
+  },
+  {
+    key: 2,
+    name: "Female",
+    type: "female",
+  },
+];
+
 export const companyTypeTable: ITypeMap[] = [
   {
     key: 1,
@@ -33,5 +46,43 @@ export const companyTypeTable: ITypeMap[] = [
     key: 4,
     name: "Created date",
     type: "createdDate",
+  },
+];
+
+export const employeeTypeTable: ITypeMap[] = [
+  {
+    key: 1,
+    name: "First name",
+    type: "firstName",
+  },
+  {
+    key: 2,
+    name: "Last name",
+    type: "lastName",
+  },
+  {
+    key: 3,
+    name: "Phone",
+    type: "phoneNumber",
+  },
+  {
+    key: 4,
+    name: "Role",
+    type: "role",
+  },
+  {
+    key: 5,
+    name: "Email",
+    type: "email",
+  },
+  {
+    key: 6,
+    name: "Gender",
+    type: "gender",
+  },
+  {
+    key: 7,
+    name: "Country",
+    type: "country",
   },
 ];

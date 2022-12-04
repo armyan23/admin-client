@@ -14,7 +14,7 @@ import {
   postVerifyRequest,
   postVerifySuccess,
 } from "./action";
-import instance, { putHeadersToken } from "config/instance";
+import instance, { putHeadersCompany, putHeadersToken } from "config/instance";
 
 function* registerFunction({ payload }: any) {
   try {
@@ -46,9 +46,10 @@ function* loginFunction({ payload }: any) {
     const response: AxiosResponse = yield call(() =>
       instance.post("/api/auth/sign-in", payload)
     );
-    const { userToken } = response?.data?.data || null;
+    const { userToken, company } = response?.data?.data || null;
 
-    localStorage.setItem("user", JSON.stringify({ token: userToken }));
+    localStorage.setItem("user", JSON.stringify({ token: userToken, company }));
+    putHeadersCompany(company);
     putHeadersToken(userToken);
 
     yield put(postLoginSuccess(response.data));
@@ -58,10 +59,10 @@ function* loginFunction({ payload }: any) {
   }
 }
 
-function* IsAuthenticatedFunction({ payload }: any) {
+function* IsAuthenticatedFunction() {
   try {
     const response: AxiosResponse = yield call(() =>
-      instance.post("/api/auth/is-login", payload)
+      instance.post("/api/auth/is-login")
     );
 
     if (response.data) {

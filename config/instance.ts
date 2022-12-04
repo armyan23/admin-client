@@ -7,6 +7,10 @@ export const putHeadersToken = (token: string) => {
   instance.defaults.headers["token"] = token;
 };
 
+export const putHeadersCompany = (company: string) => {
+  instance.defaults.headers["company"] = company;
+};
+
 const instance: AxiosInstance = axios.create({
   baseURL: apiServer,
   headers,
@@ -15,11 +19,12 @@ const instance: AxiosInstance = axios.create({
 export const logoutAction = () => {
   localStorage.removeItem("user");
   delete instance.defaults.headers["token"];
+  delete instance.defaults.headers["company"];
   Router.push("/");
 };
 
 export const loginAction = (data: any) => {
-  if (data.data.companyToken) {
+  if (data.data.company) {
     Router.push("/dashboard/home");
   } else {
     Router.push("/dashboard/company/add");

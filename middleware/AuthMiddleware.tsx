@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Router from "next/router";
 import usePreviousList from "useHooks/usePreviousList";
 import { RootState } from "types/iReducer";
-import { putHeadersToken } from "config/instance";
+import { putHeadersCompany, putHeadersToken } from "config/instance";
 import { postIsAuthenticatedRequest } from "store/auth/action";
 import LoadingPage from "component/loading/LoadingPage";
 
@@ -34,6 +34,7 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
     const user: any = JSON.parse(localStorage.getItem("user") || "null");
     if (user && !isAuthenticated) {
       putHeadersToken(user.token);
+      putHeadersCompany(user.company);
       dispatch(postIsAuthenticatedRequest());
     } else if (!user) {
       setTimeout(() => {

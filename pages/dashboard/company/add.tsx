@@ -239,6 +239,8 @@ const AddCompany = () => {
                           label="Created company date"
                           handleChange={handleChange}
                           handleBlur={handleBlur}
+                          touched={touched}
+                          errors={errors}
                           values={values}
                         />
                       </Grid>
