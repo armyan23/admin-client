@@ -36,12 +36,12 @@ export const ownerList = [
     icon: <PeopleIcon />,
     subMenu: [],
   },
-  {
-    key: 4,
-    name: "Add employees",
-    icon: <PersonAddIcon />,
-    link: "/dashboard/employees/add",
-  },
+  // {
+  //   key: 4,
+  //   name: "Add employees",
+  //   icon: <PersonAddIcon />,
+  //   link: "/dashboard/employees/add",
+  // },
   {
     key: 5,
     name: "Remote employees",

@@ -3,6 +3,11 @@ import axios, { AxiosInstance } from "axios";
 import { apiServer } from "./index";
 const headers = {};
 
+export const putLocalUserInfo = (item: object) => {
+  const user = JSON.parse(localStorage.getItem("user") || "");
+  localStorage.setItem("user", JSON.stringify({ ...user, ...item }));
+};
+
 export const putHeadersToken = (token: string) => {
   instance.defaults.headers["token"] = token;
 };

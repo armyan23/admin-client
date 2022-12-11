@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
-import Dashboard from "component/layout/Dashboard";
+import Router from "next/router";
+import dayjs from "dayjs";
 import {
   Box,
   Button,
   Card,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -15,15 +17,12 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { employeeTypeTable } from "util/utils";
 import { ITypeMap } from "types/iUtils";
-import dayjs from "dayjs";
 import { RootState } from "types/iReducer";
-import {
-  getAllCompaniesRequest,
-  getCompanyByIdRequest,
-} from "store/company/action";
+import { employeeTypeTable } from "util/utils";
 import { getEmployeesRequest } from "store/employee/action";
+import Dashboard from "component/layout/Dashboard";
+import InfoIcon from "@mui/icons-material/Info";
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -34,22 +33,24 @@ const Employees = () => {
     dispatch(getEmployeesRequest());
   }, [dispatch]);
 
-  const getAllCompany = () => {
-    dispatch(getAllCompaniesRequest());
-  };
-
-  const getCompanyById = () => {
-    dispatch(getCompanyByIdRequest());
+  const selectByEmployeeId = (id: any) => {
+    Router.push(`/dashboard/employees/${id}`);
   };
 
   return (
     <Card>
-      <Box sx={{ p: 2 }}>
-        <Typography component="h1" variant="h5">
-          Companies
-        </Typography>
-        <Button onClick={() => getAllCompany()}>Get all company</Button>
-        <Button onClick={() => getCompanyById()}>Get company by id</Button>
+      <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
+        <div className="d-flex j-between">
+          <Typography component="h1" variant="h5">
+            Employees
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={() => Router.push("/dashboard/employees/add")}
+          >
+            +
+          </Button>
+        </div>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
@@ -76,6 +77,14 @@ const Employees = () => {
                     {dayjs(item.birthDate).format("DD/MM/YYYY")}
                   </TableCell>
                   <TableCell>{item.country}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      size="small"
+                      onClick={() => selectByEmployeeId(item.id)}
+                    >
+                      <InfoIcon fontSize="inherit" />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

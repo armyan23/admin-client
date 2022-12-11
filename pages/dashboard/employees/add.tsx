@@ -136,6 +136,11 @@ const AddEmployees = () => {
               <Form onSubmit={handleSubmit}>
                 <Box sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Employee info
+                      </Typography>
+                    </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         id="email"
@@ -153,122 +158,6 @@ const AddEmployees = () => {
                         }
                         error={
                           !!(errors.email && touched.email && errors.email)
-                        }
-                      />
-                    </Grid>
-                    {/*Name*/}
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id="firstName"
-                        name="firstName"
-                        label="First name"
-                        autoComplete="firstName"
-                        fullWidth
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.firstName}
-                        helperText={
-                          errors.firstName &&
-                          touched.firstName &&
-                          errors.firstName
-                            ? errors.firstName
-                            : null
-                        }
-                        error={
-                          !!(
-                            errors.firstName &&
-                            touched.firstName &&
-                            errors.firstName
-                          )
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id="lastName"
-                        name="lastName"
-                        label="Last name"
-                        autoComplete="lastName"
-                        fullWidth
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.lastName}
-                        helperText={
-                          errors.lastName && touched.lastName && errors.lastName
-                            ? errors.lastName
-                            : null
-                        }
-                        error={
-                          !!(
-                            errors.lastName &&
-                            touched.lastName &&
-                            errors.lastName
-                          )
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id="patronymic"
-                        name="patronymic"
-                        label="Patronymic"
-                        autoComplete="patronymic"
-                        fullWidth
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.patronymic}
-                        helperText={
-                          errors.patronymic &&
-                          touched.patronymic &&
-                          errors.patronymic
-                            ? errors.patronymic
-                            : null
-                        }
-                        error={
-                          !!(
-                            errors.patronymic &&
-                            touched.patronymic &&
-                            errors.patronymic
-                          )
-                        }
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id="role"
-                        name="role"
-                        label="Role"
-                        autoComplete="role"
-                        fullWidth
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.role}
-                        helperText={
-                          errors.role && touched.role && errors.role
-                            ? errors.role
-                            : null
-                        }
-                        error={!!(errors.role && touched.role && errors.role)}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id="skills"
-                        name="skills"
-                        label="Skills"
-                        autoComplete="skills"
-                        fullWidth
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.skills}
-                        helperText={
-                          errors.skills && touched.skills && errors.skills
-                            ? errors.skills
-                            : null
-                        }
-                        error={
-                          !!(errors.skills && touched.skills && errors.skills)
                         }
                       />
                     </Grid>
@@ -294,6 +183,33 @@ const AddEmployees = () => {
                             errors.phoneNumber &&
                             touched.phoneNumber &&
                             errors.phoneNumber
+                          )
+                        }
+                      />
+                    </Grid>
+                    {/*User info*/}
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id="firstName"
+                        name="firstName"
+                        label="First name"
+                        autoComplete="firstName"
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.firstName}
+                        helperText={
+                          errors.firstName &&
+                          touched.firstName &&
+                          errors.firstName
+                            ? errors.firstName
+                            : null
+                        }
+                        error={
+                          !!(
+                            errors.firstName &&
+                            touched.firstName &&
+                            errors.firstName
                           )
                         }
                       />
@@ -328,6 +244,69 @@ const AddEmployees = () => {
                           <FormHelperText error>{errors.gender}</FormHelperText>
                         ) : null}
                       </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id="lastName"
+                        name="lastName"
+                        label="Last name"
+                        autoComplete="lastName"
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.lastName}
+                        helperText={
+                          errors.lastName && touched.lastName && errors.lastName
+                            ? errors.lastName
+                            : null
+                        }
+                        error={
+                          !!(
+                            errors.lastName &&
+                            touched.lastName &&
+                            errors.lastName
+                          )
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <DateCustomField
+                        name="birthDate"
+                        label="Birth date"
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        touched={touched}
+                        errors={errors}
+                        values={values}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid item sm={6}>
+                        <TextField
+                          id="patronymic"
+                          name="patronymic"
+                          label="Patronymic"
+                          autoComplete="patronymic"
+                          fullWidth
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.patronymic}
+                          helperText={
+                            errors.patronymic &&
+                            touched.patronymic &&
+                            errors.patronymic
+                              ? errors.patronymic
+                              : null
+                          }
+                          error={
+                            !!(
+                              errors.patronymic &&
+                              touched.patronymic &&
+                              errors.patronymic
+                            )
+                          }
+                        />
+                      </Grid>
                     </Grid>
 
                     {/* Country, street, city */}
@@ -373,70 +352,97 @@ const AddEmployees = () => {
                         error={!!(errors.city && touched.city && errors.city)}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id="streetAddress"
-                        name="streetAddress"
-                        label="streetAddress"
-                        autoComplete="Street address"
-                        fullWidth
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.streetAddress}
-                        helperText={
-                          errors.streetAddress &&
-                          touched.streetAddress &&
-                          errors.streetAddress
-                            ? errors.streetAddress
-                            : null
-                        }
-                        error={
-                          !!(
+                    <Grid item xs={12}>
+                      <Grid item sm={6}>
+                        <TextField
+                          id="streetAddress"
+                          name="streetAddress"
+                          label="streetAddress"
+                          autoComplete="Street address"
+                          fullWidth
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.streetAddress}
+                          helperText={
                             errors.streetAddress &&
                             touched.streetAddress &&
                             errors.streetAddress
-                          )
+                              ? errors.streetAddress
+                              : null
+                          }
+                          error={
+                            !!(
+                              errors.streetAddress &&
+                              touched.streetAddress &&
+                              errors.streetAddress
+                            )
+                          }
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Work info
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id="role"
+                        name="role"
+                        label="Role"
+                        autoComplete="role"
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.role}
+                        helperText={
+                          errors.role && touched.role && errors.role
+                            ? errors.role
+                            : null
+                        }
+                        error={!!(errors.role && touched.role && errors.role)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id="skills"
+                        name="skills"
+                        label="Skills"
+                        autoComplete="skills"
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.skills}
+                        helperText={
+                          errors.skills && touched.skills && errors.skills
+                            ? errors.skills
+                            : null
+                        }
+                        error={
+                          !!(errors.skills && touched.skills && errors.skills)
                         }
                       />
                     </Grid>
-
                     {/* Date */}
-                    <Grid item xs={12}>
-                      <Grid item sm={6}>
-                        <DateCustomField
-                          name="birthDate"
-                          label="Birth date"
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          touched={touched}
-                          errors={errors}
-                          values={values}
-                        />
-                      </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <DateCustomField
+                        name="startWork"
+                        label="Start work"
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        touched={touched}
+                        errors={errors}
+                        values={values}
+                      />
                     </Grid>
-                    <Grid item xs={12}>
-                      <Grid item sm={6}>
-                        <DateCustomField
-                          name="startWork"
-                          label="Start work"
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          touched={touched}
-                          errors={errors}
-                          values={values}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid item sm={6}>
-                        <DateCustomField
-                          name="endWork"
-                          label="End work"
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          values={values}
-                        />
-                      </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <DateCustomField
+                        name="endWork"
+                        label="End work"
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        values={values}
+                      />
                     </Grid>
                   </Grid>
                   <Grid item xs={12} className="d-flex j-end">

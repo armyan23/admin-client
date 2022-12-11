@@ -7,6 +7,9 @@ import {
   getEmployeesRequest,
   getEmployeesSuccess,
   getEmployeesFailure,
+  employeeByIdRequest,
+  employeeByIdSuccess,
+  employeeByIdFailure,
 } from "./action";
 import instance from "config/instance";
 
@@ -36,21 +39,21 @@ function* getAllEmployees() {
   }
 }
 
-// function* getEmployeeById({ payload }: any) {
-//   try {
-//     const response: AxiosResponse = yield call(() =>
-//       instance.get(`/api/company/${payload}`)
-//     );
-//
-//     // yield put((response.data));
-//   } catch (err: any) {
-//     const { data } = err.response;
-//     // yield put((data.message));
-//   }
-// }
+function* getEmployeeById({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.get(`/api/employee/${payload}`)
+    );
+
+    yield put(employeeByIdSuccess(response.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(employeeByIdFailure(data.message));
+  }
+}
 
 export default function* employeeSaga() {
   yield takeLatest(postCreateEmployeeRequest, createEmployee);
   yield takeLatest(getEmployeesRequest, getAllEmployees);
-  // yield takeLatest(, getEmployeeById);
+  yield takeLatest(employeeByIdRequest, getEmployeeById);
 }

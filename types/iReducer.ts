@@ -23,6 +23,10 @@ export interface IEmployee {
   isGetEmployeesRequest: boolean;
   isGetEmployeesSuccess: boolean;
   isGetEmployeesFailure: boolean;
+  isEmployeeByIdRequest: boolean;
+  isEmployeeByIdSuccess: boolean;
+  isEmployeeByIdFailure: boolean;
+  employeeByIdData: object;
   data: [];
   successMessage: string;
   errorMessage: string;

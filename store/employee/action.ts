@@ -15,3 +15,8 @@ export const postCreateEmployeeFailure: any = createAction(
 export const getEmployeesRequest: any = createAction("GET_EMPLOYEES_REQUEST");
 export const getEmployeesSuccess: any = createAction("GET_EMPLOYEES_SUCCESS");
 export const getEmployeesFailure: any = createAction("GET_EMPLOYEES_FAILURE");
+
+// Get employee action
+export const employeeByIdRequest: any = createAction("EMPLOYEE_BY_ID_REQUEST");
+export const employeeByIdSuccess: any = createAction("EMPLOYEE_BY_ID_SUCCESS");
+export const employeeByIdFailure: any = createAction("EMPLOYEE_BY_ID_FAILURE");

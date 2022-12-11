@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -28,13 +28,18 @@ import { styled } from "@mui/material/styles";
 
 import useWindowSize from "useHooks/useWindowSize";
 import usePreviousList from "useHooks/usePreviousList";
+import usePrevious from "useHooks/usePrevious";
 import { footerList, ownerList } from "./UtilsDashboard";
 import { color } from "util/styleUtils";
 import { RootState } from "types/iReducer";
 import Logo from "public/assets/logo.png";
 import { logout } from "store/auth/action";
 import { getAllCompaniesRequest } from "store/company/action";
-import { logoutAction, putHeadersCompany } from "config/instance";
+import {
+  logoutAction,
+  putHeadersCompany,
+  putLocalUserInfo,
+} from "config/instance";
 import AuthMiddleware from "middleware/AuthMiddleware";
 
 const drawerWidth = 240;
@@ -124,19 +129,29 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
   ]);
 
   const [open, setOpen] = useState(true);
-  const [activeCompany, setActiveCompany] = useState<number>(0);
+  const [activeCompany, setActiveCompany] = useState<number | null>(0);
+
+  const prevActiveCompany = usePrevious<number | null>(activeCompany);
 
   useEffect(() => {
     dispatch(getAllCompaniesRequest());
   }, []);
 
   useEffect(() => {
-    if (isAllCompanySuccess && prevIsAllCompanySuccess === false) {
-      if (allCompanyData.length) {
-        // @ts-ignore
-        const companyId: number = allCompanyData?.at(0)?.id;
-        setActiveCompany(companyId);
-      }
+    if (prevActiveCompany && prevActiveCompany !== activeCompany) {
+      Router.reload();
+    }
+  }, [activeCompany, prevActiveCompany]);
+
+  useEffect(() => {
+    if (
+      isAllCompanySuccess &&
+      prevIsAllCompanySuccess === false &&
+      allCompanyData.length
+    ) {
+      const companyId: number | null =
+        JSON.parse(localStorage.getItem("user") || "null")?.company || null;
+      setActiveCompany(companyId);
     }
   }, [isAllCompanySuccess, prevIsAllCompanySuccess, allCompanyData]);
 
@@ -160,6 +175,7 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
   };
 
   const handleChangeCompany = (id: any) => {
+    putLocalUserInfo({ company: id.target.value });
     setActiveCompany(id.target.value);
     putHeadersCompany(id.target.value);
   };
@@ -225,41 +241,43 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
         >
           <DrawerHeader>
             <div style={{ width: drawerWidth }}>
-              <Image src={Logo} alt="Logo" width={180} />
+              <Image src={Logo} alt="Logo" width={180} priority={true} />
             </div>
           </DrawerHeader>
           <List style={{ height: "100vh", borderRight: "0.5px solid grey" }}>
-            <FormControl
-              sx={{
-                width: "100%",
-                mt: 3,
-                ".css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root":
-                  {
-                    width: "80%",
-                    margin: "0 auto",
-                  },
-              }}
-            >
-              <Select
-                value={activeCompany}
-                variant="standard"
-                onChange={handleChangeCompany}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
-                sx={{ m: "auto", minWidth: 170 }}
+            {activeCompany ? (
+              <FormControl
+                sx={{
+                  width: "100%",
+                  mt: 3,
+                  ".css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root":
+                    {
+                      width: "80%",
+                      margin: "0 auto",
+                    },
+                }}
               >
-                {allCompanyData.map((company: any) => {
-                  return (
-                    <MenuItem key={company.id} value={company.id}>
-                      <div className="d-flex j-between w-100">
-                        <div>{company.nameCompany}</div>
-                        <div>{company.id}</div>
-                      </div>
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+                <Select
+                  value={activeCompany}
+                  variant="standard"
+                  onChange={handleChangeCompany}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                  sx={{ m: "auto", minWidth: 170 }}
+                >
+                  {allCompanyData.map((company: any) => {
+                    return (
+                      <MenuItem key={company.id} value={company.id}>
+                        <div className="d-flex j-between w-100">
+                          <div>{company.nameCompany}</div>
+                          <div>{company.id}</div>
+                        </div>
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            ) : null}
             {ownerList.map((item) => (
               <Link key={item.key} href={item.link}>
                 <ListItem

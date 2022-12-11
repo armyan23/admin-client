@@ -6,6 +6,9 @@ import {
   getEmployeesRequest,
   getEmployeesSuccess,
   getEmployeesFailure,
+  employeeByIdRequest,
+  employeeByIdSuccess,
+  employeeByIdFailure,
 } from "./action";
 import { IEmployee } from "types/iReducer";
 
@@ -16,6 +19,10 @@ const initialValue: IEmployee = {
   isGetEmployeesRequest: false,
   isGetEmployeesSuccess: false,
   isGetEmployeesFailure: false,
+  isEmployeeByIdRequest: false,
+  isEmployeeByIdSuccess: false,
+  isEmployeeByIdFailure: false,
+  employeeByIdData: {},
   data: [],
   successMessage: "",
   errorMessage: "",
@@ -65,6 +72,27 @@ const employeeReducer = handleActions(
       isGetEmployeesRequest: false,
       isGetEmployeesSuccess: false,
       isGetEmployeesFailure: true,
+      errorMessage: payload,
+    }),
+    // GET employee by ID
+    [employeeByIdRequest]: (state: IEmployee) => ({
+      ...state,
+      isEmployeeByIdRequest: true,
+      isEmployeeByIdSuccess: false,
+      isEmployeeByIdFailure: false,
+    }),
+    [employeeByIdSuccess]: (state: IEmployee, { payload }: any) => ({
+      ...state,
+      isEmployeeByIdRequest: false,
+      isEmployeeByIdSuccess: true,
+      isEmployeeByIdFailure: false,
+      employeeByIdData: payload,
+    }),
+    [employeeByIdFailure]: (state: IEmployee, { payload }: any) => ({
+      ...state,
+      isEmployeeByIdRequest: false,
+      isEmployeeByIdSuccess: false,
+      isEmployeeByIdFailure: true,
       errorMessage: payload,
     }),
   },

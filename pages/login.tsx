@@ -23,6 +23,7 @@ import { loginAction } from "config/instance";
 import { postLoginRequest } from "store/auth/action";
 import { RootState } from "types/iReducer";
 import { ILogin } from "types/iForm";
+import PasswordCustomField from "component/formField/PasswordCustomField";
 import AuthLayout from "component/layout/AuthLayout";
 
 const initialLogin: ILogin = {
@@ -103,7 +104,6 @@ const Login = () => {
             <Form onSubmit={handleSubmit}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="email"
                 label="Email Address"
@@ -119,25 +119,14 @@ const Login = () => {
                 }
                 error={!!(errors.email && touched.email && errors.email)}
               />
-              <TextField
-                margin="normal"
-                fullWidth
+              <PasswordCustomField
                 name="password"
                 label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleChange}
+                handleChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
-                helperText={
-                  errors.password && touched.password && errors.password
-                    ? errors.password
-                    : null
-                }
-                error={
-                  !!(errors.password && touched.password && errors.password)
-                }
+                errors={errors}
+                touched={touched}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

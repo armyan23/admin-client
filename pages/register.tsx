@@ -22,6 +22,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { RootState } from "types/iReducer";
 import { IRegister } from "types/iForm";
 import { postRegisterRequest } from "store/auth/action";
+import PasswordCustomField from "component/formField/PasswordCustomField";
 import AuthLayout from "component/layout/AuthLayout";
 
 const initialLogin: IRegister = {
@@ -138,7 +139,6 @@ const Register = () => {
                     <TextField
                       autoComplete="given-name"
                       name="firstName"
-                      required
                       fullWidth
                       id="firstName"
                       label="First Name"
@@ -163,7 +163,6 @@ const Register = () => {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
                       fullWidth
                       id="lastName"
                       label="Last Name"
@@ -189,7 +188,6 @@ const Register = () => {
                   <Grid item xs={12}>
                     <TextField
                       margin="normal"
-                      required
                       fullWidth
                       id="email"
                       label="Email Address"
@@ -207,57 +205,25 @@ const Register = () => {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      margin="normal"
-                      fullWidth
+                    <PasswordCustomField
                       name="password"
                       label="Password"
-                      type="text"
-                      id="password"
-                      autoComplete="current-password"
-                      onChange={handleChange}
+                      handleChange={handleChange}
                       onBlur={handleBlur}
                       value={values.password}
-                      helperText={
-                        errors.password && touched.password && errors.password
-                          ? errors.password
-                          : null
-                      }
-                      error={
-                        !!(
-                          errors.password &&
-                          touched.password &&
-                          errors.password
-                        )
-                      }
+                      errors={errors}
+                      touched={touched}
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      margin="normal"
-                      fullWidth
+                    <PasswordCustomField
                       name="confirmPassword"
                       label="Confirm password"
-                      type="text"
-                      id="confirmPassword"
-                      autoComplete="current-confirm-password"
-                      onChange={handleChange}
+                      handleChange={handleChange}
                       onBlur={handleBlur}
                       value={values.confirmPassword}
-                      helperText={
-                        errors.confirmPassword &&
-                        touched.confirmPassword &&
-                        errors.confirmPassword
-                          ? errors.confirmPassword
-                          : null
-                      }
-                      error={
-                        !!(
-                          errors.confirmPassword &&
-                          touched.confirmPassword &&
-                          errors.confirmPassword
-                        )
-                      }
+                      errors={errors}
+                      touched={touched}
                     />
                   </Grid>
                   <Grid item xs={12}>
