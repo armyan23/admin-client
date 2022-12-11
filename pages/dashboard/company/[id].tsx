@@ -5,7 +5,7 @@ import { getCompanyByIdRequest } from "store/company/action";
 import Dashboard from "component/layout/Dashboard";
 import Router from "next/router";
 import { useEffect } from "react";
-import { RootState } from "../../../types/iReducer";
+import { RootState } from "types/iReducer";
 
 const Company = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,9 @@ const Company = () => {
 
   return (
     <Card>
-      <Box sx={{ p: 2, gap: "20px", display: "grid" }}>Company By id - {id}</Box>
+      <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
+        Company By id - {id}
+      </Box>
     </Card>
   );
 };
