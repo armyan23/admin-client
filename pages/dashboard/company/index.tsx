@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Router from "next/router";
 import { NextPage } from "next";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -6,6 +7,7 @@ import {
   Box,
   Button,
   Card,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -15,11 +17,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-
-import {
-  getAllCompaniesRequest,
-  getCompanyByIdRequest,
-} from "store/company/action";
+import InfoIcon from "@mui/icons-material/Info";
+import { getAllCompaniesRequest } from "store/company/action";
 import { RootState } from "types/iReducer";
 import { ITypeMap } from "types/iUtils";
 import { companyTypeTable } from "util/utils";
@@ -33,22 +32,24 @@ const Company = () => {
     dispatch(getAllCompaniesRequest());
   }, [dispatch]);
 
-  const getAllCompany = () => {
-    dispatch(getAllCompaniesRequest());
-  };
-
-  const getCompanyById = () => {
-    dispatch(getCompanyByIdRequest());
+  const selectByCompanyId = (id: any) => {
+    Router.push(`/dashboard/company/${id}`);
   };
 
   return (
     <Card>
-      <Box sx={{ p: 2 }}>
-        <Typography component="h1" variant="h5">
-          Companies
-        </Typography>
-        <Button onClick={() => getAllCompany()}>Get all company</Button>
-        <Button onClick={() => getCompanyById()}>Get company by id</Button>
+      <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
+        <div className="d-flex j-between">
+          <Typography component="h1" variant="h5">
+            Companies
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={() => Router.push("/dashboard/company/add")}
+          >
+            +
+          </Button>
+        </div>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
@@ -56,6 +57,8 @@ const Company = () => {
                 {companyTypeTable.map((elem: ITypeMap) => (
                   <TableCell key={elem.key}>{elem.name}</TableCell>
                 ))}
+
+                <TableCell>Info</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -71,6 +74,14 @@ const Company = () => {
                   <TableCell>{item.typeCompany}</TableCell>
                   <TableCell>
                     {dayjs(item.createdDate).format("DD/MM/YYYY")}
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      size="small"
+                      onClick={() => selectByCompanyId(item.id)}
+                    >
+                      <InfoIcon fontSize="inherit" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
