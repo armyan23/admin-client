@@ -28,9 +28,7 @@ import { getEmployeesRequest } from "store/employee/action";
 const Employees = () => {
   const dispatch = useDispatch();
 
-  const { data } = useSelector(
-    (state: RootState) => state.employee
-  );
+  const { data } = useSelector((state: RootState) => state.employee);
 
   useEffect(() => {
     dispatch(getEmployeesRequest());
@@ -63,21 +61,22 @@ const Employees = () => {
             </TableHead>
             <TableBody>
               {data?.map((item: any) => (
-                  <TableRow
-                      key={item.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="item">
-                      {item.firstName}
-                    </TableCell>
-                    <TableCell>{item.lastName}</TableCell>
-                    <TableCell>{item.phoneNumber}</TableCell>
-                    <TableCell>{item.gender}</TableCell>
-                    <TableCell>{item.email}</TableCell>
-                    <TableCell>
-                      {dayjs(item.birthDate).format("DD/MM/YYYY")}
-                    </TableCell>
-                  </TableRow>
+                <TableRow
+                  key={item.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="item">
+                    {item.firstName}
+                  </TableCell>
+                  <TableCell>{item.lastName}</TableCell>
+                  <TableCell>{item.phoneNumber}</TableCell>
+                  <TableCell>{item.gender}</TableCell>
+                  <TableCell>{item.email}</TableCell>
+                  <TableCell>
+                    {dayjs(item.birthDate).format("DD/MM/YYYY")}
+                  </TableCell>
+                  <TableCell>{item.country}</TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>

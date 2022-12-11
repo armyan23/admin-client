@@ -27,12 +27,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material/styles";
 
 import useWindowSize from "useHooks/useWindowSize";
-import { color } from "util/styleUtils";
-import Logo from "public/assets/logo.png";
-import { logoutAction } from "config/instance";
-import AuthMiddleware from "middleware/AuthMiddleware";
+import usePreviousList from "useHooks/usePreviousList";
 import { footerList, ownerList } from "./UtilsDashboard";
+import { color } from "util/styleUtils";
+import { RootState } from "types/iReducer";
+import Logo from "public/assets/logo.png";
 import { logout } from "store/auth/action";
+import { getAllCompaniesRequest } from "store/company/action";
+import { logoutAction, putHeadersCompany } from "config/instance";
+import AuthMiddleware from "middleware/AuthMiddleware";
 
 const drawerWidth = 240;
 const headerHeight = 64;
@@ -112,8 +115,30 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
   const router = useRouter();
   const size = useWindowSize();
   const dispatch = useDispatch();
+  const { allCompanyData, isAllCompanySuccess } = useSelector(
+    (state: RootState) => state.company
+  );
+
+  const [prevIsAllCompanySuccess] = usePreviousList<boolean>([
+    isAllCompanySuccess,
+  ]);
 
   const [open, setOpen] = useState(true);
+  const [activeCompany, setActiveCompany] = useState<number>(0);
+
+  useEffect(() => {
+    dispatch(getAllCompaniesRequest());
+  }, []);
+
+  useEffect(() => {
+    if (isAllCompanySuccess && prevIsAllCompanySuccess === false) {
+      if (allCompanyData.length) {
+        // @ts-ignore
+        const companyId: number = allCompanyData?.at(0)?.id;
+        setActiveCompany(companyId);
+      }
+    }
+  }, [isAllCompanySuccess, prevIsAllCompanySuccess, allCompanyData]);
 
   useEffect(() => {
     if (size.width && size.width < 600) {
@@ -134,8 +159,9 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
     }
   };
 
-  const handleChangeCompany = () => {
-    console.log("Change company");
+  const handleChangeCompany = (id: any) => {
+    setActiveCompany(id.target.value);
+    putHeadersCompany(id.target.value);
   };
 
   const logOut = () => {
@@ -215,16 +241,23 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
               }}
             >
               <Select
-                value={""}
+                value={activeCompany}
+                variant="standard"
                 onChange={handleChangeCompany}
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
+                sx={{ m: "auto", minWidth: 170 }}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
+                {allCompanyData.map((company: any) => {
+                  return (
+                    <MenuItem key={company.id} value={company.id}>
+                      <div className="d-flex j-between w-100">
+                        <div>{company.nameCompany}</div>
+                        <div>{company.id}</div>
+                      </div>
+                    </MenuItem>
+                  );
+                })}
               </Select>
             </FormControl>
             {ownerList.map((item) => (

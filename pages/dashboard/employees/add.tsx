@@ -74,7 +74,7 @@ const AddEmployees = () => {
         },
         autoHideDuration: 1000,
       });
-      Router.push("/dashboard/company");
+      Router.push("/dashboard/employees");
       setLoading(false);
     }
   }, [successMessage, prevIsCreateEmployeeSuccess, isCreateEmployeeSuccess]);
