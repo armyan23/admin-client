@@ -27,6 +27,7 @@ import { RootState } from "types/iReducer";
 import { ICreateEmployee } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
 import DateCustomField from "component/formField/DateCustomField";
+import ImageCustomField from "component/formField/ImageCustomField";
 
 const initialEmployeeCompany: ICreateEmployee = {
   email: "",
@@ -39,6 +40,7 @@ const initialEmployeeCompany: ICreateEmployee = {
   gender: "",
   country: "",
   city: "",
+  image: null,
   streetAddress: "",
   birthDate: null,
   startWork: null,
@@ -77,7 +79,12 @@ const AddEmployees = () => {
       Router.push("/dashboard/employees");
       setLoading(false);
     }
-  }, [successMessage, prevIsCreateEmployeeSuccess, isCreateEmployeeSuccess]);
+  }, [
+    successMessage,
+    prevIsCreateEmployeeSuccess,
+    isCreateEmployeeSuccess,
+    enqueueSnackbar,
+  ]);
 
   useEffect(() => {
     if (isCreateEmployeeFailure && prevIsCreateEmployeeFailure === false) {
@@ -90,7 +97,12 @@ const AddEmployees = () => {
       });
       setLoading(false);
     }
-  }, [errorMessage, isCreateEmployeeFailure, prevIsCreateEmployeeFailure]);
+  }, [
+    enqueueSnackbar,
+    errorMessage,
+    isCreateEmployeeFailure,
+    prevIsCreateEmployeeFailure,
+  ]);
 
   const onFinish = (values: FormikValues) => {
     setLoading(true);
@@ -280,35 +292,32 @@ const AddEmployees = () => {
                         values={values}
                       />
                     </Grid>
-                    <Grid item xs={12}>
-                      <Grid item sm={6}>
-                        <TextField
-                          id="patronymic"
-                          name="patronymic"
-                          label="Patronymic"
-                          autoComplete="patronymic"
-                          fullWidth
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.patronymic}
-                          helperText={
+                    <Grid item xs={6}>
+                      <TextField
+                        id="patronymic"
+                        name="patronymic"
+                        label="Patronymic"
+                        autoComplete="patronymic"
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.patronymic}
+                        helperText={
+                          errors.patronymic &&
+                          touched.patronymic &&
+                          errors.patronymic
+                            ? errors.patronymic
+                            : null
+                        }
+                        error={
+                          !!(
                             errors.patronymic &&
                             touched.patronymic &&
                             errors.patronymic
-                              ? errors.patronymic
-                              : null
-                          }
-                          error={
-                            !!(
-                              errors.patronymic &&
-                              touched.patronymic &&
-                              errors.patronymic
-                            )
-                          }
-                        />
-                      </Grid>
+                          )
+                        }
+                      />
                     </Grid>
-
                     {/* Country, street, city */}
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -379,6 +388,9 @@ const AddEmployees = () => {
                           }
                         />
                       </Grid>
+                    </Grid>
+                    <Grid item sm={12}>
+                      <ImageCustomField />
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="subtitle2" gutterBottom>
