@@ -366,7 +366,7 @@ const AddEmployees = () => {
                         <TextField
                           id="streetAddress"
                           name="streetAddress"
-                          label="streetAddress"
+                          label="Street address"
                           autoComplete="Street address"
                           fullWidth
                           onBlur={handleBlur}

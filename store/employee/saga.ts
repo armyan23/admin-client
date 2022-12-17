@@ -10,6 +10,9 @@ import {
   employeeByIdRequest,
   employeeByIdSuccess,
   employeeByIdFailure,
+  deleteEmployeeRequest,
+  deleteEmployeeSuccess,
+  deleteEmployeeFailure,
 } from "./action";
 import instance from "config/instance";
 
@@ -26,10 +29,10 @@ function* createEmployee({ payload }: any) {
   }
 }
 
-function* getAllEmployees() {
+function* getAllEmployees({ payload }: any) {
   try {
     const response: AxiosResponse = yield call(() =>
-      instance.get("/api/employee/all")
+      instance.get(`/api/employee/all?type=${payload.type}`)
     );
 
     yield put(getEmployeesSuccess(response.data.data));
@@ -45,10 +48,23 @@ function* getEmployeeById({ payload }: any) {
       instance.get(`/api/employee/${payload}`)
     );
 
-    yield put(employeeByIdSuccess(response.data));
+    yield put(employeeByIdSuccess(response.data.data));
   } catch (err: any) {
     const { data } = err.response;
     yield put(employeeByIdFailure(data.message));
+  }
+}
+
+function* deleteEmployee({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() => {
+      return instance.delete(`/api/employee/delete/${payload}`);
+    });
+
+    yield put(deleteEmployeeSuccess(response.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(deleteEmployeeFailure(data.message));
   }
 }
 
@@ -56,4 +72,5 @@ export default function* employeeSaga() {
   yield takeLatest(postCreateEmployeeRequest, createEmployee);
   yield takeLatest(getEmployeesRequest, getAllEmployees);
   yield takeLatest(employeeByIdRequest, getEmployeeById);
+  yield takeLatest(deleteEmployeeRequest, deleteEmployee);
 }

@@ -16,6 +16,7 @@ export interface ICompany {
   successMessage: string;
   errorMessage: string;
 }
+
 export interface IEmployee {
   isCreateEmployeeRequest: boolean;
   isCreateEmployeeSuccess: boolean;
@@ -26,11 +27,15 @@ export interface IEmployee {
   isEmployeeByIdRequest: boolean;
   isEmployeeByIdSuccess: boolean;
   isEmployeeByIdFailure: boolean;
+  isDeleteEmployeeRequest: boolean;
+  isDeleteEmployeeSuccess: boolean;
+  isDeleteEmployeeFailure: boolean;
   employeeByIdData: object;
   data: [];
   successMessage: string;
   errorMessage: string;
 }
+
 export interface IAuth {
   registerRequest: boolean;
   registerSuccess: boolean;

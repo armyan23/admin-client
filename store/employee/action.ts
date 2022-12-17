@@ -20,3 +20,14 @@ export const getEmployeesFailure: any = createAction("GET_EMPLOYEES_FAILURE");
 export const employeeByIdRequest: any = createAction("EMPLOYEE_BY_ID_REQUEST");
 export const employeeByIdSuccess: any = createAction("EMPLOYEE_BY_ID_SUCCESS");
 export const employeeByIdFailure: any = createAction("EMPLOYEE_BY_ID_FAILURE");
+
+// Get employee action
+export const deleteEmployeeRequest: any = createAction(
+  "DELETE_EMPLOYEE_REQUEST"
+);
+export const deleteEmployeeSuccess: any = createAction(
+  "DELETE_EMPLOYEE_SUCCESS"
+);
+export const deleteEmployeeFailure: any = createAction(
+  "DELETE_EMPLOYEE_FAILURE"
+);

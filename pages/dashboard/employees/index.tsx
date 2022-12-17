@@ -30,7 +30,7 @@ const Employees = () => {
   const { data } = useSelector((state: RootState) => state.employee);
 
   useEffect(() => {
-    dispatch(getEmployeesRequest());
+    dispatch(getEmployeesRequest({ type: "active" }));
   }, [dispatch]);
 
   const selectByEmployeeId = (id: any) => {

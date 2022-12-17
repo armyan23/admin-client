@@ -9,19 +9,29 @@ import {
   employeeByIdRequest,
   employeeByIdSuccess,
   employeeByIdFailure,
+  deleteEmployeeRequest,
+  deleteEmployeeSuccess,
+  deleteEmployeeFailure,
 } from "./action";
 import { IEmployee } from "types/iReducer";
 
 const initialValue: IEmployee = {
+  //   Create
   isCreateEmployeeRequest: false,
   isCreateEmployeeSuccess: false,
   isCreateEmployeeFailure: false,
+  //   Get all employees
   isGetEmployeesRequest: false,
   isGetEmployeesSuccess: false,
   isGetEmployeesFailure: false,
+  //   Employee by id
   isEmployeeByIdRequest: false,
   isEmployeeByIdSuccess: false,
   isEmployeeByIdFailure: false,
+  //   Delete employee
+  isDeleteEmployeeRequest: false,
+  isDeleteEmployeeSuccess: false,
+  isDeleteEmployeeFailure: false,
   employeeByIdData: {},
   data: [],
   successMessage: "",
@@ -93,6 +103,26 @@ const employeeReducer = handleActions(
       isEmployeeByIdRequest: false,
       isEmployeeByIdSuccess: false,
       isEmployeeByIdFailure: true,
+      errorMessage: payload,
+    }),
+    // Post employee image
+    [deleteEmployeeRequest]: (state: IEmployee) => ({
+      ...state,
+      isDeleteEmployeeRequest: true,
+      isDeleteEmployeeSuccess: false,
+      isDeleteEmployeeFailure: false,
+    }),
+    [deleteEmployeeSuccess]: (state: IEmployee) => ({
+      ...state,
+      isDeleteEmployeeRequest: false,
+      isDeleteEmployeeSuccess: true,
+      isDeleteEmployeeFailure: false,
+    }),
+    [deleteEmployeeFailure]: (state: IEmployee, { payload }: any) => ({
+      ...state,
+      isDeleteEmployeeRequest: false,
+      isDeleteEmployeeSuccess: false,
+      isDeleteEmployeeFailure: true,
       errorMessage: payload,
     }),
   },
