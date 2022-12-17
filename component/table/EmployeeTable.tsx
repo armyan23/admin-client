@@ -1,5 +1,4 @@
 import React from "react";
-import { NextPage } from "next";
 import dayjs from "dayjs";
 import {
   Paper,
@@ -12,7 +11,6 @@ import {
 } from "@mui/material";
 import { ITypeMap } from "types/iUtils";
 import { employeeTypeTable } from "util/utils";
-import Dashboard from "component/layout/Dashboard";
 
 const EmployeesTable = ({ action, data }: any) => {
   return (
@@ -50,10 +48,6 @@ const EmployeesTable = ({ action, data }: any) => {
       </Table>
     </TableContainer>
   );
-};
-
-EmployeesTable.getLayout = function getLayout(page: NextPage) {
-  return <Dashboard>{page}</Dashboard>;
 };
 
 export default EmployeesTable;

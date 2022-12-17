@@ -14,6 +14,7 @@ import {
 } from "store/employee/action";
 import ProfileImage from "resources/image/profile/girl.png";
 import Dashboard from "component/layout/Dashboard";
+import SimpleModal from "component/modal/SimpleModal";
 
 const Employee = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Employee = () => {
 
   const { id } = Router.query;
   const [value, setValue] = React.useState<number | null>(2);
+  const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
 
   useEffect(() => {
     dispatch(employeeByIdRequest(id));
@@ -59,7 +61,7 @@ const Employee = () => {
                 <IconButton
                   aria-label="delete"
                   color="primary"
-                  onClick={onDelete}
+                  onClick={() => setDeleteModal(true)}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -147,6 +149,11 @@ const Employee = () => {
           </Grid>
         </Grid>
       </Box>
+      <SimpleModal
+        open={deleteModal}
+        setOpen={setDeleteModal}
+        agree={onDelete}
+      />
     </Card>
   );
 };

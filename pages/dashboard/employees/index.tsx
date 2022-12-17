@@ -13,11 +13,15 @@ import {
 } from "store/employee/action";
 import Dashboard from "component/layout/Dashboard";
 import EmployeeTable from "component/table/EmployeeTable";
+import SimpleModal from "component/modal/SimpleModal";
 
 const Employees = () => {
   const dispatch = useDispatch();
 
   const { data } = useSelector((state: RootState) => state.employee);
+
+  const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
+  const [selectedId, setSelectedId] = React.useState<number>();
 
   useEffect(() => {
     dispatch(getEmployeesRequest({ type: "active" }));
@@ -31,8 +35,13 @@ const Employees = () => {
     Router.push(`/dashboard/employees/edit/${id}`);
   };
 
-  const onDelete = (id: number) => {
-    dispatch(deleteEmployeeRequest(id));
+  const openDeleteModal = (id: number) => {
+    setSelectedId(id);
+    setDeleteModal(true);
+  };
+
+  const onDelete = () => {
+    dispatch(deleteEmployeeRequest(selectedId));
   };
 
   const Action = (item: any) => (
@@ -40,7 +49,7 @@ const Employees = () => {
       <IconButton size="small" onClick={() => onEdit(item.id)}>
         <EditIcon />
       </IconButton>
-      <IconButton size="small" onClick={() => onDelete(item.id)}>
+      <IconButton size="small" onClick={() => openDeleteModal(item.id)}>
         <DeleteIcon />
       </IconButton>
       <IconButton size="small" onClick={() => selectByEmployeeId(item.id)}>
@@ -65,6 +74,11 @@ const Employees = () => {
         </div>
         <EmployeeTable data={data} action={Action} />
       </Box>
+      <SimpleModal
+        open={deleteModal}
+        setOpen={setDeleteModal}
+        agree={onDelete}
+      />
     </Card>
   );
 };
