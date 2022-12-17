@@ -12,6 +12,9 @@ import {
   deleteEmployeeRequest,
   deleteEmployeeSuccess,
   deleteEmployeeFailure,
+  restoreEmployeeRequest,
+  restoreEmployeeSuccess,
+  restoreEmployeeFailure,
 } from "./action";
 import { IEmployee } from "types/iReducer";
 
@@ -32,6 +35,10 @@ const initialValue: IEmployee = {
   isDeleteEmployeeRequest: false,
   isDeleteEmployeeSuccess: false,
   isDeleteEmployeeFailure: false,
+  //   Restore employee
+  isRestoreEmployeeRequest: false,
+  isRestoreEmployeeSuccess: false,
+  isRestoreEmployeeFailure: false,
   employeeByIdData: {},
   data: [],
   successMessage: "",
@@ -105,7 +112,7 @@ const employeeReducer = handleActions(
       isEmployeeByIdFailure: true,
       errorMessage: payload,
     }),
-    // Post employee image
+    // Delete employee
     [deleteEmployeeRequest]: (state: IEmployee) => ({
       ...state,
       isDeleteEmployeeRequest: true,
@@ -123,6 +130,26 @@ const employeeReducer = handleActions(
       isDeleteEmployeeRequest: false,
       isDeleteEmployeeSuccess: false,
       isDeleteEmployeeFailure: true,
+      errorMessage: payload,
+    }),
+    // Restore employee
+    [restoreEmployeeRequest]: (state: IEmployee) => ({
+      ...state,
+      isRestoreEmployeeRequest: true,
+      isRestoreEmployeeSuccess: false,
+      isRestoreEmployeeFailure: false,
+    }),
+    [restoreEmployeeSuccess]: (state: IEmployee) => ({
+      ...state,
+      isRestoreEmployeeRequest: false,
+      isRestoreEmployeeSuccess: true,
+      isRestoreEmployeeFailure: false,
+    }),
+    [restoreEmployeeFailure]: (state: IEmployee, { payload }: any) => ({
+      ...state,
+      isRestoreEmployeeRequest: false,
+      isRestoreEmployeeSuccess: false,
+      isRestoreEmployeeFailure: true,
       errorMessage: payload,
     }),
   },

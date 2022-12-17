@@ -13,6 +13,9 @@ import {
   deleteEmployeeRequest,
   deleteEmployeeSuccess,
   deleteEmployeeFailure,
+  restoreEmployeeRequest,
+  restoreEmployeeSuccess,
+  restoreEmployeeFailure,
 } from "./action";
 import instance from "config/instance";
 
@@ -68,9 +71,23 @@ function* deleteEmployee({ payload }: any) {
   }
 }
 
+function* restoreEmployee({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() => {
+      return instance.post(`/api/employee/restore/${payload}`);
+    });
+
+    yield put(restoreEmployeeSuccess(response.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(restoreEmployeeFailure(data.message));
+  }
+}
+
 export default function* employeeSaga() {
   yield takeLatest(postCreateEmployeeRequest, createEmployee);
   yield takeLatest(getEmployeesRequest, getAllEmployees);
   yield takeLatest(employeeByIdRequest, getEmployeeById);
   yield takeLatest(deleteEmployeeRequest, deleteEmployee);
+  yield takeLatest(restoreEmployeeRequest, restoreEmployee);
 }

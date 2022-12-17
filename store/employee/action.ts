@@ -31,3 +31,14 @@ export const deleteEmployeeSuccess: any = createAction(
 export const deleteEmployeeFailure: any = createAction(
   "DELETE_EMPLOYEE_FAILURE"
 );
+
+// Restore employee action
+export const restoreEmployeeRequest: any = createAction(
+  "RESTORE_EMPLOYEE_REQUEST"
+);
+export const restoreEmployeeSuccess: any = createAction(
+  "RESTORE_EMPLOYEE_SUCCESS"
+);
+export const restoreEmployeeFailure: any = createAction(
+  "RESTORE_EMPLOYEE_FAILURE"
+);

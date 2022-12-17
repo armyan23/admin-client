@@ -30,6 +30,10 @@ export interface IEmployee {
   isDeleteEmployeeRequest: boolean;
   isDeleteEmployeeSuccess: boolean;
   isDeleteEmployeeFailure: boolean;
+
+  isRestoreEmployeeRequest: boolean;
+  isRestoreEmployeeSuccess: boolean;
+  isRestoreEmployeeFailure: boolean;
   employeeByIdData: object;
   data: [];
   successMessage: string;

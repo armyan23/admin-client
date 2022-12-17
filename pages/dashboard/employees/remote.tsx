@@ -2,27 +2,16 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
 import Router from "next/router";
-import dayjs from "dayjs";
-import {
-  Box,
-  Button,
-  Card,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Card, IconButton, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { ITypeMap } from "types/iUtils";
+import UndoIcon from "@mui/icons-material/Undo";
 import { RootState } from "types/iReducer";
-import { employeeTypeTable } from "util/utils";
-import { getEmployeesRequest } from "store/employee/action";
+import {
+  getEmployeesRequest,
+  restoreEmployeeRequest,
+} from "store/employee/action";
 import Dashboard from "component/layout/Dashboard";
+import EmployeeTable from "component/table/EmployeeTable";
 
 const RemoteEmployees = () => {
   const dispatch = useDispatch();
@@ -37,59 +26,29 @@ const RemoteEmployees = () => {
     Router.push(`/dashboard/employees/${id}`);
   };
 
+  const onRestore = (id: number) => {
+    dispatch(restoreEmployeeRequest(id));
+  };
+
+  const Action = (item: any) => (
+    <>
+      <IconButton size="small" onClick={() => onRestore(item.id)}>
+        <UndoIcon />
+      </IconButton>
+      <IconButton size="small" onClick={() => selectByEmployeeId(item.id)}>
+        <InfoIcon fontSize="inherit" />
+      </IconButton>
+    </>
+  );
+
   return (
     <Card>
       <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
-        <div className="d-flex j-between">
-          <Typography component="h1" variant="h5">
-            Employees
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={() => Router.push("/dashboard/employees/add")}
-          >
-            +
-          </Button>
-        </div>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                {employeeTypeTable.map((elem: ITypeMap) => (
-                  <TableCell key={elem.key}>{elem.name}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data?.map((item: any) => (
-                <TableRow
-                  key={item.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="item">
-                    {item.firstName}
-                  </TableCell>
-                  <TableCell>{item.lastName}</TableCell>
-                  <TableCell>{item.phoneNumber}</TableCell>
-                  <TableCell>{item.gender}</TableCell>
-                  <TableCell>{item.email}</TableCell>
-                  <TableCell>
-                    {dayjs(item.birthDate).format("DD/MM/YYYY")}
-                  </TableCell>
-                  <TableCell>{item.country}</TableCell>
-                  <TableCell>
-                    <IconButton
-                      size="small"
-                      onClick={() => selectByEmployeeId(item.id)}
-                    >
-                      <InfoIcon fontSize="inherit" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <Typography component="h1" variant="h5">
+          Remote Employees
+        </Typography>
+
+        <EmployeeTable data={data} action={Action} />
       </Box>
     </Card>
   );

@@ -2,27 +2,17 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
 import Router from "next/router";
-import dayjs from "dayjs";
-import {
-  Box,
-  Button,
-  Card,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import { ITypeMap } from "types/iUtils";
-import { RootState } from "types/iReducer";
-import { employeeTypeTable } from "util/utils";
-import { getEmployeesRequest } from "store/employee/action";
-import Dashboard from "component/layout/Dashboard";
+import { Box, Button, Card, IconButton, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { RootState } from "types/iReducer";
+import {
+  deleteEmployeeRequest,
+  getEmployeesRequest,
+} from "store/employee/action";
+import Dashboard from "component/layout/Dashboard";
+import EmployeeTable from "component/table/EmployeeTable";
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -33,9 +23,31 @@ const Employees = () => {
     dispatch(getEmployeesRequest({ type: "active" }));
   }, [dispatch]);
 
-  const selectByEmployeeId = (id: any) => {
+  const selectByEmployeeId = (id: number) => {
     Router.push(`/dashboard/employees/${id}`);
   };
+
+  const onEdit = (id: number) => {
+    Router.push(`/dashboard/employees/edit/${id}`);
+  };
+
+  const onDelete = (id: number) => {
+    dispatch(deleteEmployeeRequest(id));
+  };
+
+  const Action = (item: any) => (
+    <>
+      <IconButton size="small" onClick={() => onEdit(item.id)}>
+        <EditIcon />
+      </IconButton>
+      <IconButton size="small" onClick={() => onDelete(item.id)}>
+        <DeleteIcon />
+      </IconButton>
+      <IconButton size="small" onClick={() => selectByEmployeeId(item.id)}>
+        <InfoIcon fontSize="inherit" />
+      </IconButton>
+    </>
+  );
 
   return (
     <Card>
@@ -51,45 +63,7 @@ const Employees = () => {
             +
           </Button>
         </div>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                {employeeTypeTable.map((elem: ITypeMap) => (
-                  <TableCell key={elem.key}>{elem.name}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data?.map((item: any) => (
-                <TableRow
-                  key={item.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="item">
-                    {item.firstName}
-                  </TableCell>
-                  <TableCell>{item.lastName}</TableCell>
-                  <TableCell>{item.phoneNumber}</TableCell>
-                  <TableCell>{item.gender}</TableCell>
-                  <TableCell>{item.email}</TableCell>
-                  <TableCell>
-                    {dayjs(item.birthDate).format("DD/MM/YYYY")}
-                  </TableCell>
-                  <TableCell>{item.country}</TableCell>
-                  <TableCell>
-                    <IconButton
-                      size="small"
-                      onClick={() => selectByEmployeeId(item.id)}
-                    >
-                      <InfoIcon fontSize="inherit" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <EmployeeTable data={data} action={Action} />
       </Box>
     </Card>
   );
