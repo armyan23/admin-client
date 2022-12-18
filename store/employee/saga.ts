@@ -4,6 +4,9 @@ import {
   postCreateEmployeeRequest,
   postCreateEmployeeSuccess,
   postCreateEmployeeFailure,
+  editEmployeeRequest,
+  editEmployeeSuccess,
+  editEmployeeFailure,
   getEmployeesRequest,
   getEmployeesSuccess,
   getEmployeesFailure,
@@ -29,6 +32,19 @@ function* createEmployee({ payload }: any) {
   } catch (err: any) {
     const { data } = err.response;
     yield put(postCreateEmployeeFailure(data.message));
+  }
+}
+
+function* editEmployee({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.post(`/api/employee/edit${1}`, payload)
+    );
+
+    yield put(editEmployeeSuccess(response.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(editEmployeeFailure(data.message));
   }
 }
 
@@ -86,6 +102,7 @@ function* restoreEmployee({ payload }: any) {
 
 export default function* employeeSaga() {
   yield takeLatest(postCreateEmployeeRequest, createEmployee);
+  yield takeLatest(editEmployeeRequest, editEmployee);
   yield takeLatest(getEmployeesRequest, getAllEmployees);
   yield takeLatest(employeeByIdRequest, getEmployeeById);
   yield takeLatest(deleteEmployeeRequest, deleteEmployee);

@@ -11,6 +11,11 @@ export const postCreateEmployeeFailure: any = createAction(
   "POST_CREATE_EMPLOYEE_FAILURE"
 );
 
+// Edit employee action
+export const editEmployeeRequest: any = createAction("EDIT_EMPLOYEE_REQUEST");
+export const editEmployeeSuccess: any = createAction("EDIT_EMPLOYEE_SUCCESS");
+export const editEmployeeFailure: any = createAction("EDIT_EMPLOYEE_FAILURE");
+
 // Get employee action
 export const getEmployeesRequest: any = createAction("GET_EMPLOYEES_REQUEST");
 export const getEmployeesSuccess: any = createAction("GET_EMPLOYEES_SUCCESS");

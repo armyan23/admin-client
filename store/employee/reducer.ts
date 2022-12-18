@@ -3,6 +3,9 @@ import {
   postCreateEmployeeRequest,
   postCreateEmployeeSuccess,
   postCreateEmployeeFailure,
+  editEmployeeRequest,
+  editEmployeeSuccess,
+  editEmployeeFailure,
   getEmployeesRequest,
   getEmployeesSuccess,
   getEmployeesFailure,
@@ -23,6 +26,10 @@ const initialValue: IEmployee = {
   isCreateEmployeeRequest: false,
   isCreateEmployeeSuccess: false,
   isCreateEmployeeFailure: false,
+  //   Edit
+  isEditEmployeeRequest: false,
+  isEditEmployeeSuccess: false,
+  isEditEmployeeFailure: false,
   //   Get all employees
   isGetEmployeesRequest: false,
   isGetEmployeesSuccess: false,
@@ -68,7 +75,26 @@ const employeeReducer = handleActions(
       isCreateEmployeeFailure: true,
       errorMessage: payload,
     }),
-
+    // Edit employee
+    [editEmployeeRequest]: (state: IEmployee) => ({
+      ...state,
+      isEditEmployeeRequest: true,
+      isEditEmployeeSuccess: false,
+      isEditEmployeeFailure: false,
+    }),
+    [editEmployeeSuccess]: (state: IEmployee) => ({
+      ...state,
+      isEditEmployeeRequest: false,
+      isEditEmployeeSuccess: true,
+      isEditEmployeeFailure: false,
+    }),
+    [editEmployeeFailure]: (state: IEmployee, { payload }: any) => ({
+      ...state,
+      isEditEmployeeRequest: false,
+      isEditEmployeeSuccess: false,
+      isEditEmployeeFailure: true,
+      errorMessage: payload,
+    }),
     // GET employees
     [getEmployeesRequest]: (state: IEmployee) => ({
       ...state,
