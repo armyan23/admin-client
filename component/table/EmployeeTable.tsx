@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { ITypeMap } from "types/iUtils";
 import { employeeTypeTable } from "util/utils";
+import ProfileImage from "component/profile/ProfileImage";
 
 const EmployeesTable = ({ action, data }: any) => {
   return (
@@ -21,7 +22,6 @@ const EmployeesTable = ({ action, data }: any) => {
             {employeeTypeTable.map((elem: ITypeMap) => (
               <TableCell key={elem.key}>{elem.name}</TableCell>
             ))}
-            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -30,6 +30,14 @@ const EmployeesTable = ({ action, data }: any) => {
               key={item.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
+              <TableCell component="th" scope="item">
+                <ProfileImage
+                  type={item.gender}
+                  url={item?.image}
+                  width={75}
+                  height={75}
+                />
+              </TableCell>
               <TableCell component="th" scope="item">
                 {item.firstName}
               </TableCell>

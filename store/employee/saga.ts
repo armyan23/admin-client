@@ -64,7 +64,7 @@ function* deleteEmployee({ payload }: any) {
       return instance.delete(`/api/employee/delete/${payload}`);
     });
 
-    yield put(deleteEmployeeSuccess(response.data));
+    yield put(deleteEmployeeSuccess({ ...response.data, id: payload }));
   } catch (err: any) {
     const { data } = err.response;
     yield put(deleteEmployeeFailure(data.message));
@@ -77,7 +77,7 @@ function* restoreEmployee({ payload }: any) {
       return instance.post(`/api/employee/restore/${payload}`);
     });
 
-    yield put(restoreEmployeeSuccess(response.data));
+    yield put(restoreEmployeeSuccess({ ...response.data, id: payload }));
   } catch (err: any) {
     const { data } = err.response;
     yield put(restoreEmployeeFailure(data.message));

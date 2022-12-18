@@ -52,37 +52,47 @@ export const companyTypeTable: ITypeMap[] = [
 export const employeeTypeTable: ITypeMap[] = [
   {
     key: 1,
+    name: "Image",
+    type: "image",
+  },
+  {
+    key: 2,
     name: "First name",
     type: "firstName",
   },
   {
-    key: 2,
+    key: 3,
     name: "Last name",
     type: "lastName",
   },
   {
-    key: 3,
+    key: 4,
     name: "Phone",
     type: "phoneNumber",
   },
   {
-    key: 4,
+    key: 5,
     name: "Role",
     type: "role",
   },
   {
-    key: 5,
+    key: 6,
     name: "Email",
     type: "email",
   },
   {
-    key: 6,
+    key: 7,
     name: "Gender",
     type: "gender",
   },
   {
-    key: 7,
+    key: 8,
     name: "Country",
     type: "country",
+  },
+  {
+    key: 9,
+    name: "Action",
+    type: "action",
   },
 ];

@@ -48,95 +48,99 @@ const Employee = () => {
     dispatch(restoreEmployeeRequest(id));
   };
 
-  return (
-    <Card>
-      <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs="auto">
-            <Image src={ProfileImage} alt="employee" height={250} />
-          </Grid>
-          <Grid item xs>
-            <Typography
-              component="h1"
-              variant="h5"
-              className="d-flex j-between"
-              sx={{ mb: 2 }}
-            >
-              {employeeByIdData?.firstName} {employeeByIdData.lastName}
-              <Box>
-                {employeeStatus ? (
-                  <>
-                    <IconButton
-                      color="primary"
-                      size="small"
-                      onClick={() => setOpenModal(true)}
-                    >
-                      <UndoIcon />
-                    </IconButton>
-                  </>
-                ) : (
-                  <>
-                    <IconButton
-                      aria-label="edit"
-                      color="primary"
-                      onClick={onEdit}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      color="primary"
-                      onClick={() => setOpenModal(true)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </>
-                )}
-              </Box>
-            </Typography>
-            <Box className="d-flex a-center" sx={{ mb: 2 }}>
-              Rating
-              <Rating
-                name="simple-controlled"
-                value={value}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
-              />
-            </Box>
-            <Box className="d-flex a-center">
-              <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              >
-                <Grid item xs={12}>
-                  <b>Contact information</b>
-                </Grid>
-                <Grid item xs={5}>
-                  Phone number:
-                </Grid>
-                <Grid item xs={7}>
-                  {employeeByIdData.phoneNumber}
-                </Grid>
-                <Grid item xs={5}>
-                  Email:
-                </Grid>
-                <Grid item xs={7}>
-                  {employeeByIdData.email}
-                </Grid>
-                <Grid item xs={5}>
-                  Address:
-                </Grid>
-                <Grid item xs={7}>
-                  {employeeByIdData.country +
-                    " " +
-                    employeeByIdData.city +
-                    " " +
-                    employeeByIdData.streetAddress}
-                </Grid>
-              </Grid>
-            </Box>
+    return (
+        <Card>
+            {/*<Image src={`${process.env.NEXT_PUBLIC_API_SERVER}${employeeByIdData.image}`} alt="employee" width={200} height={250} />*/}
+            <Box sx={{p: 2, gap: "20px", display: "grid"}}>
+                <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
+                    <Grid item xs="auto">
+                        <ProfileImage
+                            type={employeeByIdData.gender}
+                            url={employeeByIdData?.image}
+                        />
+                    </Grid>
+                    <Grid item xs>
+                        <Typography
+                            component="h1"
+                            variant="h5"
+                            className="d-flex j-between"
+                            sx={{mb: 2}}
+                        >
+                            {employeeByIdData?.firstName} {employeeByIdData.lastName}
+                            <Box>
+                                {employeeStatus ? (
+                                    <>
+                                        <IconButton
+                                            color="primary"
+                                            size="small"
+                                            onClick={() => setOpenModal(true)}
+                                        >
+                                            <UndoIcon/>
+                                        </IconButton>
+                                    </>
+                                ) : (
+                                    <>
+                                        <IconButton
+                                            aria-label="edit"
+                                            color="primary"
+                                            onClick={onEdit}
+                                        >
+                                            <EditIcon/>
+                                        </IconButton>
+                                        <IconButton
+                                            aria-label="delete"
+                                            color="primary"
+                                            onClick={() => setOpenModal(true)}
+                                        >
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    </>
+                                )}
+                            </Box>
+                        </Typography>
+                        <Box className="d-flex a-center" sx={{mb: 2}}>
+                            Rating
+                            <Rating
+                                name="simple-controlled"
+                                value={value}
+                                onChange={(event, newValue) => {
+                                    setValue(newValue);
+                                }}
+                            />
+                        </Box>
+                        <Box className="d-flex a-center">
+                            <Grid
+                                container
+                                rowSpacing={1}
+                                columnSpacing={{xs: 1, sm: 2, md: 3}}
+                            >
+                                <Grid item xs={12}>
+                                    <b>Contact information</b>
+                                </Grid>
+                                <Grid item xs={5}>
+                                    Phone number:
+                                </Grid>
+                                <Grid item xs={7}>
+                                    {employeeByIdData.phoneNumber}
+                                </Grid>
+                                <Grid item xs={5}>
+                                    Email:
+                                </Grid>
+                                <Grid item xs={7}>
+                                    {employeeByIdData.email}
+                                </Grid>
+                                <Grid item xs={5}>
+                                    Address:
+                                </Grid>
+                                <Grid item xs={7}>
+                                    {employeeByIdData.country +
+                                        " " +
+                                        employeeByIdData.city +
+                                        " " +
+                                        employeeByIdData.streetAddress}
+                                </Grid>
+                            </Grid>
+                        </Box>
 
             <Box className="d-flex a-center" sx={{ mt: 3 }}>
               <Grid

@@ -119,11 +119,12 @@ const employeeReducer = handleActions(
       isDeleteEmployeeSuccess: false,
       isDeleteEmployeeFailure: false,
     }),
-    [deleteEmployeeSuccess]: (state: IEmployee) => ({
+    [deleteEmployeeSuccess]: (state: IEmployee, { payload }: any) => ({
       ...state,
       isDeleteEmployeeRequest: false,
       isDeleteEmployeeSuccess: true,
       isDeleteEmployeeFailure: false,
+      data: state.data.filter((elem: any) => elem.id !== payload.id),
     }),
     [deleteEmployeeFailure]: (state: IEmployee, { payload }: any) => ({
       ...state,
@@ -139,11 +140,12 @@ const employeeReducer = handleActions(
       isRestoreEmployeeSuccess: false,
       isRestoreEmployeeFailure: false,
     }),
-    [restoreEmployeeSuccess]: (state: IEmployee) => ({
+    [restoreEmployeeSuccess]: (state: IEmployee, { payload }: any) => ({
       ...state,
       isRestoreEmployeeRequest: false,
       isRestoreEmployeeSuccess: true,
       isRestoreEmployeeFailure: false,
+      data: state.data.filter((elem: any) => elem.id !== payload.id),
     }),
     [restoreEmployeeFailure]: (state: IEmployee, { payload }: any) => ({
       ...state,
