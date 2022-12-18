@@ -7,10 +7,13 @@ import moment from "moment";
 import { Box, Card, Typography, Rating, Grid, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import UndoIcon from "@mui/icons-material/Undo";
+
 import { RootState } from "types/iReducer";
 import {
   deleteEmployeeRequest,
   employeeByIdRequest,
+  restoreEmployeeRequest,
 } from "store/employee/action";
 import ProfileImage from "resources/image/profile/girl.png";
 import Dashboard from "component/layout/Dashboard";
@@ -23,9 +26,11 @@ const Employee = () => {
     (state: RootState) => state.employee
   );
 
-  const { id } = Router.query;
   const [value, setValue] = React.useState<number | null>(2);
-  const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+
+  const { id } = Router.query;
+  const employeeStatus = employeeByIdData.endWork;
 
   useEffect(() => {
     dispatch(employeeByIdRequest(id));
@@ -37,6 +42,10 @@ const Employee = () => {
 
   const onDelete = () => {
     dispatch(deleteEmployeeRequest(id));
+  };
+
+  const onRestore = () => {
+    dispatch(restoreEmployeeRequest(id));
   };
 
   return (
@@ -55,16 +64,34 @@ const Employee = () => {
             >
               {employeeByIdData?.firstName} {employeeByIdData.lastName}
               <Box>
-                <IconButton aria-label="edit" color="primary" onClick={onEdit}>
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  aria-label="delete"
-                  color="primary"
-                  onClick={() => setDeleteModal(true)}
-                >
-                  <DeleteIcon />
-                </IconButton>
+                {employeeStatus ? (
+                  <>
+                    <IconButton
+                      color="primary"
+                      size="small"
+                      onClick={() => setOpenModal(true)}
+                    >
+                      <UndoIcon />
+                    </IconButton>
+                  </>
+                ) : (
+                  <>
+                    <IconButton
+                      aria-label="edit"
+                      color="primary"
+                      onClick={onEdit}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      color="primary"
+                      onClick={() => setOpenModal(true)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
+                )}
               </Box>
             </Typography>
             <Box className="d-flex a-center" sx={{ mb: 2 }}>
@@ -149,11 +176,23 @@ const Employee = () => {
           </Grid>
         </Grid>
       </Box>
-      <SimpleModal
-        open={deleteModal}
-        setOpen={setDeleteModal}
-        agree={onDelete}
-      />
+      {employeeStatus ? (
+        <SimpleModal
+          title="Restore employee"
+          body="Do you agree to reinstate the employee?"
+          open={openModal}
+          setOpen={setOpenModal}
+          agree={onRestore}
+        />
+      ) : (
+        <SimpleModal
+          title="Remove employee"
+          body="Do you agree to remove the employee from this job?"
+          open={openModal}
+          setOpen={setOpenModal}
+          agree={onDelete}
+        />
+      )}
     </Card>
   );
 };

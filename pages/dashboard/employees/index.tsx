@@ -75,6 +75,8 @@ const Employees = () => {
         <EmployeeTable data={data} action={Action} />
       </Box>
       <SimpleModal
+        title="Remove employee"
+        body="Do you agree to remove the employee from this job?"
         open={deleteModal}
         setOpen={setDeleteModal}
         agree={onDelete}

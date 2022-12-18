@@ -7,7 +7,7 @@ import {
   DialogContent,
 } from "@mui/material";
 
-const SimpleModal = ({ open, setOpen, agree }) => {
+const SimpleModal = ({ title, body, open, setOpen, agree }) => {
   const onAgree = () => {
     agree();
     setOpen(false);
@@ -21,13 +21,11 @@ const SimpleModal = ({ open, setOpen, agree }) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Do you agree to remove the employee from this job?
+        {title}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Removal of Employees. All employees assigned to this contract shall
-          have such knowledge and experience as will enable them to perform the
-          assigned duties to them.
+          {body}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
