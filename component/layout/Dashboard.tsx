@@ -5,21 +5,22 @@ import Link from "next/link";
 import Image from "next/image";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import {
-  Box,
-  Toolbar,
-  Typography,
-  List,
-  Divider,
-  IconButton,
-  ListItem,
   ListItemButton,
+  FormControl,
+  IconButton,
+  Typography,
+  ListItem,
+  MenuItem,
+  Divider,
+  Toolbar,
+  Button,
+  Select,
+  List,
+  Box,
   ListItemIcon,
   ListItemText,
+  InputLabel,
   Drawer,
-  Button,
-  FormControl,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -59,7 +60,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   flexGrow: 1,
   padding: theme.spacing(3),
   marginTop: `${headerHeight}px`,
-  height: `calc(100vh - ${headerHeight}px)`,
+  minHeight: `calc(100vh - ${headerHeight}px)`,
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -74,7 +75,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   }),
   ...(!open && {
     marginTop: `${headerMinHeight}px`,
-    height: `calc(100vh - ${headerMinHeight}px)`,
+    minHeight: `calc(100vh - ${headerMinHeight}px)`,
   }),
   ...(!open &&
     width &&
@@ -86,7 +87,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open, width }) => ({
-  background: "transparent",
+  background: "white",
   boxShadow: "none",
   borderBottom: "0.5px solid grey",
   color: "black",
@@ -250,19 +251,17 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
                 sx={{
                   width: "100%",
                   mt: 3,
-                  ".css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root":
-                    {
-                      width: "80%",
-                      margin: "0 auto",
-                    },
                 }}
               >
+                <InputLabel id="select-label-company" sx={{ ml: 4 }}>
+                  <div>Company</div>
+                </InputLabel>
                 <Select
                   value={activeCompany}
                   variant="standard"
                   onChange={handleChangeCompany}
                   displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
+                  labelId="select-label-company"
                   sx={{ m: "auto", minWidth: 170 }}
                 >
                   {allCompanyData.map((company: any) => {
