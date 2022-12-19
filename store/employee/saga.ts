@@ -38,7 +38,7 @@ function* createEmployee({ payload }: any) {
 function* editEmployee({ payload }: any) {
   try {
     const response: AxiosResponse = yield call(() =>
-      instance.post(`/api/employee/edit${1}`, payload)
+      instance.put(`/api/employee/edit/${payload.id}`, payload.values)
     );
 
     yield put(editEmployeeSuccess(response.data));
