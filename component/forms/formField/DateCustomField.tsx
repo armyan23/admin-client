@@ -12,7 +12,7 @@ const DateCustomField = ({
   errors,
   touched,
 }: any) => {
-  const [value, setValue] = useState<Dayjs | null>(null);
+  const [value, setValue] = useState<Dayjs | null>(values[name]);
   const handleChangeValues = (createdDate: Dayjs | null) => {
     setValue(createdDate);
     values[name] = createdDate;

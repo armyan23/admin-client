@@ -23,7 +23,7 @@ import { loginAction } from "config/instance";
 import { postLoginRequest } from "store/auth/action";
 import { RootState } from "types/iReducer";
 import { ILogin } from "types/iForm";
-import PasswordCustomField from "component/formField/PasswordCustomField";
+import PasswordCustomField from "component/forms/formField/PasswordCustomField";
 import AuthLayout from "component/layout/AuthLayout";
 
 const initialLogin: ILogin = {

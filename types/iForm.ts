@@ -1,5 +1,3 @@
-import { date } from "yup";
-
 export interface IRegister {
   firstName: string;
   lastName: string;

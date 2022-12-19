@@ -22,7 +22,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { RootState } from "types/iReducer";
 import { IRegister } from "types/iForm";
 import { postRegisterRequest } from "store/auth/action";
-import PasswordCustomField from "component/formField/PasswordCustomField";
+import PasswordCustomField from "component/forms/formField/PasswordCustomField";
 import AuthLayout from "component/layout/AuthLayout";
 
 const initialLogin: IRegister = {

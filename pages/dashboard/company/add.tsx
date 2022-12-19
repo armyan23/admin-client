@@ -25,7 +25,7 @@ import { postCreateCompanyRequest } from "store/company/action";
 import { RootState } from "types/iReducer";
 import { ICreateCompany } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
-import DateCustomField from "component/formField/DateCustomField";
+import DateCustomField from "component/forms/formField/DateCustomField";
 
 const initialCreateCompany: ICreateCompany = {
   nameCompany: "",
