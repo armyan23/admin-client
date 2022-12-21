@@ -12,9 +12,10 @@ import {
 import { ITypeMap } from "types/iUtils";
 import { employeeTypeTable } from "util/utils";
 import ProfileImage from "component/profile/ProfileImage";
+import Empty from "component/ui/Empty";
 
 const EmployeesTable = ({ action, data }: any) => {
-  return (
+  return data.length ? (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -55,6 +56,8 @@ const EmployeesTable = ({ action, data }: any) => {
         </TableBody>
       </Table>
     </TableContainer>
+  ) : (
+    <Empty />
   );
 };
 

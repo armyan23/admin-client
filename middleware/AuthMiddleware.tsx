@@ -5,7 +5,7 @@ import usePreviousList from "useHooks/usePreviousList";
 import { RootState } from "types/iReducer";
 import { putHeadersCompany, putHeadersToken } from "config/instance";
 import { postIsAuthenticatedRequest } from "store/auth/action";
-import LoadingPage from "component/loading/LoadingPage";
+import LoadingPage from "component/ui/loading/LoadingPage";
 
 const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
   children,

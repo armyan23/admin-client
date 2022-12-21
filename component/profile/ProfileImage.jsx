@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Male from "resources/image/profile/male.jpg";
-import Female from "resources/image/profile/female.jpg";
+import Male from "public/assets/image/profile/male.jpg";
+import Female from "public/assets/image/profile/female.jpg";
 
 const ProfileImage = ({ url, type, width = 250, height = 250 }) => {
   return (

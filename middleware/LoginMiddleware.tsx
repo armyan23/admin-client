@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LoadingPage from "component/loading/LoadingPage";
+import LoadingPage from "component/ui/loading/LoadingPage";
 
 const LoginMiddleware: ({ children }: { children: any }) => JSX.Element = ({
   children,
