@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Button,
   FormControl,
   FormHelperText,
   Grid,
@@ -21,8 +22,11 @@ import DateCustomField from "component/forms/formField/DateCustomField";
 
 const EmployeeForms = ({
   onFinish,
+  submitText = "Create employee",
   initialState = initialEmployeeForm,
   loading,
+  onCancel,
+  cancelText,
 }) => {
   return (
     <Formik
@@ -187,7 +191,7 @@ const EmployeeForms = ({
                   values={values}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   id="patronymic"
                   name="patronymic"
@@ -250,7 +254,7 @@ const EmployeeForms = ({
                   error={!!(errors.city && touched.city && errors.city)}
                 />
               </Grid>
-              <Grid item sm={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   id="streetAddress"
                   name="streetAddress"
@@ -344,6 +348,11 @@ const EmployeeForms = ({
             {/*  <ImageCustomField />*/}
             {/*</Grid>*/}
             <Grid item xs={12} className="d-flex j-end">
+              {cancelText && (
+                <Button sx={{ mt: 3, mb: 2, mr: 2 }} onClick={onCancel}>
+                  {cancelText}
+                </Button>
+              )}
               <LoadingButton
                 loading={loading}
                 type="submit"
@@ -352,7 +361,7 @@ const EmployeeForms = ({
                 sx={{ mt: 3, mb: 2 }}
                 variant="contained"
               >
-                Create employee
+                {submitText}
               </LoadingButton>
             </Grid>
           </Box>

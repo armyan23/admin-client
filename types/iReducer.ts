@@ -62,6 +62,14 @@ export interface IAuth {
   errorMessage: string;
 }
 
+export interface IProfile {
+  isProfileDataRequest: boolean;
+  isProfileDataSuccess: boolean;
+  isProfileDataFailure: boolean;
+  profileData: object;
+  errorMessage: string;
+}
+
 export interface IExample {
   data: number;
   errorMessage: string;
