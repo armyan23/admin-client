@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Card } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import { FormikValues } from "formik";
 import { useSnackbar } from "notistack";
 
@@ -74,13 +74,14 @@ const EmployeeEdit = () => {
 
   useEffect(() => {
     if (isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false) {
-      enqueueSnackbar(successMessage, {
+      enqueueSnackbar("Employee successfully updated", {
         variant: "success",
         anchorOrigin: {
           vertical: "top",
           horizontal: "center",
         },
       });
+      Router.push(`/dashboard/employees/${id}`);
       setLoading(false);
     }
   }, [
@@ -103,6 +104,10 @@ const EmployeeEdit = () => {
     }
   }, [errorMessage, isEditEmployeeFailure, prevIsEditEmployeeFailure]);
 
+  const onCancel = () => {
+    Router.push("/dashboard/employees");
+  };
+
   const onFinish = (values: FormikValues) => {
     setLoading(true);
     dispatch(editEmployeeRequest({ values, id }));
@@ -111,12 +116,17 @@ const EmployeeEdit = () => {
   return (
     <Card>
       <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
-        Id - {id}
+        <Typography component="h1" variant="h5">
+          Edit employee information
+        </Typography>
         {employeeData ? (
           <EmployeeForms
             onFinish={onFinish}
             initialState={employeeData}
             loading={loading}
+            onCancel={onCancel}
+            cancelText="cancel"
+            submitText="Save"
           />
         ) : (
           <Box>Loading</Box>
