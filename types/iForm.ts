@@ -33,7 +33,7 @@ export interface ICreateEmployee {
   country: string;
   city: string;
   streetAddress: string;
-  image: any;
+  image: string;
   birthDate: Date | null | number;
   startWork: Date | null | number;
   endWork: Date | null | number;

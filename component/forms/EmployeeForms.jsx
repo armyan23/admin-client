@@ -20,14 +20,20 @@ import { typeGender } from "util/utils";
 import { initialEmployeeForm } from "util/Initial/InitialValue";
 import DateCustomField from "component/forms/formField/DateCustomField";
 
+import Router from "next/router";
+
 const EmployeeForms = ({
+  children,
   onFinish,
+  loading,
+  cancelText = false,
   submitText = "Create employee",
   initialState = initialEmployeeForm,
-  loading,
-  onCancel,
-  cancelText,
 }) => {
+  const onCancel = () => {
+    Router.push("/dashboard/employees");
+  };
+
   return (
     <Formik
       initialValues={initialState}
@@ -343,14 +349,11 @@ const EmployeeForms = ({
                 />
               </Grid>
             </Grid>
-
-            {/*<Grid item sm={12}>*/}
-            {/*  <ImageCustomField />*/}
-            {/*</Grid>*/}
+            {children}
             <Grid item xs={12} className="d-flex j-end">
               {cancelText && (
                 <Button sx={{ mt: 3, mb: 2, mr: 2 }} onClick={onCancel}>
-                  {cancelText}
+                  Cancel
                 </Button>
               )}
               <LoadingButton

@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 import { FormikValues } from "formik";
 import { useSnackbar } from "notistack";
 
@@ -11,6 +11,7 @@ import { postCreateEmployeeRequest } from "store/employee/action";
 import { RootState } from "types/iReducer";
 import Dashboard from "component/layout/Dashboard";
 import EmployeeForms from "component/forms/EmployeeForms";
+import ImageCustomField from "component/forms/formField/ImageCustomField";
 
 const AddEmployees = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const AddEmployees = () => {
     ]);
 
   const [loading, setLoading] = useState(false);
+  const [photoData, setPhotoData] = useState();
 
   useEffect(() => {
     if (isCreateEmployeeSuccess && prevIsCreateEmployeeSuccess === false) {
@@ -71,7 +73,15 @@ const AddEmployees = () => {
 
   const onFinish = (values: FormikValues) => {
     setLoading(true);
-    dispatch(postCreateEmployeeRequest(values));
+    const data = new FormData();
+    if (photoData) {
+      data.append("image", photoData);
+    }
+    for (const i in values) {
+      data.append(i, values[i]);
+    }
+
+    dispatch(postCreateEmployeeRequest(data));
   };
 
   return (
@@ -81,7 +91,15 @@ const AddEmployees = () => {
           <Typography component="h1" variant="h5">
             Create Employee
           </Typography>
-          <EmployeeForms onFinish={onFinish} loading={loading} />
+          <EmployeeForms onFinish={onFinish} loading={loading}>
+            {/* Employee Image */}
+            <Grid item sm={12}>
+              <ImageCustomField
+                photoData={photoData}
+                setPhotoData={setPhotoData}
+              />
+            </Grid>
+          </EmployeeForms>
         </Box>
       </Card>
     </div>

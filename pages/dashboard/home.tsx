@@ -1,5 +1,6 @@
+import React from "react";
 import { NextPage } from "next";
-import { Button } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { postIsAuthenticatedRequest } from "store/auth/action";
 import Dashboard from "component/layout/Dashboard";
@@ -12,10 +13,14 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>My page</h1>
-      <Button onClick={getAuth}>Is Authenticated</Button>
-    </div>
+    <Card>
+      <Box sx={{ p: 2 }}>
+        <Typography component="h1" variant="h5">
+          Home
+        </Typography>
+        <Button onClick={getAuth}>Is Authenticated</Button>
+      </Box>
+    </Card>
   );
 };
 

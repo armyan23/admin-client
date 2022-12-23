@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 import { FormikValues } from "formik";
 import { useSnackbar } from "notistack";
 
@@ -15,6 +15,7 @@ import { RootState } from "types/iReducer";
 import { ICreateEmployee } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
 import EmployeeForms from "component/forms/EmployeeForms";
+import ImageCustomField from "component/forms/formField/ImageCustomField";
 
 const EmployeeEdit = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const EmployeeEdit = () => {
     false
   );
   const [loading, setLoading] = useState(false);
+  const [photoData, setPhotoData] = useState();
 
   const { id } = Router.query;
 
@@ -104,13 +106,17 @@ const EmployeeEdit = () => {
     }
   }, [errorMessage, isEditEmployeeFailure, prevIsEditEmployeeFailure]);
 
-  const onCancel = () => {
-    Router.push("/dashboard/employees");
-  };
-
   const onFinish = (values: FormikValues) => {
     setLoading(true);
-    dispatch(editEmployeeRequest({ values, id }));
+    const data = new FormData();
+    if (photoData) {
+      data.append("image", photoData);
+    }
+    for (const i in values) {
+      data.append(i, values[i]);
+    }
+
+    dispatch(editEmployeeRequest({ data, id }));
   };
 
   return (
@@ -124,10 +130,23 @@ const EmployeeEdit = () => {
             onFinish={onFinish}
             initialState={employeeData}
             loading={loading}
-            onCancel={onCancel}
-            cancelText="cancel"
+            cancelText={true}
             submitText="Save"
-          />
+          >
+            <Grid item sm={12}>
+              <ImageCustomField
+                photoData={photoData}
+                setPhotoData={setPhotoData}
+              />
+              {employeeData?.image && !photoData && (
+                <img
+                  src={employeeData?.image}
+                  alt={"employee-image"}
+                  height={100}
+                />
+              )}
+            </Grid>
+          </EmployeeForms>
         ) : (
           <Box>Loading</Box>
         )}

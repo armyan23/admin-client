@@ -11,7 +11,7 @@ export const initialEmployeeForm: ICreateEmployee = {
   gender: "",
   country: "",
   city: "",
-  image: null,
+  image: "",
   streetAddress: "",
   birthDate: null,
   startWork: null,
