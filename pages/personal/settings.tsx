@@ -1,12 +1,24 @@
 import { NextPage } from "next";
 import Dashboard from "component/layout/Dashboard";
+import { Box, Card, Typography } from "@mui/material";
+import Empty from "component/ui/Empty";
+import React from "react";
 
-const settings = () => {
-  return <div>Settings</div>;
+const Settings = () => {
+  return (
+    <Card>
+      <Box sx={{ p: 2 }}>
+        <Typography component="h1" variant="h5">
+          Settings
+        </Typography>
+        <Empty />
+      </Box>
+    </Card>
+  );
 };
 
-settings.getLayout = function getLayout(page: NextPage) {
+Settings.getLayout = function getLayout(page: NextPage) {
   return <Dashboard>{page}</Dashboard>;
 };
 
-export default settings;
+export default Settings;

@@ -23,6 +23,7 @@ import { RootState } from "types/iReducer";
 import { ITypeMap } from "types/iUtils";
 import { companyTypeTable } from "util/utils";
 import Dashboard from "component/layout/Dashboard";
+import Empty from "component/ui/Empty";
 
 const Company = () => {
   const dispatch = useDispatch();
@@ -50,44 +51,52 @@ const Company = () => {
             +
           </Button>
         </div>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                {companyTypeTable.map((elem: ITypeMap) => (
-                  <TableCell key={elem.key}>{elem.name}</TableCell>
-                ))}
+        {companyTypeTable.length ? (
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              size="small"
+              aria-label="a dense table"
+            >
+              <TableHead>
+                <TableRow>
+                  {companyTypeTable.map((elem: ITypeMap) => (
+                    <TableCell key={elem.key}>{elem.name}</TableCell>
+                  ))}
 
-                <TableCell>Info</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {allCompanyData.map((item: any) => (
-                <TableRow
-                  key={item.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="item">
-                    {item.nameCompany}
-                  </TableCell>
-                  <TableCell>{item.phoneNumber}</TableCell>
-                  <TableCell>{item.typeCompany}</TableCell>
-                  <TableCell>
-                    {dayjs(item.createdDate).format("DD/MM/YYYY")}
-                  </TableCell>
-                  <TableCell>
-                    <IconButton
-                      size="small"
-                      onClick={() => selectByCompanyId(item.id)}
-                    >
-                      <InfoIcon fontSize="inherit" />
-                    </IconButton>
-                  </TableCell>
+                  <TableCell>Info</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {allCompanyData.map((item: any) => (
+                  <TableRow
+                    key={item.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="item">
+                      {item.nameCompany}
+                    </TableCell>
+                    <TableCell>{item.phoneNumber}</TableCell>
+                    <TableCell>{item.typeCompany}</TableCell>
+                    <TableCell>
+                      {dayjs(item.createdDate).format("DD/MM/YYYY")}
+                    </TableCell>
+                    <TableCell>
+                      <IconButton
+                        size="small"
+                        onClick={() => selectByCompanyId(item.id)}
+                      >
+                        <InfoIcon fontSize="inherit" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <Empty />
+        )}
       </Box>
     </Card>
   );
