@@ -5,7 +5,7 @@ export const profileDataRequest: any = createAction("PROFILE_DATA_REQUEST");
 export const profileDataSuccess: any = createAction("PROFILE_DATA_SUCCESS");
 export const profileDataFailure: any = createAction("PROFILE_DATA_FAILURE");
 
-// Profile data request
+// Update user details actions
 export const updateUserDetailsRequest: any = createAction(
   "UPDATE_USER_DETAILS_REQUEST"
 );

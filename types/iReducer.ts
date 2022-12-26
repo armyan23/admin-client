@@ -1,4 +1,5 @@
 import rootReducer from "store/rootReducer";
+import { IUserDetails } from "./iForm";
 
 export interface ICompany {
   isCreateCompanyRequest: boolean;
@@ -33,7 +34,6 @@ export interface IEmployee {
   isDeleteEmployeeRequest: boolean;
   isDeleteEmployeeSuccess: boolean;
   isDeleteEmployeeFailure: boolean;
-
   isRestoreEmployeeRequest: boolean;
   isRestoreEmployeeSuccess: boolean;
   isRestoreEmployeeFailure: boolean;
@@ -66,7 +66,11 @@ export interface IProfile {
   isProfileDataRequest: boolean;
   isProfileDataSuccess: boolean;
   isProfileDataFailure: boolean;
-  profileData: object;
+  isUpdateUserDetailsRequest: boolean;
+  isUpdateUserDetailsSuccess: boolean;
+  isUpdateUserDetailsFailure: boolean;
+  userDetails: IUserDetails | null;
+  profileData: object | null;
   errorMessage: string;
 }
 

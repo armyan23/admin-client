@@ -18,7 +18,8 @@ export const initialValue: IProfile = {
   isUpdateUserDetailsRequest: false,
   isUpdateUserDetailsSuccess: false,
   isUpdateUserDetailsFailure: false,
-  profileData: {},
+  profileData: null,
+  userDetails: null,
   errorMessage: "",
 };
 
@@ -36,7 +37,8 @@ const profileReducer = handleActions(
       isProfileDataRequest: false,
       isProfileDataSuccess: true,
       isProfileDataFailure: false,
-      data: payload,
+      userDetails: payload.details,
+      profileData: payload,
     }),
     [profileDataFailure]: (state: IProfile, { payload }: any) => ({
       ...state,

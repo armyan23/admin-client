@@ -14,7 +14,7 @@ import Dashboard from "component/layout/Dashboard";
 const MyProfile = () => {
   const dispatch = useDispatch();
 
-  const { isProfileDataSuccess, data }: any = useSelector(
+  const { isProfileDataSuccess, profileData }: any = useSelector(
     (state: RootState) => state.profile
   );
 
@@ -22,13 +22,13 @@ const MyProfile = () => {
     isProfileDataSuccess,
   ]);
 
-  const [profileData, setProfileData] = useState<any>({});
+  const [profileInfo, setProfileData] = useState<any>({});
 
   useEffect(() => {
     if (isProfileDataSuccess && prevIsProfileDataSuccess === false) {
-      setProfileData(data);
+      setProfileData(profileData);
     }
-  }, [data, isProfileDataSuccess, prevIsProfileDataSuccess]);
+  }, [profileData, isProfileDataSuccess, prevIsProfileDataSuccess]);
 
   useEffect(() => {
     dispatch(profileDataRequest());
@@ -41,7 +41,7 @@ const MyProfile = () => {
   return (
     <Card>
       <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
-        {data ? (
+        {profileData ? (
           <Grid
             container
             rowSpacing={1}
@@ -49,8 +49,8 @@ const MyProfile = () => {
           >
             <Grid item xs="auto">
               <ProfileImage
-                type={data.details.gender}
-                url={data.details?.image}
+                type={profileData.details.gender}
+                url={profileData.details?.image}
               />
             </Grid>
             <Grid item xs>
@@ -60,7 +60,7 @@ const MyProfile = () => {
                 className="d-flex j-between"
                 sx={{ mb: 2 }}
               >
-                {data.details?.firstName} {data.details.lastName}
+                {profileData.details?.firstName} {profileData.details.lastName}
                 <Box>
                   <IconButton
                     aria-label="edit"
@@ -82,13 +82,13 @@ const MyProfile = () => {
                     Phone number:
                   </Grid>
                   <Grid item xs={7}>
-                    {data.details.phoneNumber}
+                    {profileData.details.phoneNumber}
                   </Grid>
                   <Grid item xs={5}>
                     Email:
                   </Grid>
                   <Grid item xs={7}>
-                    {profileData.email}
+                    {profileInfo.email}
                   </Grid>
                 </Grid>
               </Box>
@@ -106,25 +106,25 @@ const MyProfile = () => {
                     Birth date:
                   </Grid>
                   <Grid item xs={7}>
-                    {moment(data.details.birthDate).format("MM/DD/YYYY")}
+                    {moment(profileData.details.birthDate).format("MM/DD/YYYY")}
                   </Grid>
                   <Grid item xs={5}>
                     Gender:
                   </Grid>
                   <Grid item xs={7}>
-                    {data.details.gender}
+                    {profileData.details.gender}
                   </Grid>
                   <Grid item xs={5}>
                     Country:
                   </Grid>
                   <Grid item xs={7}>
-                    {data.details.country}
+                    {profileData.details.country}
                   </Grid>
                   <Grid item xs={5}>
                     City:
                   </Grid>
                   <Grid item xs={7}>
-                    {data.details.city}
+                    {profileData.details.city}
                   </Grid>
                 </Grid>
               </Box>
