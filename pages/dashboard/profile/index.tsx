@@ -35,7 +35,7 @@ const MyProfile = () => {
   }, [dispatch]);
 
   const onEdit = () => {
-    Router.push(`/dashboard/employees/profile/edit`);
+    Router.push(`/personal/settings`);
   };
 
   return (

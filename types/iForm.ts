@@ -6,6 +6,16 @@ export interface IRegister {
   password: string;
 }
 
+export interface IUserDetails {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  phoneNumber: string;
+  country: string;
+  city: string;
+  birthDate: Date | null | number;
+}
+
 export interface ILogin {
   email: string;
   password: string;
