@@ -15,3 +15,14 @@ export const updateUserDetailsSuccess: any = createAction(
 export const updateUserDetailsFailure: any = createAction(
   "UPDATE_USER_DETAILS_FAILURE"
 );
+
+// Delete user image actions
+export const deleteUserImageRequest: any = createAction(
+  "DELETE_USER_IMAGE_REQUEST"
+);
+export const deleteUserImageSuccess: any = createAction(
+  "DELETE_USER_IMAGE_SUCCESS"
+);
+export const deleteUserImageFailure: any = createAction(
+  "DELETE_USER_IMAGE_FAILURE"
+);

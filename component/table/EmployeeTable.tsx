@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ITypeMap } from "types/iUtils";
 import { employeeTypeTable } from "util/utils";
-import ProfileImage from "component/profile/ProfileImage";
+import ProfileImage from "component/ui/image/ProfileImage";
 import Empty from "component/ui/Empty";
 
 const EmployeesTable = ({ action, data }: any) => {

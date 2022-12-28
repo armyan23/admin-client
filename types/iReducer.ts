@@ -69,6 +69,9 @@ export interface IProfile {
   isUpdateUserDetailsRequest: boolean;
   isUpdateUserDetailsSuccess: boolean;
   isUpdateUserDetailsFailure: boolean;
+  isDeleteUserImageRequest: boolean;
+  isDeleteUserImageSuccess: boolean;
+  isDeleteUserImageFailure: boolean;
   userDetails: IUserDetails | null;
   profileData: object | null;
   errorMessage: string;

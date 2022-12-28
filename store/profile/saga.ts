@@ -6,6 +6,9 @@ import {
   updateUserDetailsRequest,
   updateUserDetailsSuccess,
   updateUserDetailsFailure,
+  deleteUserImageRequest,
+  deleteUserImageSuccess,
+  deleteUserImageFailure,
 } from "./actions";
 import { AxiosResponse } from "axios";
 import { call } from "redux-saga/effects";
@@ -37,7 +40,21 @@ function* updateUserDetails({ payload }: any) {
   }
 }
 
+function* deleteUserImage() {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.delete(`/api/profile/delete-image`)
+    );
+
+    yield put(deleteUserImageSuccess(response.data.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(deleteUserImageFailure(data.message));
+  }
+}
+
 export default function* profile() {
   yield takeLatest(profileDataRequest, profileData);
   yield takeLatest(updateUserDetailsRequest, updateUserDetails);
+  yield takeLatest(deleteUserImageRequest, deleteUserImage);
 }

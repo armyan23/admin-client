@@ -15,7 +15,7 @@ import {
   employeeByIdRequest,
   restoreEmployeeRequest,
 } from "store/employee/action";
-import ProfileImage from "component/profile/ProfileImage";
+import ProfileImage from "component/ui/image/ProfileImage";
 import Dashboard from "component/layout/Dashboard";
 import SimpleModal from "component/modal/SimpleModal";
 

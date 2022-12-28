@@ -8,7 +8,7 @@ import moment from "moment/moment";
 import { RootState } from "types/iReducer";
 import { profileDataRequest } from "store/profile/actions";
 import usePreviousList from "useHooks/usePreviousList";
-import ProfileImage from "component/profile/ProfileImage";
+import ProfileImage from "component/ui/image/ProfileImage";
 import Dashboard from "component/layout/Dashboard";
 
 const MyProfile = () => {

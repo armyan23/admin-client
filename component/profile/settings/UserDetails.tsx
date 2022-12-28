@@ -20,11 +20,13 @@ import SendIcon from "@mui/icons-material/Send";
 import { useSnackbar } from "notistack";
 import {
   profileDataRequest,
+  deleteUserImageRequest,
   updateUserDetailsRequest,
 } from "store/profile/actions";
 import { typeGender } from "util/utils";
 import { RootState } from "types/iReducer";
 import usePreviousList from "useHooks/usePreviousList";
+import EditImage from "component/ui/image/EditImage";
 import DateCustomField from "component/forms/formField/DateCustomField";
 import ImageCustomField from "component/forms/formField/ImageCustomField";
 
@@ -37,15 +39,23 @@ const UserDetails = () => {
     isUpdateUserDetailsRequest,
     isUpdateUserDetailsSuccess,
     isUpdateUserDetailsFailure,
+    isDeleteUserImageSuccess,
+    isDeleteUserImageFailure,
     errorMessage,
     userDetails,
   } = useSelector((state: RootState) => state.profile);
 
-  const [prevIsUpdateUserDetailsSuccess, prevIsUpdateUserDetailsFailure] =
-    usePreviousList<boolean>([
-      isUpdateUserDetailsSuccess,
-      isUpdateUserDetailsFailure,
-    ]);
+  const [
+    prevIsUpdateUserDetailsSuccess,
+    prevIsUpdateUserDetailsFailure,
+    prevIsDeleteUserImageSuccess,
+    prevIsDeleteUserImageFailure,
+  ] = usePreviousList<boolean>([
+    isUpdateUserDetailsSuccess,
+    isUpdateUserDetailsFailure,
+    isDeleteUserImageSuccess,
+    isDeleteUserImageFailure,
+  ]);
 
   const [photoData, setPhotoData] = useState();
 
@@ -57,28 +67,37 @@ const UserDetails = () => {
 
   useEffect(() => {
     if (
-      isUpdateUserDetailsSuccess &&
-      prevIsUpdateUserDetailsSuccess === false
+      (isUpdateUserDetailsSuccess &&
+        prevIsUpdateUserDetailsSuccess === false) ||
+      (isDeleteUserImageSuccess && prevIsDeleteUserImageSuccess === false)
     ) {
-      enqueueSnackbar("Profile details successfully updated", {
-        variant: "success",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
-        },
-        autoHideDuration: 1000,
-      });
+      enqueueSnackbar(
+        isUpdateUserDetailsSuccess
+          ? "Profile details successfully updated"
+          : "Image successfully deleted",
+        {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+          autoHideDuration: 1000,
+        }
+      );
     }
   }, [
     enqueueSnackbar,
     isUpdateUserDetailsSuccess,
     prevIsUpdateUserDetailsSuccess,
+    isDeleteUserImageSuccess,
+    prevIsDeleteUserImageSuccess,
   ]);
 
   useEffect(() => {
     if (
-      isUpdateUserDetailsFailure &&
-      prevIsUpdateUserDetailsFailure === false
+      (isUpdateUserDetailsFailure &&
+        prevIsUpdateUserDetailsFailure === false) ||
+      (isDeleteUserImageFailure && prevIsDeleteUserImageFailure === false)
     ) {
       enqueueSnackbar(errorMessage, {
         variant: "error",
@@ -93,9 +112,16 @@ const UserDetails = () => {
     errorMessage,
     isUpdateUserDetailsFailure,
     prevIsUpdateUserDetailsFailure,
+    isDeleteUserImageFailure,
+    prevIsDeleteUserImageFailure,
   ]);
+
   const onCancel = () => {
     Router.push("/dashboard/profile");
+  };
+
+  const onImageDelete = () => {
+    dispatch(deleteUserImageRequest());
   };
 
   const onFinish = (values: FormikValues) => {
@@ -287,6 +313,12 @@ const UserDetails = () => {
                   photoData={photoData}
                   setPhotoData={setPhotoData}
                 />
+                {userDetails?.image && !photoData && (
+                  <EditImage
+                    imageUrl={userDetails?.image}
+                    onDelete={onImageDelete}
+                  />
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12} className="d-flex j-end">

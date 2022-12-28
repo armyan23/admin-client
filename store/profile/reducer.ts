@@ -7,6 +7,9 @@ import {
   updateUserDetailsRequest,
   updateUserDetailsSuccess,
   updateUserDetailsFailure,
+  deleteUserImageRequest,
+  deleteUserImageSuccess,
+  deleteUserImageFailure,
 } from "./actions";
 
 export const initialValue: IProfile = {
@@ -18,6 +21,10 @@ export const initialValue: IProfile = {
   isUpdateUserDetailsRequest: false,
   isUpdateUserDetailsSuccess: false,
   isUpdateUserDetailsFailure: false,
+  // update user details
+  isDeleteUserImageRequest: false,
+  isDeleteUserImageSuccess: false,
+  isDeleteUserImageFailure: false,
   profileData: null,
   userDetails: null,
   errorMessage: "",
@@ -65,6 +72,27 @@ const profileReducer = handleActions(
       isUpdateUserDetailsRequest: false,
       isUpdateUserDetailsSuccess: false,
       isUpdateUserDetailsFailure: true,
+      errorMessage: payload,
+    }),
+    // Delete user image
+    [deleteUserImageRequest]: (state: IProfile) => ({
+      ...state,
+      isDeleteUserImageRequest: true,
+      isDeleteUserImageSuccess: false,
+      isDeleteUserImageFailure: false,
+    }),
+    [deleteUserImageSuccess]: (state: IProfile) => ({
+      ...state,
+      isDeleteUserImageRequest: false,
+      isDeleteUserImageSuccess: true,
+      isDeleteUserImageFailure: false,
+      userDetails: { ...state.userDetails, image: null },
+    }),
+    [deleteUserImageFailure]: (state: IProfile, { payload }: any) => ({
+      ...state,
+      isDeleteUserImageRequest: false,
+      isDeleteUserImageSuccess: false,
+      isDeleteUserImageFailure: true,
       errorMessage: payload,
     }),
   },

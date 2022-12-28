@@ -12,6 +12,7 @@ export interface IUserDetails {
   gender: string;
   phoneNumber: string;
   country: string;
+  image: string;
   city: string;
   birthDate: Date | null | number;
 }
