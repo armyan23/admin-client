@@ -16,6 +16,17 @@ export const editEmployeeRequest: any = createAction("EDIT_EMPLOYEE_REQUEST");
 export const editEmployeeSuccess: any = createAction("EDIT_EMPLOYEE_SUCCESS");
 export const editEmployeeFailure: any = createAction("EDIT_EMPLOYEE_FAILURE");
 
+// Delete employee image action
+export const deleteEmployeeImageRequest: any = createAction(
+  "DELETE_EMPLOYEE_IMAGE_REQUEST"
+);
+export const deleteEmployeeImageSuccess: any = createAction(
+  "DELETE_EMPLOYEE_IMAGE_SUCCESS"
+);
+export const deleteEmployeeImageFailure: any = createAction(
+  "DELETE_EMPLOYEE_IMAGE_FAILURE"
+);
+
 // Get employee action
 export const getEmployeesRequest: any = createAction("GET_EMPLOYEES_REQUEST");
 export const getEmployeesSuccess: any = createAction("GET_EMPLOYEES_SUCCESS");

@@ -72,7 +72,7 @@ const UserDetails = () => {
       (isDeleteUserImageSuccess && prevIsDeleteUserImageSuccess === false)
     ) {
       enqueueSnackbar(
-        isUpdateUserDetailsSuccess
+        isUpdateUserDetailsSuccess && prevIsUpdateUserDetailsSuccess === false
           ? "Profile details successfully updated"
           : "Image successfully deleted",
         {

@@ -25,6 +25,9 @@ export interface IEmployee {
   isEditEmployeeRequest: boolean;
   isEditEmployeeSuccess: boolean;
   isEditEmployeeFailure: boolean;
+  isDeleteEmployeeImageRequest: boolean;
+  isDeleteEmployeeImageSuccess: boolean;
+  isDeleteEmployeeImageFailure: boolean;
   isGetEmployeesRequest: boolean;
   isGetEmployeesSuccess: boolean;
   isGetEmployeesFailure: boolean;

@@ -7,6 +7,9 @@ import {
   editEmployeeRequest,
   editEmployeeSuccess,
   editEmployeeFailure,
+  deleteEmployeeImageRequest,
+  deleteEmployeeImageSuccess,
+  deleteEmployeeImageFailure,
   getEmployeesRequest,
   getEmployeesSuccess,
   getEmployeesFailure,
@@ -45,6 +48,19 @@ function* editEmployee({ payload }: any) {
   } catch (err: any) {
     const { data } = err.response;
     yield put(editEmployeeFailure(data.message));
+  }
+}
+
+function* deleteEmployeeImage({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.delete(`/api/employee/delete-image/${payload}`)
+    );
+
+    yield put(deleteEmployeeImageSuccess(response.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(deleteEmployeeImageFailure(data.message));
   }
 }
 
@@ -103,6 +119,7 @@ function* restoreEmployee({ payload }: any) {
 export default function* employeeSaga() {
   yield takeLatest(postCreateEmployeeRequest, createEmployee);
   yield takeLatest(editEmployeeRequest, editEmployee);
+  yield takeLatest(deleteEmployeeImageRequest, deleteEmployeeImage);
   yield takeLatest(getEmployeesRequest, getAllEmployees);
   yield takeLatest(employeeByIdRequest, getEmployeeById);
   yield takeLatest(deleteEmployeeRequest, deleteEmployee);

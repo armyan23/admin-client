@@ -6,6 +6,9 @@ import {
   editEmployeeRequest,
   editEmployeeSuccess,
   editEmployeeFailure,
+  deleteEmployeeImageRequest,
+  deleteEmployeeImageSuccess,
+  deleteEmployeeImageFailure,
   getEmployeesRequest,
   getEmployeesSuccess,
   getEmployeesFailure,
@@ -30,6 +33,10 @@ const initialValue: IEmployee = {
   isEditEmployeeRequest: false,
   isEditEmployeeSuccess: false,
   isEditEmployeeFailure: false,
+  //   Delete Employee image
+  isDeleteEmployeeImageRequest: false,
+  isDeleteEmployeeImageSuccess: false,
+  isDeleteEmployeeImageFailure: false,
   //   Get all employees
   isGetEmployeesRequest: false,
   isGetEmployeesSuccess: false,
@@ -93,6 +100,27 @@ const employeeReducer = handleActions(
       isEditEmployeeRequest: false,
       isEditEmployeeSuccess: false,
       isEditEmployeeFailure: true,
+      errorMessage: payload,
+    }),
+    // Edit employee
+    [deleteEmployeeImageRequest]: (state: IEmployee) => ({
+      ...state,
+      isDeleteEmployeeImageRequest: true,
+      isDeleteEmployeeImageSuccess: false,
+      isDeleteEmployeeImageFailure: false,
+    }),
+    [deleteEmployeeImageSuccess]: (state: IEmployee) => ({
+      ...state,
+      isDeleteEmployeeImageRequest: false,
+      isDeleteEmployeeImageSuccess: true,
+      isDeleteEmployeeImageFailure: false,
+      employeeByIdData: { ...state.employeeByIdData, image: null },
+    }),
+    [deleteEmployeeImageFailure]: (state: IEmployee, { payload }: any) => ({
+      ...state,
+      isDeleteEmployeeImageRequest: false,
+      isDeleteEmployeeImageSuccess: false,
+      isDeleteEmployeeImageFailure: true,
       errorMessage: payload,
     }),
     // GET employees

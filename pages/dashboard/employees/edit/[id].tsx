@@ -8,12 +8,14 @@ import { useSnackbar } from "notistack";
 
 import usePreviousList from "useHooks/usePreviousList";
 import {
+  deleteEmployeeImageRequest,
   editEmployeeRequest,
   employeeByIdRequest,
 } from "store/employee/action";
 import { RootState } from "types/iReducer";
 import { ICreateEmployee } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
+import EditImage from "component/ui/image/EditImage";
 import EmployeeForms from "component/forms/EmployeeForms";
 import ImageCustomField from "component/forms/formField/ImageCustomField";
 
@@ -25,6 +27,8 @@ const EmployeeEdit = () => {
     isEmployeeByIdSuccess,
     isEditEmployeeSuccess,
     isEditEmployeeFailure,
+    isDeleteEmployeeImageSuccess,
+    isDeleteEmployeeImageFailure,
     employeeByIdData,
     successMessage,
     errorMessage,
@@ -34,10 +38,14 @@ const EmployeeEdit = () => {
     prevIsEmployeeByIdSuccess,
     prevIsEditEmployeeSuccess,
     prevIsEditEmployeeFailure,
+    prevIsDeleteEmployeeImageSuccess,
+    prevIsDeleteEmployeeImageFailure,
   ] = usePreviousList<boolean>([
     isEmployeeByIdSuccess,
     isEditEmployeeSuccess,
     isEditEmployeeFailure,
+    isDeleteEmployeeImageSuccess,
+    isDeleteEmployeeImageFailure,
   ]);
 
   const [employeeData, setEmployeeData] = useState<ICreateEmployee | false>(
@@ -75,26 +83,42 @@ const EmployeeEdit = () => {
   }, [isEmployeeByIdSuccess, employeeByIdData, prevIsEmployeeByIdSuccess]);
 
   useEffect(() => {
-    if (isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false) {
-      enqueueSnackbar("Employee successfully updated", {
-        variant: "success",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
-        },
-      });
+    if (
+      (isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false) ||
+      (isDeleteEmployeeImageSuccess &&
+        prevIsDeleteEmployeeImageSuccess === false)
+    ) {
+      enqueueSnackbar(
+        isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false
+          ? "Profile details successfully updated"
+          : "Image successfully deleted",
+        {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+        }
+      );
       Router.push(`/dashboard/employees/${id}`);
       setLoading(false);
     }
   }, [
-    isEditEmployeeSuccess,
-    prevIsEditEmployeeSuccess,
     successMessage,
     enqueueSnackbar,
+    isEditEmployeeSuccess,
+    prevIsEditEmployeeSuccess,
+    isDeleteEmployeeImageSuccess,
+    prevIsDeleteEmployeeImageSuccess,
+    id,
   ]);
 
   useEffect(() => {
-    if (isEditEmployeeFailure && prevIsEditEmployeeFailure === false) {
+    if (
+      (isEditEmployeeFailure && prevIsEditEmployeeFailure === false) ||
+      (isDeleteEmployeeImageFailure &&
+        prevIsDeleteEmployeeImageFailure === false)
+    ) {
       enqueueSnackbar(errorMessage, {
         variant: "error",
         anchorOrigin: {
@@ -104,7 +128,18 @@ const EmployeeEdit = () => {
       });
       setLoading(false);
     }
-  }, [errorMessage, isEditEmployeeFailure, prevIsEditEmployeeFailure]);
+  }, [
+    errorMessage,
+    enqueueSnackbar,
+    isDeleteEmployeeImageFailure,
+    isEditEmployeeFailure,
+    prevIsDeleteEmployeeImageFailure,
+    prevIsEditEmployeeFailure,
+  ]);
+
+  const onImageDelete = () => {
+    dispatch(deleteEmployeeImageRequest(id));
+  };
 
   const onFinish = (values: FormikValues) => {
     setLoading(true);
@@ -139,10 +174,9 @@ const EmployeeEdit = () => {
                 setPhotoData={setPhotoData}
               />
               {employeeData?.image && !photoData && (
-                <img
-                  src={employeeData?.image}
-                  alt={"employee-image"}
-                  height={100}
+                <EditImage
+                  imageUrl={employeeData?.image}
+                  onDelete={onImageDelete}
                 />
               )}
             </Grid>

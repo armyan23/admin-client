@@ -24,6 +24,13 @@ a {
     display: grid;
 }
 
+.d-inline {
+    display: inline;
+}
+
+.d-block {
+    display: block;
+}
 
 .j-end {
     justify-content: end;
@@ -58,6 +65,19 @@ a {
 
 .h-7 {
     height: 7rem;
+}
+
+/* Position */
+.p-absolute {
+    position: absolute;
+}
+
+.p-relative {
+    position: relative;
+}
+
+.r-1 {
+    right: 1rem;
 }
 
 @media (prefers-color-scheme: dark) {
