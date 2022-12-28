@@ -282,7 +282,7 @@ const UserDetails = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <ImageCustomField
                   photoData={photoData}
                   setPhotoData={setPhotoData}
