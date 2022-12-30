@@ -8,9 +8,6 @@ import UserDetails from "component/profile/settings/UserDetails";
 const Settings = () => {
   const [value, setValue] = React.useState(1);
 
-  const handleChange = (event: any, newValue: any) => {
-    setValue(newValue);
-  };
   return (
     <Card>
       <Box sx={{ p: 2 }}>
@@ -21,7 +18,10 @@ const Settings = () => {
       <Box sx={{ width: "100%" }}>
         <TabContext value={`${value}`}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <TabList
+              onChange={(_, index: number) => setValue(index)}
+              aria-label="lab API tabs example"
+            >
               <Tab label="Profile details" value="1" />
               <Tab label="Password and security" value="2" />
             </TabList>

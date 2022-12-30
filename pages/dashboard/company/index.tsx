@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import EditIcon from "@mui/icons-material/Edit";
 import { getAllCompaniesRequest } from "store/company/action";
 import { RootState } from "types/iReducer";
 import { ITypeMap } from "types/iUtils";
@@ -32,6 +33,10 @@ const Company = () => {
   useEffect(() => {
     dispatch(getAllCompaniesRequest());
   }, [dispatch]);
+
+  const onEdit = (id: any) => {
+    Router.push(`/dashboard/company/edit/${id}`);
+  };
 
   const selectByCompanyId = (id: any) => {
     Router.push(`/dashboard/company/${id}`);
@@ -82,6 +87,9 @@ const Company = () => {
                       {dayjs(item.createdDate).format("DD/MM/YYYY")}
                     </TableCell>
                     <TableCell>
+                      <IconButton size="small" onClick={() => onEdit(item.id)}>
+                        <EditIcon fontSize="inherit" />
+                      </IconButton>
                       <IconButton
                         size="small"
                         onClick={() => selectByCompanyId(item.id)}

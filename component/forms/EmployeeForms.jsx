@@ -156,7 +156,7 @@ const EmployeeForms = ({
                     value={values.gender}
                   >
                     {typeGender.map((item) => (
-                      <MenuItem key={item.key} value={item.type}>
+                      <MenuItem key={item.key} value={item.name}>
                         {item.name}
                       </MenuItem>
                     ))}

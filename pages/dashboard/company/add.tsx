@@ -23,11 +23,11 @@ import usePreviousList from "useHooks/usePreviousList";
 import { typeCompany } from "util/utils";
 import { postCreateCompanyRequest } from "store/company/action";
 import { RootState } from "types/iReducer";
-import { ICreateCompany } from "types/iForm";
+import { ICompany } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
 import DateCustomField from "component/forms/formField/DateCustomField";
 
-const initialCreateCompany: ICreateCompany = {
+const initialCreateCompany: ICompany = {
   nameCompany: "",
   aboutCompany: "",
   typeCompany: "",
@@ -210,7 +210,7 @@ const AddCompany = () => {
                         }
                       >
                         {typeCompany.map((item) => (
-                          <MenuItem key={item.key} value={item.type}>
+                          <MenuItem key={item.key} value={item.value}>
                             {item.name}
                           </MenuItem>
                         ))}
