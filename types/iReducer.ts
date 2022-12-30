@@ -14,7 +14,7 @@ export interface ICompany {
   isCompanyByIdRequest: boolean;
   isCompanyByIdSuccess: boolean;
   isCompanyByIdFailure: boolean;
-  companyByIdData: object | [];
+  companyByIdData: object | null;
   createCompanyData: object | [];
   allCompanyData: [];
   successMessage: string;

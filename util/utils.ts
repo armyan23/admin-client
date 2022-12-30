@@ -4,12 +4,27 @@ export const typeCompany: ITypeMap[] = [
   {
     key: 1,
     name: "Restaurant",
-    type: "restaurant",
+    value: "restaurant",
   },
   {
     key: 2,
     name: "Store",
-    type: "store",
+    value: "store",
+  },
+  {
+    key: 3,
+    name: "IT",
+    value: "it",
+  },
+  {
+    key: 4,
+    name: "Coffee shop",
+    value: "coffeeShop",
+  },
+  {
+    key: 5,
+    name: "Electronics",
+    value: "electronics",
   },
 ];
 
@@ -17,12 +32,12 @@ export const typeGender: ITypeMap[] = [
   {
     key: 1,
     name: "Male",
-    type: "male",
+    value: "male",
   },
   {
     key: 2,
     name: "Female",
-    type: "female",
+    value: "female",
   },
 ];
 
@@ -30,22 +45,22 @@ export const companyTypeTable: ITypeMap[] = [
   {
     key: 1,
     name: "Name",
-    type: "nameCompany",
+    value: "nameCompany",
   },
   {
     key: 2,
     name: "Phone",
-    type: "phoneNumber",
+    value: "phoneNumber",
   },
   {
     key: 3,
     name: "Type",
-    type: "typeCompany",
+    value: "typeCompany",
   },
   {
     key: 4,
     name: "Created date",
-    type: "createdDate",
+    value: "createdDate",
   },
 ];
 
@@ -53,46 +68,46 @@ export const employeeTypeTable: ITypeMap[] = [
   {
     key: 1,
     name: "Image",
-    type: "image",
+    value: "image",
   },
   {
     key: 2,
     name: "First name",
-    type: "firstName",
+    value: "firstName",
   },
   {
     key: 3,
     name: "Last name",
-    type: "lastName",
+    value: "lastName",
   },
   {
     key: 4,
     name: "Phone",
-    type: "phoneNumber",
+    value: "phoneNumber",
   },
   {
     key: 5,
     name: "Role",
-    type: "role",
+    value: "role",
   },
   {
     key: 6,
     name: "Email",
-    type: "email",
+    value: "email",
   },
   {
     key: 7,
     name: "Gender",
-    type: "gender",
+    value: "gender",
   },
   {
     key: 8,
     name: "Country",
-    type: "country",
+    value: "country",
   },
   {
     key: 9,
     name: "Action",
-    type: "action",
+    value: "action",
   },
 ];

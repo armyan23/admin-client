@@ -22,7 +22,7 @@ export interface ILogin {
   password: string;
 }
 
-export interface ICreateCompany {
+export interface ICompany {
   nameCompany: string;
   aboutCompany: string;
   typeCompany: string;
