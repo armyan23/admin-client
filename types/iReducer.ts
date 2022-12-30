@@ -1,20 +1,23 @@
 import rootReducer from "store/rootReducer";
-import { IUserDetails } from "./iForm";
+import { IUserDetails, ICompanyForm } from "./iForm";
 
-export interface ICompany {
+export interface ICompanyReducer {
   isCreateCompanyRequest: boolean;
   isCreateCompanySuccess: boolean;
   isCreateCompanyFailure: boolean;
   isUpdateCompanyRequest: boolean;
   isUpdateCompanySuccess: boolean;
   isUpdateCompanyFailure: boolean;
+  isDeleteImageCompanyRequest: boolean;
+  isDeleteImageCompanySuccess: boolean;
+  isDeleteImageCompanyFailure: boolean;
   isAllCompanyRequest: boolean;
   isAllCompanySuccess: boolean;
   isAllCompanyFailure: boolean;
   isCompanyByIdRequest: boolean;
   isCompanyByIdSuccess: boolean;
   isCompanyByIdFailure: boolean;
-  companyByIdData: object | null;
+  companyByIdData: ICompanyForm;
   createCompanyData: object | [];
   allCompanyData: [];
   successMessage: string;

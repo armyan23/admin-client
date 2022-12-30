@@ -21,12 +21,12 @@ import { initialCompany } from "util/Initial/InitialValue";
 import DateCustomField from "component/forms/formField/DateCustomField";
 
 type Props = {
-  children: JSX.Element;
+  children?: JSX.Element;
   onFinish: any;
   loading: boolean;
   cancelText: boolean;
   submitText: string;
-  initialState: ICompanyForm;
+  initialState?: ICompanyForm;
 };
 
 const CompanyForms: FC<Props> = ({

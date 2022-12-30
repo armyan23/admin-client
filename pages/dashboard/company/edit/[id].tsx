@@ -88,7 +88,9 @@ const EmployeeEdit = () => {
           },
         }
       );
-      Router.push(`/dashboard/company/${id}`);
+      if (isUpdateCompanySuccess && prevIsUpdateCompanySuccess === false) {
+        Router.push(`/dashboard/company/${id}`);
+      }
     }
   }, [
     id,

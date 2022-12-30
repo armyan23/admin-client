@@ -100,7 +100,9 @@ const EmployeeEdit = () => {
           },
         }
       );
-      Router.push(`/dashboard/employees/${id}`);
+      if (isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false) {
+        Router.push(`/dashboard/employees/${id}`);
+      }
       setLoading(false);
     }
   }, [
@@ -173,9 +175,9 @@ const EmployeeEdit = () => {
                 photoData={photoData}
                 setPhotoData={setPhotoData}
               />
-              {employeeData?.image && !photoData && (
+              {employeeByIdData?.image && !photoData && (
                 <EditImage
-                  imageUrl={employeeData?.image}
+                  imageUrl={employeeByIdData?.image}
                   onDelete={onImageDelete}
                 />
               )}
