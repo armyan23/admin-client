@@ -23,6 +23,7 @@ import { getAllCompaniesRequest } from "store/company/action";
 import { RootState } from "types/iReducer";
 import { ITypeMap } from "types/iUtils";
 import { companyTypeTable } from "util/utils";
+import ProfileImage from "component/ui/image/ProfileImage";
 import Dashboard from "component/layout/Dashboard";
 import Empty from "component/ui/Empty";
 
@@ -78,6 +79,14 @@ const Company = () => {
                     key={item.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
+                    <TableCell component="th" scope="item">
+                      <ProfileImage
+                        type={"company"}
+                        url={item?.image}
+                        width={75}
+                        height={75}
+                      />
+                    </TableCell>
                     <TableCell component="th" scope="item">
                       {item.nameCompany}
                     </TableCell>

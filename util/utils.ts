@@ -44,21 +44,26 @@ export const typeGender: ITypeMap[] = [
 export const companyTypeTable: ITypeMap[] = [
   {
     key: 1,
+    name: "Image",
+    value: "image",
+  },
+  {
+    key: 2,
     name: "Name",
     value: "nameCompany",
   },
   {
-    key: 2,
+    key: 3,
     name: "Phone",
     value: "phoneNumber",
   },
   {
-    key: 3,
+    key: 4,
     name: "Type",
     value: "typeCompany",
   },
   {
-    key: 4,
+    key: 5,
     name: "Created date",
     value: "createdDate",
   },

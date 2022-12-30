@@ -6,6 +6,9 @@ import {
   updateCompanyRequest,
   updateCompanySuccess,
   updateCompanyFailure,
+  deleteImageCompanyRequest,
+  deleteImageCompanySuccess,
+  deleteImageCompanyFailure,
   getAllCompaniesRequest,
   getAllCompaniesSuccess,
   getAllCompaniesFailure,
@@ -13,22 +16,31 @@ import {
   getCompanyByIdSuccess,
   getCompanyByIdFailure,
 } from "./action";
-import { ICompany } from "types/iReducer";
+import { initialCompany } from "util/Initial/InitialValue";
+import { ICompanyReducer } from "types/iReducer";
 
-const initialValue: ICompany = {
+const initialValue: ICompanyReducer = {
+  // Create Company
   isCreateCompanyRequest: false,
   isCreateCompanySuccess: false,
   isCreateCompanyFailure: false,
+  // Update Company
   isUpdateCompanyRequest: false,
   isUpdateCompanySuccess: false,
   isUpdateCompanyFailure: false,
+  // Delete Company
+  isDeleteImageCompanyRequest: false,
+  isDeleteImageCompanySuccess: false,
+  isDeleteImageCompanyFailure: false,
+  // Get all Company
   isAllCompanyRequest: false,
   isAllCompanySuccess: false,
   isAllCompanyFailure: false,
+  // Get Company by ID
   isCompanyByIdRequest: false,
   isCompanyByIdSuccess: false,
   isCompanyByIdFailure: false,
-  companyByIdData: {},
+  companyByIdData: initialCompany,
   createCompanyData: {},
   allCompanyData: [],
   successMessage: "",
@@ -38,13 +50,13 @@ const initialValue: ICompany = {
 const companyReducer = handleActions(
   {
     // Create company
-    [postCreateCompanyRequest]: (state: ICompany) => ({
+    [postCreateCompanyRequest]: (state: ICompanyReducer) => ({
       ...state,
       isCreateCompanyRequest: true,
       isCreateCompanySuccess: false,
       isCreateCompanyFailure: false,
     }),
-    [postCreateCompanySuccess]: (state: ICompany, { payload }: any) => ({
+    [postCreateCompanySuccess]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isCreateCompanyRequest: false,
       isCreateCompanySuccess: true,
@@ -52,7 +64,7 @@ const companyReducer = handleActions(
       createCompanyData: payload,
       successMessage: payload.message,
     }),
-    [postCreateCompanyFailure]: (state: ICompany, { payload }: any) => ({
+    [postCreateCompanyFailure]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isCreateCompanyRequest: false,
       isCreateCompanySuccess: false,
@@ -60,41 +72,65 @@ const companyReducer = handleActions(
       errorMessage: payload,
     }),
     // Update company
-    [updateCompanyRequest]: (state: ICompany) => ({
+    [updateCompanyRequest]: (state: ICompanyReducer) => ({
       ...state,
       isUpdateCompanyRequest: true,
       isUpdateCompanySuccess: false,
       isUpdateCompanyFailure: false,
     }),
-    [updateCompanySuccess]: (state: ICompany, { payload }: any) => ({
+    [updateCompanySuccess]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isUpdateCompanyRequest: false,
       isUpdateCompanySuccess: true,
       isUpdateCompanyFailure: false,
       createCompanyData: payload,
     }),
-    [updateCompanyFailure]: (state: ICompany, { payload }: any) => ({
+    [updateCompanyFailure]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isUpdateCompanyRequest: false,
       isUpdateCompanySuccess: false,
       isUpdateCompanyFailure: true,
       errorMessage: payload,
     }),
+    // Image company
+    [deleteImageCompanyRequest]: (state: ICompanyReducer) => ({
+      ...state,
+      isDeleteImageCompanyRequest: true,
+      isDeleteImageCompanySuccess: false,
+      isDeleteImageCompanyFailure: false,
+    }),
+    [deleteImageCompanySuccess]: (state: ICompanyReducer) => ({
+      ...state,
+      isDeleteImageCompanyRequest: false,
+      isDeleteImageCompanySuccess: true,
+      isDeleteImageCompanyFailure: false,
+      companyByIdData: { ...state.companyByIdData, image: null },
+    }),
+    [deleteImageCompanyFailure]: (
+      state: ICompanyReducer,
+      { payload }: any
+    ) => ({
+      ...state,
+      isDeleteImageCompanyRequest: false,
+      isDeleteImageCompanySuccess: false,
+      isDeleteImageCompanyFailure: true,
+      errorMessage: payload,
+    }),
     // Get all companies
-    [getAllCompaniesRequest]: (state: ICompany) => ({
+    [getAllCompaniesRequest]: (state: ICompanyReducer) => ({
       ...state,
       isAllCompanyRequest: true,
       isAllCompanySuccess: false,
       isAllCompanyFailure: false,
     }),
-    [getAllCompaniesSuccess]: (state: ICompany, { payload }: any) => ({
+    [getAllCompaniesSuccess]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isAllCompanyRequest: false,
       isAllCompanySuccess: true,
       isAllCompanyFailure: false,
       allCompanyData: payload.data,
     }),
-    [getAllCompaniesFailure]: (state: ICompany, { payload }: any) => ({
+    [getAllCompaniesFailure]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isAllCompanyRequest: false,
       isAllCompanySuccess: false,
@@ -103,20 +139,20 @@ const companyReducer = handleActions(
     }),
 
     // Get Company by Id
-    [getCompanyByIdRequest]: (state: ICompany) => ({
+    [getCompanyByIdRequest]: (state: ICompanyReducer) => ({
       ...state,
       isCompanyByIdRequest: true,
       isCompanyByIdSuccess: false,
       isCompanyByIdFailure: false,
     }),
-    [getCompanyByIdSuccess]: (state: ICompany, { payload }: any) => ({
+    [getCompanyByIdSuccess]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isCompanyByIdRequest: false,
       isCompanyByIdSuccess: true,
       isCompanyByIdFailure: false,
       companyByIdData: payload,
     }),
-    [getCompanyByIdFailure]: (state: ICompany, { payload }: any) => ({
+    [getCompanyByIdFailure]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,
       isCompanyByIdRequest: false,
       isCompanyByIdSuccess: false,

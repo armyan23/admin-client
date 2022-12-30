@@ -23,15 +23,16 @@ import usePreviousList from "useHooks/usePreviousList";
 import { typeCompany } from "util/utils";
 import { postCreateCompanyRequest } from "store/company/action";
 import { RootState } from "types/iReducer";
-import { ICompany } from "types/iForm";
+import { ICompanyForm } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
 import DateCustomField from "component/forms/formField/DateCustomField";
 
-const initialCreateCompany: ICompany = {
+const initialCreateCompany: ICompanyForm = {
   nameCompany: "",
   aboutCompany: "",
   typeCompany: "",
   phoneNumber: "",
+  image: "",
   email: "",
   website: "",
   createdDate: null,

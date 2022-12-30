@@ -22,11 +22,12 @@ export interface ILogin {
   password: string;
 }
 
-export interface ICompany {
+export interface ICompanyForm {
   nameCompany: string;
   aboutCompany: string;
   typeCompany: string;
   phoneNumber: string;
+  image?: string;
   email: string;
   website: string;
   createdDate: Date | null | number;

@@ -7,6 +7,9 @@ import {
   updateCompanyRequest,
   updateCompanySuccess,
   updateCompanyFailure,
+  deleteImageCompanyRequest,
+  deleteImageCompanySuccess,
+  deleteImageCompanyFailure,
   getAllCompaniesRequest,
   getAllCompaniesSuccess,
   getAllCompaniesFailure,
@@ -32,13 +35,26 @@ function* createCompany({ payload }: any) {
 function* updateCompany({ payload }: any) {
   try {
     const response: AxiosResponse = yield call(() =>
-      instance.post(`/api/company/edit/${payload.id}`, payload.data)
+      instance.post(`/api/company/${payload.id}`, payload.data)
     );
 
     yield put(updateCompanySuccess(response.data));
   } catch (err: any) {
     const { data } = err.response;
     yield put(updateCompanyFailure(data.message));
+  }
+}
+
+function* deleteImageCompany({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.delete(`/api/company/image/${payload}`)
+    );
+
+    yield put(deleteImageCompanySuccess(response.data.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(deleteImageCompanyFailure(data.message));
   }
 }
 
@@ -70,6 +86,7 @@ function* getCompanyById({ payload }: any) {
 export default function* companySaga() {
   yield takeLatest(postCreateCompanyRequest, createCompany);
   yield takeLatest(updateCompanyRequest, updateCompany);
+  yield takeLatest(deleteImageCompanyRequest, deleteImageCompany);
   yield takeLatest(getAllCompaniesRequest, getAllCompany);
   yield takeLatest(getCompanyByIdRequest, getCompanyById);
 }

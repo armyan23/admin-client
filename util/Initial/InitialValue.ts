@@ -1,4 +1,4 @@
-import { ICompany, ICreateEmployee } from "types/iForm";
+import { ICompanyForm, ICreateEmployee } from "types/iForm";
 
 export const initialEmployeeForm: ICreateEmployee = {
   email: "",
@@ -18,11 +18,12 @@ export const initialEmployeeForm: ICreateEmployee = {
   endWork: null,
 };
 
-export const initialCompany: ICompany = {
+export const initialCompany: ICompanyForm = {
   nameCompany: "",
   aboutCompany: "",
   typeCompany: "",
   phoneNumber: "",
+  image: "",
   email: "",
   website: "",
   createdDate: null,
