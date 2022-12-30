@@ -3,6 +3,9 @@ import {
   postCreateCompanyRequest,
   postCreateCompanySuccess,
   postCreateCompanyFailure,
+  updateCompanyRequest,
+  updateCompanySuccess,
+  updateCompanyFailure,
   getAllCompaniesRequest,
   getAllCompaniesSuccess,
   getAllCompaniesFailure,
@@ -16,6 +19,9 @@ const initialValue: ICompany = {
   isCreateCompanyRequest: false,
   isCreateCompanySuccess: false,
   isCreateCompanyFailure: false,
+  isUpdateCompanyRequest: false,
+  isUpdateCompanySuccess: false,
+  isUpdateCompanyFailure: false,
   isAllCompanyRequest: false,
   isAllCompanySuccess: false,
   isAllCompanyFailure: false,
@@ -53,7 +59,27 @@ const companyReducer = handleActions(
       isCreateCompanyFailure: true,
       errorMessage: payload,
     }),
-
+    // Update company
+    [updateCompanyRequest]: (state: ICompany) => ({
+      ...state,
+      isUpdateCompanyRequest: true,
+      isUpdateCompanySuccess: false,
+      isUpdateCompanyFailure: false,
+    }),
+    [updateCompanySuccess]: (state: ICompany, { payload }: any) => ({
+      ...state,
+      isUpdateCompanyRequest: false,
+      isUpdateCompanySuccess: true,
+      isUpdateCompanyFailure: false,
+      createCompanyData: payload,
+    }),
+    [updateCompanyFailure]: (state: ICompany, { payload }: any) => ({
+      ...state,
+      isUpdateCompanyRequest: false,
+      isUpdateCompanySuccess: false,
+      isUpdateCompanyFailure: true,
+      errorMessage: payload,
+    }),
     // Get all companies
     [getAllCompaniesRequest]: (state: ICompany) => ({
       ...state,

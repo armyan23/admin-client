@@ -5,6 +5,9 @@ export interface ICompany {
   isCreateCompanyRequest: boolean;
   isCreateCompanySuccess: boolean;
   isCreateCompanyFailure: boolean;
+  isUpdateCompanyRequest: boolean;
+  isUpdateCompanySuccess: boolean;
+  isUpdateCompanyFailure: boolean;
   isAllCompanyRequest: boolean;
   isAllCompanySuccess: boolean;
   isAllCompanyFailure: boolean;

@@ -4,6 +4,9 @@ import {
   postCreateCompanyRequest,
   postCreateCompanySuccess,
   postCreateCompanyFailure,
+  updateCompanyRequest,
+  updateCompanySuccess,
+  updateCompanyFailure,
   getAllCompaniesRequest,
   getAllCompaniesSuccess,
   getAllCompaniesFailure,
@@ -23,6 +26,19 @@ function* createCompany({ payload }: any) {
   } catch (err: any) {
     const { data } = err.response;
     yield put(postCreateCompanyFailure(data.message));
+  }
+}
+
+function* updateCompany({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.post(`/api/company/edit/${payload.id}`, payload.data)
+    );
+
+    yield put(updateCompanySuccess(response.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(updateCompanyFailure(data.message));
   }
 }
 
@@ -54,6 +70,7 @@ function* getCompanyById({ payload }: any) {
 
 export default function* companySaga() {
   yield takeLatest(postCreateCompanyRequest, createCompany);
+  yield takeLatest(updateCompanyRequest, updateCompany);
   yield takeLatest(getAllCompaniesRequest, getAllCompany);
   yield takeLatest(getCompanyByIdRequest, getCompanyById);
 }
