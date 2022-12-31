@@ -16,8 +16,7 @@ const Company = () => {
 
   useEffect(() => {
     dispatch(getCompanyByIdRequest(id));
-  }, []);
-  console.log(companyByIdData);
+  }, [dispatch, id]);
 
   return (
     <Card>

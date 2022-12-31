@@ -32,10 +32,15 @@ import usePreviousList from "useHooks/usePreviousList";
 import usePrevious from "useHooks/usePrevious";
 import { footerList, ownerList } from "./UtilsDashboard";
 import { color } from "util/styleUtils";
+import { initialCompany } from "util/Initial/InitialValue";
+import { ICompanyForm } from "types/iForm";
 import { RootState } from "types/iReducer";
 import Logo from "public/assets/logo.png";
 import { logout } from "store/auth/action";
-import { getAllCompaniesRequest } from "store/company/action";
+import {
+  getAllCompaniesRequest,
+  getCompanyByIdRequest,
+} from "store/company/action";
 import {
   logoutAction,
   putHeadersCompany,
@@ -131,12 +136,14 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
 
   const [open, setOpen] = useState(true);
   const [activeCompany, setActiveCompany] = useState<number | null>(0);
+  const [currentCompany, setCurrentCompany] =
+    useState<ICompanyForm>(initialCompany);
 
   const prevActiveCompany = usePrevious<number | null>(activeCompany);
 
   useEffect(() => {
     dispatch(getAllCompaniesRequest());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (prevActiveCompany && prevActiveCompany !== activeCompany) {
@@ -152,9 +159,14 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
     ) {
       const companyId: number | null =
         JSON.parse(localStorage.getItem("user") || "null")?.company || null;
+      dispatch(getCompanyByIdRequest(companyId));
+      setCurrentCompany(
+        allCompanyData.find((elem: any) => elem.id === companyId) ||
+          initialCompany
+      );
       setActiveCompany(companyId);
     }
-  }, [isAllCompanySuccess, prevIsAllCompanySuccess, allCompanyData]);
+  }, [isAllCompanySuccess, prevIsAllCompanySuccess, allCompanyData, dispatch]);
 
   useEffect(() => {
     if (size.width && size.width < 600) {
@@ -240,10 +252,14 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <DrawerHeader>
-            <div style={{ width: drawerWidth }}>
-              <Image src={Logo} alt="Logo" width={180} priority={true} />
-            </div>
+          <DrawerHeader className="d-flex j-center">
+            <Image
+              src={currentCompany.image ? currentCompany.image : Logo}
+              alt="Logo"
+              width={180}
+              height={currentCompany.image ? 100 : undefined}
+              priority={true}
+            />
           </DrawerHeader>
           <List style={{ height: "100vh", borderRight: "0.5px solid grey" }}>
             {activeCompany ? (
