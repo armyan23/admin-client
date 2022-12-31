@@ -28,6 +28,7 @@ import AuthLayout from "component/layout/AuthLayout";
 const initialLogin: IRegister = {
   firstName: "",
   lastName: "",
+  phoneNumber: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -37,10 +38,13 @@ const Register = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { registerSuccess, successMessage, registerFailure, errorMessage } =
-    useSelector((state: RootState) => state.auth);
-
-  const [loading, setLoading] = useState(false);
+  const {
+    registerRequest,
+    registerSuccess,
+    successMessage,
+    registerFailure,
+    errorMessage,
+  } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (registerSuccess) {
@@ -52,7 +56,6 @@ const Register = () => {
         },
       });
       Router.push("/auth/verify");
-      setLoading(false);
     }
   }, [registerSuccess, successMessage, enqueueSnackbar]);
 
@@ -65,12 +68,10 @@ const Register = () => {
           horizontal: "center",
         },
       });
-      setLoading(false);
     }
   }, [enqueueSnackbar, errorMessage, registerFailure]);
 
   const onFinish = (values: FormikValues) => {
-    setLoading(true);
     localStorage.setItem("user", JSON.stringify({ email: values.email }));
     const payload = {
       email: values.email,
@@ -118,6 +119,7 @@ const Register = () => {
             password: Yup.string()
               .min(8, "Password must be at least 8 characters")
               .required("Required"),
+            phoneNumber: Yup.string().required("Required"),
             confirmPassword: Yup.string()
               .oneOf([Yup.ref("password"), null], "Passwords must match")
               .required("Required"),
@@ -187,6 +189,32 @@ const Register = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      label="Phone number"
+                      autoComplete="phone"
+                      fullWidth
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.phoneNumber}
+                      helperText={
+                        errors.phoneNumber &&
+                        touched.phoneNumber &&
+                        errors.phoneNumber
+                          ? errors.phoneNumber
+                          : null
+                      }
+                      error={
+                        !!(
+                          errors.phoneNumber &&
+                          touched.phoneNumber &&
+                          errors.phoneNumber
+                        )
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
                       margin="normal"
                       fullWidth
                       id="email"
@@ -236,7 +264,7 @@ const Register = () => {
                   </Grid>
                 </Grid>
                 <LoadingButton
-                  loading={loading}
+                  loading={registerRequest}
                   type="submit"
                   startIcon={<SendIcon />}
                   fullWidth
