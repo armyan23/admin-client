@@ -310,6 +310,7 @@ const UserDetails = () => {
 
               <Grid item xs={12}>
                 <ImageCustomField
+                  label="Upload profile image"
                   photoData={photoData}
                   setPhotoData={setPhotoData}
                 />

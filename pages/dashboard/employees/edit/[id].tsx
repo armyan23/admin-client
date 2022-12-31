@@ -172,6 +172,7 @@ const EmployeeEdit = () => {
           >
             <Grid item sm={12}>
               <ImageCustomField
+                label="Upload employee image"
                 photoData={photoData}
                 setPhotoData={setPhotoData}
               />

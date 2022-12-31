@@ -80,6 +80,11 @@ a {
     right: 1rem;
 }
 
+/* Margin */
+.mt-1 {
+    margin-top: 1rem;
+}
+
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;

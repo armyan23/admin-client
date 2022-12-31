@@ -42,7 +42,12 @@ const AddCompany = () => {
       });
       Router.push("/dashboard/company");
     }
-  }, [successMessage, isCreateCompanySuccess, prevIsCreateCompanySuccess]);
+  }, [
+    successMessage,
+    enqueueSnackbar,
+    isCreateCompanySuccess,
+    prevIsCreateCompanySuccess,
+  ]);
 
   useEffect(() => {
     if (isCreateCompanyFailure && prevIsCreateCompanyFailure === false) {
@@ -54,7 +59,12 @@ const AddCompany = () => {
         },
       });
     }
-  }, [errorMessage, isCreateCompanyFailure, prevIsCreateCompanyFailure]);
+  }, [
+    errorMessage,
+    enqueueSnackbar,
+    isCreateCompanyFailure,
+    prevIsCreateCompanyFailure,
+  ]);
 
   const onFinish = (values: FormikValues) => {
     const data = new FormData();
@@ -81,6 +91,7 @@ const AddCompany = () => {
         >
           <Grid item sm={12}>
             <ImageCustomField
+              label="Upload company logo"
               photoData={photoData}
               setPhotoData={setPhotoData}
             />

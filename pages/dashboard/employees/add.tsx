@@ -92,9 +92,9 @@ const AddEmployees = () => {
             Create Employee
           </Typography>
           <EmployeeForms onFinish={onFinish} loading={loading}>
-            {/* Employee Image */}
             <Grid item sm={12}>
               <ImageCustomField
+                label="Upload Employee image"
                 photoData={photoData}
                 setPhotoData={setPhotoData}
               />

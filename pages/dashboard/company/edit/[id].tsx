@@ -155,6 +155,7 @@ const EmployeeEdit = () => {
           >
             <Grid item sm={12}>
               <ImageCustomField
+                label="Upload company logo"
                 photoData={photoData}
                 setPhotoData={setPhotoData}
               />

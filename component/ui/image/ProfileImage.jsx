@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Male from "public/assets/image/profile/male.jpg";
 import Female from "public/assets/image/profile/female.jpg";
+import Company from "public/assets/image/profile/company.png";
 
 const ProfileImage = ({ url, type = "Male", width = 250, height = 320 }) => {
   return url ? (
@@ -16,7 +17,7 @@ const ProfileImage = ({ url, type = "Male", width = 250, height = 320 }) => {
     />
   ) : (
     <Image
-      src={type === "Female" ? Female : Male}
+      src={type === "Female" ? Female : type === "Male" ? Male : Company}
       alt="ProfileImg"
       width={width}
       height={height}

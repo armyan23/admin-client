@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, InputLabel } from "@mui/material";
 
 const Thumb = ({ file }) => {
   const [loading, setLoading] = useState(false);
@@ -30,22 +30,25 @@ const Thumb = ({ file }) => {
   return <img src={thumb} alt={file?.name} height={100} />;
 };
 
-const ImageCustomField = ({ photoData, setPhotoData }) => {
+const ImageCustomField = ({ label, photoData, setPhotoData }) => {
   return (
-    <Box className="d-flex a-center g-1 h-7">
-      <Button variant="contained" component="label">
-        Upload photo
-        <input
-          hidden
-          name="image"
-          multiple
-          type="file"
-          onChange={(event) => {
-            setPhotoData(event.currentTarget.files[0]);
-          }}
-        />
-      </Button>
-      <Thumb file={photoData} />
+    <Box className="mt-1">
+      <InputLabel>{label}</InputLabel>
+      <Box className="d-flex a-center g-1 h-7">
+        <Button variant="contained" component="label">
+          Upload
+          <input
+            hidden
+            name="image"
+            multiple
+            type="file"
+            onChange={(event) => {
+              setPhotoData(event.currentTarget.files[0]);
+            }}
+          />
+        </Button>
+        <Thumb file={photoData} />
+      </Box>
     </Box>
   );
 };

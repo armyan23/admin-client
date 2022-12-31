@@ -81,7 +81,7 @@ const Company = () => {
                   >
                     <TableCell component="th" scope="item">
                       <ProfileImage
-                        type={"company"}
+                        type="Company"
                         url={item?.image}
                         width={75}
                         height={75}
