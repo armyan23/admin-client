@@ -77,22 +77,21 @@ const Register = () => {
       email: values.email,
       password: values.password,
       confirmPassword: values.confirmPassword,
+      userDetails: {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        phoneNumber: values.phoneNumber,
+      },
     };
-    dispatch(
-      postRegisterRequest({
-        ...payload,
-        userDetails: {
-          firstName: "John",
-          lastName: "Smith",
-          gender: "male",
-          phoneNumber: "+37499889988",
-          birthDate: "05/10/1978",
-          country: "England",
-          city: "London",
-        },
-      })
-    );
+
+    dispatch(postRegisterRequest(payload));
   };
+
+  // TODO: CREATE SMALL TODO FOR TASK ON MY PAGE
+  // TODO: ADD A  FEW FIELDS FOR REGISTER
+  // TODO: CHECK FIELDS FOR COMPANY, EMPLOYEE, USER PROFILE
+  // TODO: ADD COMPANY PAGE BY ID
+  // TODO: PUT THE LOGO IN IT'S PLACE
 
   return (
     <Container component="main" maxWidth="xs">
