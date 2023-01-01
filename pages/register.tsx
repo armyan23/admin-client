@@ -88,9 +88,7 @@ const Register = () => {
   };
 
   // TODO: CREATE SMALL TODO FOR TASK ON MY PAGE
-  // TODO: CHECK FIELDS FOR COMPANY, EMPLOYEE, USER PROFILE
   // TODO: ADD COMPANY PAGE BY ID
-  // TODO: PUT THE LOGO IN IT'S PLACE
 
   return (
     <Container component="main" maxWidth="xs">

@@ -50,7 +50,6 @@ const Employee = () => {
 
   return (
     <Card>
-      {/*<Image src={`${process.env.NEXT_PUBLIC_API_SERVER}${employeeByIdData.image}`} alt="employee" width={200} height={250} />*/}
       <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs="auto">
