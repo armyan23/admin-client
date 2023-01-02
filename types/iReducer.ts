@@ -1,5 +1,5 @@
 import rootReducer from "store/rootReducer";
-import { IUserDetails, ICompanyForm } from "./iForm";
+import { IUserDetails, ICompanyForm, ICompanyDetails } from "./iForm";
 
 export interface ICompanyReducer {
   isCreateCompanyRequest: boolean;
@@ -17,6 +17,7 @@ export interface ICompanyReducer {
   isCompanyByIdRequest: boolean;
   isCompanyByIdSuccess: boolean;
   isCompanyByIdFailure: boolean;
+  companyDetails: ICompanyDetails;
   companyByIdData: ICompanyForm;
   createCompanyData: object | [];
   allCompanyData: [];

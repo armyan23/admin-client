@@ -75,6 +75,7 @@ const EmployeeEdit = () => {
         city: employeeByIdData?.city,
         image: employeeByIdData?.image,
         streetAddress: employeeByIdData?.streetAddress,
+        salary: employeeByIdData?.salary,
         birthDate: employeeByIdData?.birthDate,
         startWork: employeeByIdData?.startWork,
         endWork: employeeByIdData?.endWork,

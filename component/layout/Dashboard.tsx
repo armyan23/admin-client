@@ -159,7 +159,6 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
     ) {
       const companyId: number | null =
         JSON.parse(localStorage.getItem("user") || "null")?.company || null;
-      dispatch(getCompanyByIdRequest(companyId));
       setCurrentCompany(
         allCompanyData.find((elem: any) => elem.id === companyId) ||
           initialCompany

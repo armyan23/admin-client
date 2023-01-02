@@ -76,7 +76,7 @@ function* getCompanyById({ payload }: any) {
     const response: AxiosResponse = yield call(() =>
       instance.get(`/api/company/${payload}`)
     );
-    yield put(getCompanyByIdSuccess(response.data.data));
+    yield put(getCompanyByIdSuccess(response.data));
   } catch (err: any) {
     const { data } = err.response;
     yield put(getCompanyByIdFailure(data.message));

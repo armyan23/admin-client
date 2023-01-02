@@ -150,7 +150,8 @@ const companyReducer = handleActions(
       isCompanyByIdRequest: false,
       isCompanyByIdSuccess: true,
       isCompanyByIdFailure: false,
-      companyByIdData: payload,
+      companyByIdData: payload.data,
+      companyDetails: payload.details,
     }),
     [getCompanyByIdFailure]: (state: ICompanyReducer, { payload }: any) => ({
       ...state,

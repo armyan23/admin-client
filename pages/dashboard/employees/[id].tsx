@@ -169,6 +169,12 @@ const Employee = () => {
                   {employeeByIdData.skills}
                 </Grid>
                 <Grid item xs={5}>
+                  Salary:
+                </Grid>
+                <Grid item xs={7}>
+                  {employeeByIdData.salary}
+                </Grid>
+                <Grid item xs={5}>
                   Start work:
                 </Grid>
                 <Grid item xs={7}>

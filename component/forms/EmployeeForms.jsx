@@ -44,6 +44,7 @@ const EmployeeForms = ({
         patronymic: Yup.string().required("Required"),
         role: Yup.string().required("Required"),
         skills: Yup.string().required("Required"),
+        salary: Yup.string().required("Required"),
         phoneNumber: Yup.string().required("Required"),
         gender: Yup.string().required("Required"),
         country: Yup.string().required("Required"),
@@ -325,6 +326,24 @@ const EmployeeForms = ({
                       : null
                   }
                   error={!!(errors.skills && touched.skills && errors.skills)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="salary"
+                  name="salary"
+                  label="Salary"
+                  autoComplete="salary"
+                  fullWidth
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.salary}
+                  helperText={
+                    errors.salary && touched.salary && errors.salary
+                      ? errors.salary
+                      : null
+                  }
+                  error={!!(errors.salary && touched.salary && errors.salary)}
                 />
               </Grid>
               {/* Date */}

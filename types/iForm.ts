@@ -34,6 +34,13 @@ export interface ICompanyForm {
   createdDate: Date | null | number;
 }
 
+export interface ICompanyDetails {
+  count: number;
+  female: number;
+  male: number;
+  costsSalary: number;
+}
+
 export interface ICreateEmployee {
   email: string;
   firstName: string;
@@ -47,6 +54,7 @@ export interface ICreateEmployee {
   city: string;
   streetAddress: string;
   image: string;
+  salary: string;
   birthDate: Date | null | number;
   startWork: Date | null | number;
   endWork: Date | null | number;

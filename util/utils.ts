@@ -107,8 +107,8 @@ export const employeeTypeTable: ITypeMap[] = [
   },
   {
     key: 8,
-    name: "Country",
-    value: "country",
+    name: "Salary",
+    value: "salary",
   },
   {
     key: 9,

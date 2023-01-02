@@ -1,22 +1,31 @@
-import { NextPage } from "next";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Card } from "@mui/material";
+import { NextPage } from "next";
+import Router from "next/router";
+import { Box, Card, Grid, IconButton, Typography } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import moment from "moment/moment";
+import { RootState } from "types/iReducer";
 import { getCompanyByIdRequest } from "store/company/action";
 import Dashboard from "component/layout/Dashboard";
-import Router from "next/router";
-import { useEffect } from "react";
-import { RootState } from "types/iReducer";
+import ProfileImage from "component/ui/image/ProfileImage";
 
 const Company = () => {
   const dispatch = useDispatch();
 
-  const { companyByIdData } = useSelector((state: RootState) => state.company);
+  const { isCompanyByIdRequest, companyByIdData, companyDetails } = useSelector(
+    (state: RootState) => state.company
+  );
 
   const { id } = Router.query;
 
   useEffect(() => {
     dispatch(getCompanyByIdRequest(id));
   }, [dispatch, id]);
+
+  const onEdit = () => {
+    Router.push(`/dashboard/company/edit/${id}`);
+  };
 
   return (
     <Card>

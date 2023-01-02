@@ -49,7 +49,7 @@ const EmployeesTable = ({ action, data }: any) => {
               <TableCell>
                 {dayjs(item.birthDate).format("DD/MM/YYYY")}
               </TableCell>
-              <TableCell>{item.country}</TableCell>
+              <TableCell>{item.salary}</TableCell>
               <TableCell>{action(item)}</TableCell>
             </TableRow>
           ))}
