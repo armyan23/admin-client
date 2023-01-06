@@ -26,7 +26,7 @@ const RemoteEmployees = () => {
     dispatch(getEmployeesRequest({ type: "deleted" }));
   }, [dispatch]);
 
-  const selectByEmployeeId = (id: any) => {
+  const selectByEmployeeId = (id: number) => {
     Router.push(`/dashboard/employees/${id}`);
   };
 
