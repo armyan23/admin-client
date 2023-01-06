@@ -16,7 +16,10 @@ import {
   getCompanyByIdSuccess,
   getCompanyByIdFailure,
 } from "./action";
-import { initialCompany } from "util/Initial/InitialValue";
+import {
+  initialCompany,
+  initialCompanyDetails,
+} from "util/Initial/InitialValue";
 import { ICompanyReducer } from "types/iReducer";
 
 const initialValue: ICompanyReducer = {
@@ -41,6 +44,7 @@ const initialValue: ICompanyReducer = {
   isCompanyByIdSuccess: false,
   isCompanyByIdFailure: false,
   companyByIdData: initialCompany,
+  companyDetails: initialCompanyDetails,
   createCompanyData: {},
   allCompanyData: [],
   successMessage: "",

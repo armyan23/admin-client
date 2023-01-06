@@ -31,7 +31,7 @@ const AddEmployees = () => {
     ]);
 
   const [loading, setLoading] = useState(false);
-  const [photoData, setPhotoData] = useState();
+  const [photoData, setPhotoData] = useState<File | undefined>();
 
   useEffect(() => {
     if (isCreateEmployeeSuccess && prevIsCreateEmployeeSuccess === false) {

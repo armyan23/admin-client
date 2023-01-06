@@ -28,7 +28,7 @@ const AddCompany = () => {
   const [prevIsCreateCompanySuccess, prevIsCreateCompanyFailure] =
     usePreviousList<boolean>([isCreateCompanySuccess, isCreateCompanyFailure]);
 
-  const [photoData, setPhotoData] = useState();
+  const [photoData, setPhotoData] = useState<File | undefined>();
 
   useEffect(() => {
     if (isCreateCompanySuccess && prevIsCreateCompanySuccess === false) {

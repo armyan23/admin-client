@@ -63,8 +63,16 @@ a {
     height: 100%;
 }
 
+.h-3 {
+    height: 3rem;
+}
+
 .h-7 {
     height: 7rem;
+}
+
+.h-9 {
+    height: 9rem;
 }
 
 /* Position */
@@ -81,8 +89,17 @@ a {
 }
 
 /* Margin */
+
 .mt-1 {
     margin-top: 1rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
 }
 
 @media (prefers-color-scheme: dark) {

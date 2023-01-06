@@ -52,7 +52,7 @@ const EmployeeEdit = () => {
     false
   );
   const [loading, setLoading] = useState(false);
-  const [photoData, setPhotoData] = useState();
+  const [photoData, setPhotoData] = useState<File | undefined>();
 
   const { id } = Router.query;
 
@@ -176,13 +176,14 @@ const EmployeeEdit = () => {
                 label="Upload employee image"
                 photoData={photoData}
                 setPhotoData={setPhotoData}
-              />
-              {employeeByIdData?.image && !photoData && (
-                <EditImage
-                  imageUrl={employeeByIdData?.image}
-                  onDelete={onImageDelete}
-                />
-              )}
+              >
+                {employeeByIdData?.image && !photoData && (
+                  <EditImage
+                    imageUrl={employeeByIdData?.image}
+                    onDelete={onImageDelete}
+                  />
+                )}
+              </ImageCustomField>
             </Grid>
           </EmployeeForms>
         ) : (

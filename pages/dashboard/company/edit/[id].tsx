@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { FormikValues } from "formik";
 import { useSnackbar } from "notistack";
 
@@ -49,7 +49,7 @@ const EmployeeEdit = () => {
   ]);
 
   const [companyData, setCompanyData] = useState<ICompanyForm | false>(false);
-  const [photoData, setPhotoData] = useState();
+  const [photoData, setPhotoData] = useState<File | undefined>();
 
   const { id } = Router.query;
 
@@ -127,6 +127,10 @@ const EmployeeEdit = () => {
     dispatch(deleteImageCompanyRequest(id));
   };
 
+  const onDeleteCompany = () => {
+    console.log(id);
+  };
+
   const onFinish = (values: FormikValues) => {
     const data = new FormData();
     if (photoData) {
@@ -138,7 +142,9 @@ const EmployeeEdit = () => {
 
     dispatch(updateCompanyRequest({ data: data, id }));
   };
-
+  // TODO: change IMAGE COMPONENT
+  // TODO: ADD delete company API for FRONT AND BACK
+  // TODO:
   return (
     <Card>
       <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
@@ -158,13 +164,16 @@ const EmployeeEdit = () => {
                 label="Upload company logo"
                 photoData={photoData}
                 setPhotoData={setPhotoData}
-              />
-              {companyByIdData?.image && !photoData && (
-                <EditImage
-                  imageUrl={companyByIdData?.image}
-                  onDelete={onImageDelete}
-                />
-              )}
+              >
+                {companyByIdData?.image && !photoData ? (
+                  <EditImage
+                    imageUrl={companyByIdData?.image}
+                    onDelete={onImageDelete}
+                  />
+                ) : null}
+              </ImageCustomField>
+
+              <Button onClick={onDeleteCompany}>Delete Company</Button>
             </Grid>
           </CompanyForms>
         ) : (

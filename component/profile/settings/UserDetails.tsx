@@ -57,7 +57,7 @@ const UserDetails = () => {
     isDeleteUserImageFailure,
   ]);
 
-  const [photoData, setPhotoData] = useState();
+  const [photoData, setPhotoData] = useState<File | undefined>();
 
   useEffect(() => {
     if (!isProfileDataSuccess) {
@@ -313,13 +313,14 @@ const UserDetails = () => {
                   label="Upload profile image"
                   photoData={photoData}
                   setPhotoData={setPhotoData}
-                />
-                {userDetails?.image && !photoData && (
-                  <EditImage
-                    imageUrl={userDetails?.image}
-                    onDelete={onImageDelete}
-                  />
-                )}
+                >
+                  {userDetails?.image && !photoData ? (
+                    <EditImage
+                      imageUrl={userDetails?.image}
+                      onDelete={onImageDelete}
+                    />
+                  ) : null}
+                </ImageCustomField>
               </Grid>
             </Grid>
             <Grid item xs={12} className="d-flex j-end">
