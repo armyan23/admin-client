@@ -14,7 +14,7 @@ type PropsThumb = {
 
 const Thumb: FC<PropsThumb> = ({ file }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [thumb, setThumb] = useState<any>(undefined);
+  const [thumb, setThumb] = useState<string | ArrayBuffer | null>("");
 
   useEffect(() => {
     if (!file) {
@@ -37,7 +37,13 @@ const Thumb: FC<PropsThumb> = ({ file }) => {
     return <p>loading...</p>;
   }
 
-  return <img src={thumb} alt={file?.name} height={100} />;
+  return (
+    <img
+      src={typeof thumb === "string" ? thumb : undefined}
+      alt={file?.name}
+      height={100}
+    />
+  );
 };
 
 const ImageCustomField: FC<PropsImage> = ({

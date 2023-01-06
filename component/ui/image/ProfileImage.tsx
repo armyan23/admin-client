@@ -1,10 +1,22 @@
-import React from "react";
+import React, { FC } from "react";
 import Image from "next/image";
 import Male from "public/assets/image/profile/male.jpg";
 import Female from "public/assets/image/profile/female.jpg";
 import Company from "public/assets/image/profile/company.png";
 
-const ProfileImage = ({ url, type = "Male", width = 250, height = 320 }) => {
+type Props = {
+  url: string | undefined;
+  type?: string;
+  width?: number;
+  height?: number;
+};
+
+const ProfileImage: FC<Props> = ({
+  url,
+  type = "Male",
+  width = 250,
+  height = 320,
+}) => {
   return url ? (
     <div
       style={{

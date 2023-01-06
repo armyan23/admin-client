@@ -28,7 +28,7 @@ export interface ICompanyForm {
   aboutCompany: string;
   typeCompany: string;
   phoneNumber: string;
-  image?: string | null;
+  image?: string | undefined;
   email: string;
   website: string;
   createdDate: Date | null | number;

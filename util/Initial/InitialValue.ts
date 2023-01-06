@@ -24,7 +24,7 @@ export const initialCompany: ICompanyForm = {
   aboutCompany: "",
   typeCompany: "",
   phoneNumber: "",
-  image: null,
+  image: undefined,
   email: "",
   website: "",
   createdDate: null,

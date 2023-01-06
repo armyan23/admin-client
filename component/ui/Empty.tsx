@@ -13,7 +13,7 @@ const Empty = () => {
         <Typography variant="h4">It is empty in here.</Typography>
       </Box>
       <Box className="d-grid j-center w-100">
-        <Typography variant="h7">
+        <Typography variant="h6">
           Oops! Seems like there is nothing in this page yet.
         </Typography>
       </Box>
