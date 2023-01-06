@@ -18,7 +18,7 @@ import SimpleModal from "component/modal/SimpleModal";
 const Employees = () => {
   const dispatch = useDispatch();
 
-  const { data } = useSelector((state: RootState) => state.employee);
+  const { employeesData } = useSelector((state: RootState) => state.employee);
 
   const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
   const [selectedId, setSelectedId] = React.useState<number>();
@@ -72,7 +72,7 @@ const Employees = () => {
             +
           </Button>
         </div>
-        <EmployeeTable data={data} action={Action} />
+        <EmployeeTable data={employeesData} action={Action} />
       </Box>
       <SimpleModal
         title="Remove employee"

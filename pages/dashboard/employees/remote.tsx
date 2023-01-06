@@ -17,7 +17,7 @@ import SimpleModal from "component/modal/SimpleModal";
 const RemoteEmployees = () => {
   const dispatch = useDispatch();
 
-  const { data } = useSelector((state: RootState) => state.employee);
+  const { employeesData } = useSelector((state: RootState) => state.employee);
 
   const [restoreModal, setRestoreModal] = React.useState<boolean>(false);
   const [selectedId, setSelectedId] = React.useState<number>();
@@ -57,7 +57,7 @@ const RemoteEmployees = () => {
           Remote Employees
         </Typography>
 
-        <EmployeeTable data={data} action={Action} />
+        <EmployeeTable data={employeesData} action={Action} />
       </Box>
       <SimpleModal
         title="Restore employee"

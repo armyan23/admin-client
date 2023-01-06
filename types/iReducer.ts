@@ -48,7 +48,7 @@ export interface IEmployee {
   isRestoreEmployeeSuccess: boolean;
   isRestoreEmployeeFailure: boolean;
   employeeByIdData: object;
-  data: [];
+  employeesData: [];
   successMessage: string;
   errorMessage: string;
 }
