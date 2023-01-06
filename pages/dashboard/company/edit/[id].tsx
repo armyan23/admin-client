@@ -1,6 +1,6 @@
-import { NextPage } from "next";
-import Router from "next/router";
 import React, { useEffect, useState } from "react";
+import Router from "next/router";
+import { NextPage } from "next";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { FormikValues } from "formik";
@@ -142,9 +142,8 @@ const EmployeeEdit = () => {
 
     dispatch(updateCompanyRequest({ data: data, id }));
   };
-  // TODO: change IMAGE COMPONENT
   // TODO: ADD delete company API for FRONT AND BACK
-  // TODO:
+
   return (
     <Card>
       <Box sx={{ p: 2, gap: "20px", display: "grid" }}>

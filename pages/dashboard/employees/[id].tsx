@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
 import Router from "next/router";
-import Image from "next/image";
 import moment from "moment";
 import { Box, Card, Typography, Rating, Grid, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
 import Router from "next/router";
@@ -86,9 +86,6 @@ const Register = () => {
 
     dispatch(postRegisterRequest(payload));
   };
-
-  // TODO: CREATE SMALL TODO FOR TASK ON MY PAGE
-  // TODO: ADD COMPANY PAGE BY ID
 
   return (
     <Container component="main" maxWidth="xs">

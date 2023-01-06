@@ -37,10 +37,7 @@ import { ICompanyForm } from "types/iForm";
 import { RootState } from "types/iReducer";
 import Logo from "public/assets/logo.png";
 import { logout } from "store/auth/action";
-import {
-  getAllCompaniesRequest,
-  getCompanyByIdRequest,
-} from "store/company/action";
+import { getAllCompaniesRequest } from "store/company/action";
 import {
   logoutAction,
   putHeadersCompany,

@@ -10,7 +10,7 @@ import {
   InputLabel,
   TextField,
 } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
@@ -22,7 +22,7 @@ import DateCustomField from "component/forms/formField/DateCustomField";
 
 type Props = {
   children?: JSX.Element;
-  onFinish: any;
+  onFinish: (values: FormikValues) => void;
   loading: boolean;
   cancelText: boolean;
   submitText: string;
