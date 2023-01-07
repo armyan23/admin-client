@@ -27,6 +27,11 @@ export const deleteImageCompanyFailure: any = createAction(
   "DELETE_IMAGE_COMPANY_FAILURE"
 );
 
+// Image company action
+export const deleteCompanyRequest: any = createAction("DELETE_COMPANY_REQUEST");
+export const deleteCompanySuccess: any = createAction("DELETE_COMPANY_SUCCESS");
+export const deleteCompanyFailure: any = createAction("DELETE_COMPANY_FAILURE");
+
 // Get all companies action
 export const getAllCompaniesRequest: any = createAction(
   "GET_ALL_COMPANIES_REQUEST"

@@ -9,6 +9,9 @@ import {
   deleteImageCompanyRequest,
   deleteImageCompanySuccess,
   deleteImageCompanyFailure,
+  deleteCompanyRequest,
+  deleteCompanySuccess,
+  deleteCompanyFailure,
   getAllCompaniesRequest,
   getAllCompaniesSuccess,
   getAllCompaniesFailure,
@@ -31,10 +34,14 @@ const initialValue: ICompanyReducer = {
   isUpdateCompanyRequest: false,
   isUpdateCompanySuccess: false,
   isUpdateCompanyFailure: false,
-  // Delete Company
+  // Delete image Company
   isDeleteImageCompanyRequest: false,
   isDeleteImageCompanySuccess: false,
   isDeleteImageCompanyFailure: false,
+  // Delete company
+  isDeleteCompanyRequest: false,
+  isDeleteCompanySuccess: false,
+  isDeleteCompanyFailure: false,
   // Get all Company
   isAllCompanyRequest: false,
   isAllCompanySuccess: false,
@@ -96,7 +103,7 @@ const companyReducer = handleActions(
       isUpdateCompanyFailure: true,
       errorMessage: payload,
     }),
-    // Image company
+    // Delete Image company
     [deleteImageCompanyRequest]: (state: ICompanyReducer) => ({
       ...state,
       isDeleteImageCompanyRequest: true,
@@ -118,6 +125,26 @@ const companyReducer = handleActions(
       isDeleteImageCompanyRequest: false,
       isDeleteImageCompanySuccess: false,
       isDeleteImageCompanyFailure: true,
+      errorMessage: payload,
+    }),
+    // Delete company reducer
+    [deleteCompanyRequest]: (state: ICompanyReducer) => ({
+      ...state,
+      isDeleteCompanyRequest: true,
+      isDeleteCompanySuccess: false,
+      isDeleteCompanyFailure: false,
+    }),
+    [deleteCompanySuccess]: (state: ICompanyReducer) => ({
+      ...state,
+      isDeleteCompanyRequest: false,
+      isDeleteCompanySuccess: true,
+      isDeleteCompanyFailure: false,
+    }),
+    [deleteCompanyFailure]: (state: ICompanyReducer, { payload }: any) => ({
+      ...state,
+      isDeleteCompanyRequest: false,
+      isDeleteCompanySuccess: false,
+      isDeleteCompanyFailure: true,
       errorMessage: payload,
     }),
     // Get all companies

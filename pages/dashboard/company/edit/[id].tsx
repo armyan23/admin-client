@@ -8,6 +8,7 @@ import { useSnackbar } from "notistack";
 
 import usePreviousList from "useHooks/usePreviousList";
 import {
+  deleteCompanyRequest,
   deleteImageCompanyRequest,
   getCompanyByIdRequest,
   updateCompanyRequest,
@@ -30,6 +31,9 @@ const EmployeeEdit = () => {
     isUpdateCompanyFailure,
     isDeleteImageCompanySuccess,
     isDeleteImageCompanyFailure,
+    isDeleteCompanyRequest,
+    isDeleteCompanySuccess,
+    isDeleteCompanyFailure,
     companyByIdData,
     errorMessage,
   }: ICompanyReducer = useSelector((state: RootState) => state.company);
@@ -40,12 +44,16 @@ const EmployeeEdit = () => {
     prevIsCompanyByIdSuccess,
     prevIsDeleteImageCompanySuccess,
     prevIsDeleteImageCompanyFailure,
+    prevIsDeleteCompanySuccess,
+    prevIsDeleteCompanyFailure,
   ] = usePreviousList<boolean>([
     isUpdateCompanySuccess,
     isUpdateCompanyFailure,
     isCompanyByIdSuccess,
     isDeleteImageCompanySuccess,
     isDeleteImageCompanyFailure,
+    isDeleteCompanySuccess,
+    isDeleteCompanyFailure,
   ]);
 
   const [companyData, setCompanyData] = useState<ICompanyForm | false>(false);
@@ -74,12 +82,17 @@ const EmployeeEdit = () => {
   useEffect(() => {
     if (
       (isUpdateCompanySuccess && prevIsUpdateCompanySuccess === false) ||
-      (isDeleteImageCompanySuccess && prevIsDeleteImageCompanySuccess === false)
+      (isDeleteImageCompanySuccess &&
+        prevIsDeleteImageCompanySuccess === false) ||
+      (isDeleteCompanySuccess && prevIsDeleteCompanySuccess === false)
     ) {
       enqueueSnackbar(
         isUpdateCompanySuccess && prevIsUpdateCompanySuccess === false
-          ? "Company details successfully updated"
-          : "Image successfully deleted",
+          ? isDeleteImageCompanySuccess &&
+            prevIsDeleteImageCompanySuccess === false
+            ? "Company details successfully updated"
+            : "Image successfully deleted"
+          : "Company succesfully deleted",
         {
           variant: "success",
           anchorOrigin: {
@@ -90,6 +103,11 @@ const EmployeeEdit = () => {
       );
       if (isUpdateCompanySuccess && prevIsUpdateCompanySuccess === false) {
         Router.push(`/dashboard/company/${id}`);
+      } else if (
+        isDeleteCompanySuccess &&
+        prevIsDeleteCompanySuccess === false
+      ) {
+        Router.push(`/dashboard/company`);
       }
     }
   }, [
@@ -99,12 +117,16 @@ const EmployeeEdit = () => {
     isUpdateCompanySuccess,
     prevIsDeleteImageCompanySuccess,
     isDeleteImageCompanySuccess,
+    isDeleteCompanySuccess,
+    prevIsDeleteCompanySuccess,
   ]);
 
   useEffect(() => {
     if (
       (isUpdateCompanyFailure && prevIsUpdateCompanyFailure === false) ||
-      (isDeleteImageCompanyFailure && prevIsDeleteImageCompanyFailure === false)
+      (isDeleteImageCompanyFailure &&
+        prevIsDeleteImageCompanyFailure === false) ||
+      (isDeleteCompanyFailure && prevIsDeleteCompanyFailure === false)
     ) {
       enqueueSnackbar(errorMessage, {
         variant: "error",
@@ -121,6 +143,8 @@ const EmployeeEdit = () => {
     prevIsUpdateCompanyFailure,
     isDeleteImageCompanyFailure,
     prevIsDeleteImageCompanyFailure,
+    isDeleteCompanyFailure,
+    prevIsDeleteCompanyFailure,
   ]);
 
   const onImageDelete = () => {
@@ -128,7 +152,7 @@ const EmployeeEdit = () => {
   };
 
   const onDeleteCompany = () => {
-    console.log(id);
+    dispatch(deleteCompanyRequest(id));
   };
 
   const onFinish = (values: FormikValues) => {

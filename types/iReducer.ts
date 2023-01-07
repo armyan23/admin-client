@@ -11,6 +11,9 @@ export interface ICompanyReducer {
   isDeleteImageCompanyRequest: boolean;
   isDeleteImageCompanySuccess: boolean;
   isDeleteImageCompanyFailure: boolean;
+  isDeleteCompanyRequest: boolean;
+  isDeleteCompanySuccess: boolean;
+  isDeleteCompanyFailure: boolean;
   isAllCompanyRequest: boolean;
   isAllCompanySuccess: boolean;
   isAllCompanyFailure: boolean;

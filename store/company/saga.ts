@@ -10,6 +10,9 @@ import {
   deleteImageCompanyRequest,
   deleteImageCompanySuccess,
   deleteImageCompanyFailure,
+  deleteCompanyRequest,
+  deleteCompanySuccess,
+  deleteCompanyFailure,
   getAllCompaniesRequest,
   getAllCompaniesSuccess,
   getAllCompaniesFailure,
@@ -58,6 +61,19 @@ function* deleteImageCompany({ payload }: any) {
   }
 }
 
+function* deleteCompany({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.delete(`/api/company/${payload}`)
+    );
+
+    yield put(deleteCompanySuccess(response.data.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(deleteCompanyFailure(data.message));
+  }
+}
+
 function* getAllCompany() {
   try {
     const response: AxiosResponse = yield call(() =>
@@ -87,6 +103,7 @@ export default function* companySaga() {
   yield takeLatest(postCreateCompanyRequest, createCompany);
   yield takeLatest(updateCompanyRequest, updateCompany);
   yield takeLatest(deleteImageCompanyRequest, deleteImageCompany);
+  yield takeLatest(deleteCompanyRequest, deleteCompany);
   yield takeLatest(getAllCompaniesRequest, getAllCompany);
   yield takeLatest(getCompanyByIdRequest, getCompanyById);
 }
