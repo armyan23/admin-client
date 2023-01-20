@@ -41,7 +41,7 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
         Router.push("/login");
       }, 1000);
     }
-  }, []);
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     if (isAuthenticatedFailure && prevIsAuthenticatedFailure === false) {
@@ -60,7 +60,12 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
     ) {
       setPageLoading(false);
     }
-  }, [isAuthenticatedSuccess, prevIsAuthenticatedSuccess, loginSuccess]);
+  }, [
+    isAuthenticatedSuccess,
+    prevIsAuthenticatedSuccess,
+    loginSuccess,
+    prevLoginSuccess,
+  ]);
 
   if (pageLoading) {
     return <LoadingPage />;

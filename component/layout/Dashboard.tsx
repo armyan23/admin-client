@@ -121,7 +121,9 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
   children,
 }) => {
   const router = useRouter();
+
   const size = useWindowSize();
+
   const dispatch = useDispatch();
   const { allCompanyData, isAllCompanySuccess } = useSelector(
     (state: RootState) => state.company
