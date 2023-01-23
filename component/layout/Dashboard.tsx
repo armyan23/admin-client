@@ -121,13 +121,14 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
   children,
 }) => {
   const router = useRouter();
-
   const size = useWindowSize();
-
   const dispatch = useDispatch();
+
   const { allCompanyData, isAllCompanySuccess } = useSelector(
     (state: RootState) => state.company
   );
+
+  const { profileData }: any = useSelector((state: RootState) => state.profile);
 
   const [prevIsAllCompanySuccess] = usePreviousList<boolean>([
     isAllCompanySuccess,
@@ -291,25 +292,28 @@ const Dashboard: ({ children }: { children: any }) => JSX.Element = ({
                 </Select>
               </FormControl>
             ) : null}
-            {ownerList.map((item) => (
-              <Link key={item.key} href={item.link}>
-                <ListItem
-                  disablePadding
-                  style={
-                    item.link === router.asPath
-                      ? { color: color.activeMenu }
-                      : {}
-                  }
-                >
-                  <ListItemButton>
-                    <ListItemIcon style={{ color: "black" }}>
-                      {item.icon}
-                    </ListItemIcon>
-                    <ListItemText primary={item.name} />
-                  </ListItemButton>
-                </ListItem>
-              </Link>
-            ))}
+            {ownerList.map((item) => {
+              return (item?.owner && profileData?.role === "owner") ||
+                item.all ? (
+                <Link key={item.key} href={item.link}>
+                  <ListItem
+                    disablePadding
+                    style={
+                      item.link === router.asPath
+                        ? { color: color.activeMenu }
+                        : {}
+                    }
+                  >
+                    <ListItemButton>
+                      <ListItemIcon style={{ color: "black" }}>
+                        {item.icon}
+                      </ListItemIcon>
+                      <ListItemText primary={item.name} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              ) : null;
+            })}
           </List>
           <Divider />
           <List style={{ borderRight: "0.5px solid" }}>

@@ -41,6 +41,19 @@ export const typeGender: ITypeMap[] = [
   },
 ];
 
+export const typeRole: ITypeMap[] = [
+  {
+    key: 1,
+    name: "Admin",
+    value: "admin",
+  },
+  {
+    key: 2,
+    name: "Employee",
+    value: "employee",
+  },
+];
+
 export const companyTypeTable: ITypeMap[] = [
   {
     key: 1,

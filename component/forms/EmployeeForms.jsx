@@ -1,4 +1,7 @@
 import React from "react";
+import Router from "next/router";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
 import {
   Box,
   Button,
@@ -11,16 +14,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
 
-import { typeGender } from "util/utils";
+import { typeGender, typeRole } from "util/utils";
 import { initialEmployeeForm } from "util/Initial/InitialValue";
 import DateCustomField from "component/forms/formField/DateCustomField";
-
-import Router from "next/router";
+import PasswordCustomField from "./formField/PasswordCustomField";
+import { useSelector } from "react-redux";
 
 const EmployeeForms = ({
   children,
@@ -30,6 +31,8 @@ const EmployeeForms = ({
   submitText = "Create employee",
   initialState = initialEmployeeForm,
 }) => {
+  const { profileData } = useSelector((state) => state.profile);
+
   const onCancel = () => {
     Router.push("/dashboard/employees");
   };
@@ -44,6 +47,11 @@ const EmployeeForms = ({
         patronymic: Yup.string().required("Required"),
         role: Yup.string().required("Required"),
         skills: Yup.string().required("Required"),
+        password: Yup.string().min(8, "Password must be at least 8 characters"),
+        confirmPassword: Yup.string().oneOf(
+          [Yup.ref("password"), null],
+          "Passwords must match"
+        ),
         salary: Yup.string().required("Required"),
         phoneNumber: Yup.string().required("Required"),
         gender: Yup.string().required("Required"),
@@ -82,11 +90,9 @@ const EmployeeForms = ({
                   onBlur={handleBlur}
                   value={values.email}
                   helperText={
-                    errors.email && touched.email && errors.email
-                      ? errors.email
-                      : null
+                    errors.email && touched.email ? errors.email : null
                   }
-                  error={!!(errors.email && touched.email && errors.email)}
+                  error={!!(errors.email && touched.email)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -100,19 +106,11 @@ const EmployeeForms = ({
                   onChange={handleChange}
                   value={values.phoneNumber}
                   helperText={
-                    errors.phoneNumber &&
-                    touched.phoneNumber &&
-                    errors.phoneNumber
+                    errors.phoneNumber && touched.phoneNumber
                       ? errors.phoneNumber
                       : null
                   }
-                  error={
-                    !!(
-                      errors.phoneNumber &&
-                      touched.phoneNumber &&
-                      errors.phoneNumber
-                    )
-                  }
+                  error={!!(errors.phoneNumber && touched.phoneNumber)}
                 />
               </Grid>
               {/*User info*/}
@@ -127,23 +125,17 @@ const EmployeeForms = ({
                   onBlur={handleBlur}
                   value={values.firstName}
                   helperText={
-                    errors.firstName && touched.firstName && errors.firstName
+                    errors.firstName && touched.firstName
                       ? errors.firstName
                       : null
                   }
-                  error={
-                    !!(
-                      errors.firstName &&
-                      touched.firstName &&
-                      errors.firstName
-                    )
-                  }
+                  error={!!(errors.firstName && touched.firstName)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl
                   fullWidth
-                  error={!!(errors.gender && touched.gender && errors.gender)}
+                  error={!!(errors.gender && touched.gender)}
                 >
                   <InputLabel id="type-gender-select-label">Gender</InputLabel>
                   <Select
@@ -162,7 +154,7 @@ const EmployeeForms = ({
                       </MenuItem>
                     ))}
                   </Select>
-                  {errors.gender && touched.gender && errors.gender ? (
+                  {errors.gender && touched.gender ? (
                     <FormHelperText error>{errors.gender}</FormHelperText>
                   ) : null}
                 </FormControl>
@@ -178,13 +170,9 @@ const EmployeeForms = ({
                   onBlur={handleBlur}
                   value={values.lastName}
                   helperText={
-                    errors.lastName && touched.lastName && errors.lastName
-                      ? errors.lastName
-                      : null
+                    errors.lastName && touched.lastName ? errors.lastName : null
                   }
-                  error={
-                    !!(errors.lastName && touched.lastName && errors.lastName)
-                  }
+                  error={!!(errors.lastName && touched.lastName)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -209,17 +197,11 @@ const EmployeeForms = ({
                   onBlur={handleBlur}
                   value={values.patronymic}
                   helperText={
-                    errors.patronymic && touched.patronymic && errors.patronymic
+                    errors.patronymic && touched.patronymic
                       ? errors.patronymic
                       : null
                   }
-                  error={
-                    !!(
-                      errors.patronymic &&
-                      touched.patronymic &&
-                      errors.patronymic
-                    )
-                  }
+                  error={!!(errors.patronymic && touched.patronymic)}
                 />
               </Grid>
               {/* Country, street, city */}
@@ -234,13 +216,9 @@ const EmployeeForms = ({
                   value={values.country}
                   onChange={handleChange}
                   helperText={
-                    errors.country && touched.country && errors.country
-                      ? errors.country
-                      : null
+                    errors.country && touched.country ? errors.country : null
                   }
-                  error={
-                    !!(errors.country && touched.country && errors.country)
-                  }
+                  error={!!(errors.country && touched.country)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -253,12 +231,8 @@ const EmployeeForms = ({
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.city}
-                  helperText={
-                    errors.city && touched.city && errors.city
-                      ? errors.city
-                      : null
-                  }
-                  error={!!(errors.city && touched.city && errors.city)}
+                  helperText={errors.city && touched.city ? errors.city : null}
+                  error={!!(errors.city && touched.city)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -272,19 +246,11 @@ const EmployeeForms = ({
                   onChange={handleChange}
                   value={values.streetAddress}
                   helperText={
-                    errors.streetAddress &&
-                    touched.streetAddress &&
-                    errors.streetAddress
+                    errors.streetAddress && touched.streetAddress
                       ? errors.streetAddress
                       : null
                   }
-                  error={
-                    !!(
-                      errors.streetAddress &&
-                      touched.streetAddress &&
-                      errors.streetAddress
-                    )
-                  }
+                  error={!!(errors.streetAddress && touched.streetAddress)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -292,24 +258,68 @@ const EmployeeForms = ({
                   Work info
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="role"
-                  name="role"
-                  label="Role"
-                  autoComplete="role"
-                  fullWidth
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.role}
-                  helperText={
-                    errors.role && touched.role && errors.role
-                      ? errors.role
-                      : null
-                  }
-                  error={!!(errors.role && touched.role && errors.role)}
-                />
-              </Grid>
+              {profileData?.role === "owner" &&
+              initialState.role !== "admin" ? (
+                <>
+                  <Grid item xs={12}>
+                    <Grid item sm={6}>
+                      <FormControl
+                        fullWidth
+                        error={!!(errors.role && touched.role)}
+                      >
+                        <InputLabel id="type-role-select-label">
+                          Role
+                        </InputLabel>
+                        <Select
+                          labelId="type-gender-select-label"
+                          id="role"
+                          name="role"
+                          label="Role"
+                          fullWidth
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.role}
+                        >
+                          {typeRole.map((item) => (
+                            <MenuItem key={item.key} value={item.value}>
+                              {item.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        {errors.role && touched.role ? (
+                          <FormHelperText error>{errors.role}</FormHelperText>
+                        ) : null}
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                  {values.role === "admin" ? (
+                    <>
+                      <Grid item xs={12} sm={6}>
+                        <PasswordCustomField
+                          name="password"
+                          label="Password"
+                          handleChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.password}
+                          errors={errors}
+                          touched={touched}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <PasswordCustomField
+                          name="confirmPassword"
+                          label="Confirm password"
+                          handleChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.confirmPassword}
+                          errors={errors}
+                          touched={touched}
+                        />
+                      </Grid>
+                    </>
+                  ) : null}
+                </>
+              ) : null}
               <Grid item xs={12} sm={6}>
                 <TextField
                   id="skills"
@@ -321,11 +331,9 @@ const EmployeeForms = ({
                   onBlur={handleBlur}
                   value={values.skills}
                   helperText={
-                    errors.skills && touched.skills && errors.skills
-                      ? errors.skills
-                      : null
+                    errors.skills && touched.skills ? errors.skills : null
                   }
-                  error={!!(errors.skills && touched.skills && errors.skills)}
+                  error={!!(errors.skills && touched.skills)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -339,11 +347,9 @@ const EmployeeForms = ({
                   onBlur={handleBlur}
                   value={values.salary}
                   helperText={
-                    errors.salary && touched.salary && errors.salary
-                      ? errors.salary
-                      : null
+                    errors.salary && touched.salary ? errors.salary : null
                   }
-                  error={!!(errors.salary && touched.salary && errors.salary)}
+                  error={!!(errors.salary && touched.salary)}
                 />
               </Grid>
               {/* Date */}

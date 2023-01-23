@@ -7,12 +7,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-
-const UtilsDashboard = () => {
-  return <div>Utils</div>;
-};
-
-export default UtilsDashboard;
+import GroupsSharpIcon from "@mui/icons-material/GroupsSharp";
 
 export const ownerList = [
   {
@@ -20,43 +15,57 @@ export const ownerList = [
     name: "Home",
     icon: <HomeIcon />,
     link: "/dashboard/home",
+    all: true,
   },
   {
     key: 2,
     name: "My profile",
     icon: <AccountCircleIcon />,
     link: "/dashboard/profile",
+    all: true,
   },
   {
     key: 3,
     name: "Employees",
     link: "/dashboard/employees",
-    icon: <PeopleIcon />,
+    icon: <GroupsSharpIcon />,
     subMenu: [],
+    all: true,
   },
   {
     key: 4,
     name: "Remote employees",
     icon: <PeopleOutlineIcon />,
     link: "/dashboard/employees/remote",
+    all: true,
   },
   {
     key: 5,
-    name: "Company",
-    icon: <BusinessIcon />,
-    link: "/dashboard/company",
+    name: "Admins",
+    link: "/dashboard/admins",
+    icon: <PeopleIcon />,
+    owner: true,
   },
   {
     key: 6,
-    name: "Celebration",
-    icon: <CelebrationIcon />,
-    link: "/dashboard/company/celebration",
+    name: "Company",
+    icon: <BusinessIcon />,
+    link: "/dashboard/company",
+    owner: true,
   },
   {
     key: 7,
+    name: "Celebration",
+    icon: <CelebrationIcon />,
+    link: "/dashboard/company/celebration",
+    all: true,
+  },
+  {
+    key: 8,
     name: "Calendar",
     icon: <CalendarMonthIcon />,
     link: "/dashboard/company/calendar",
+    all: true,
   },
   // Not yet
   // {

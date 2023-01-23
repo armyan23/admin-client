@@ -3,8 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Router from "next/router";
 import usePreviousList from "useHooks/usePreviousList";
 import { RootState } from "types/iReducer";
-import { putHeadersCompany, putHeadersToken } from "config/instance";
+import {
+  logoutAction,
+  putHeadersCompany,
+  putHeadersToken,
+} from "config/instance";
 import { postIsAuthenticatedRequest } from "store/auth/action";
+import { profileDataRequest } from "../store/profile/actions";
 import LoadingPage from "component/ui/loading/LoadingPage";
 
 const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
@@ -17,6 +22,10 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
     loginSuccess,
     isAuthenticated,
   } = useSelector((state: RootState) => state.auth);
+
+  const { isProfileDataSuccess }: any = useSelector(
+    (state: RootState) => state.profile
+  );
 
   const [
     prevLoginSuccess,
@@ -36,6 +45,8 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
       putHeadersToken(user.token);
       putHeadersCompany(user.company);
       dispatch(postIsAuthenticatedRequest());
+      // TODO: change below part
+      dispatch(profileDataRequest());
     } else if (!user) {
       setTimeout(() => {
         Router.push("/login");
@@ -47,7 +58,7 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
     if (isAuthenticatedFailure && prevIsAuthenticatedFailure === false) {
       setTimeout(() => {
         Router.push("/login");
-        localStorage.removeItem("user");
+        logoutAction();
       }, 1000);
       setPageLoading(false);
     }
@@ -67,7 +78,7 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
     prevLoginSuccess,
   ]);
 
-  if (pageLoading) {
+  if (pageLoading || !isProfileDataSuccess) {
     return <LoadingPage />;
   }
 
