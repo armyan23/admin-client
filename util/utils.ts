@@ -120,11 +120,16 @@ export const employeeTypeTable: ITypeMap[] = [
   },
   {
     key: 8,
+    name: "Birth date",
+    value: "birthDate",
+  },
+  {
+    key: 9,
     name: "Salary",
     value: "salary",
   },
   {
-    key: 9,
+    key: 10,
     name: "Action",
     value: "action",
   },

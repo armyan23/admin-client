@@ -165,6 +165,7 @@ const EmployeeEdit = () => {
         </Typography>
         {employeeData ? (
           <EmployeeForms
+            role="employee"
             onFinish={onFinish}
             initialState={employeeData}
             loading={loading}

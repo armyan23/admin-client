@@ -91,7 +91,7 @@ const AddEmployees = () => {
           <Typography component="h1" variant="h5">
             Create Employee
           </Typography>
-          <EmployeeForms onFinish={onFinish} loading={loading}>
+          <EmployeeForms role="employee" onFinish={onFinish} loading={loading}>
             <Grid item sm={12}>
               <ImageCustomField
                 label="Upload Employee image"

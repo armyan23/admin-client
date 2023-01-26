@@ -4,6 +4,7 @@ import authReducer from "./auth/reducer";
 import profileReducer from "./profile/reducer";
 import companyReducer from "./company/reducer";
 import employeeReducer from "./employee/reducer";
+import adminReducer from "./admin/reducer";
 
 const rootReducer = combineReducers({
   example: exampleReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   company: companyReducer,
   employee: employeeReducer,
+  admin: adminReducer,
 });
 
 export default rootReducer;

@@ -56,6 +56,21 @@ export interface IEmployee {
   errorMessage: string;
 }
 
+export interface IAdmin {
+  isCreateAdminRequest: boolean;
+  isCreateAdminSuccess: boolean;
+  isCreateAdminFailure: boolean;
+  isAllAdminsRequest: boolean;
+  isAllAdminsSuccess: boolean;
+  isAllAdminsFailure: boolean;
+  isDeleteAdminsRequest: boolean;
+  isDeleteAdminsSuccess: boolean;
+  isDeleteAdminsFailure: boolean;
+  adminsData: [];
+  successMessage: string;
+  errorMessage: string;
+}
+
 export interface IAuth {
   registerRequest: boolean;
   registerSuccess: boolean;
