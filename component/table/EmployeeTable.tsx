@@ -15,7 +15,7 @@ import ProfileImage from "component/ui/image/ProfileImage";
 import Empty from "component/ui/Empty";
 
 const EmployeesTable = ({ action, data }: any) => {
-  return data.length ? (
+  return data?.length > 0 ? (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -44,8 +44,9 @@ const EmployeesTable = ({ action, data }: any) => {
               </TableCell>
               <TableCell>{item.lastName}</TableCell>
               <TableCell>{item.phoneNumber}</TableCell>
-              <TableCell>{item.gender}</TableCell>
+              <TableCell>{item.role}</TableCell>
               <TableCell>{item.email}</TableCell>
+              <TableCell>{item.gender}</TableCell>
               <TableCell>
                 {dayjs(item.birthDate).format("DD/MM/YYYY")}
               </TableCell>

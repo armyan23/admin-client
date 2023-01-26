@@ -3,16 +3,16 @@ import Router from "next/router";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import {
-  Box,
-  Button,
-  FormControl,
   FormHelperText,
-  Grid,
-  InputLabel,
+  FormControl,
+  Typography,
   MenuItem,
   Select,
+  Button,
+  Grid,
+  Box,
   TextField,
-  Typography,
+  InputLabel,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
@@ -24,6 +24,7 @@ import PasswordCustomField from "./formField/PasswordCustomField";
 import { useSelector } from "react-redux";
 
 const EmployeeForms = ({
+  role,
   children,
   onFinish,
   loading,
@@ -34,7 +35,7 @@ const EmployeeForms = ({
   const { profileData } = useSelector((state) => state.profile);
 
   const onCancel = () => {
-    Router.push("/dashboard/employees");
+    Router.push(`/dashboard/${role.toLowerCase()}s`);
   };
 
   return (
@@ -52,7 +53,7 @@ const EmployeeForms = ({
           [Yup.ref("password"), null],
           "Passwords must match"
         ),
-        salary: Yup.string().required("Required"),
+        salary: Yup.number().required("Required"),
         phoneNumber: Yup.string().required("Required"),
         gender: Yup.string().required("Required"),
         country: Yup.string().required("Required"),
@@ -76,7 +77,7 @@ const EmployeeForms = ({
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="subtitle2" gutterBottom>
-                  Employee info
+                  {role} info
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -89,6 +90,7 @@ const EmployeeForms = ({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.email}
+                  disabled={role === "Admin" && submitText === "Save"}
                   helperText={
                     errors.email && touched.email ? errors.email : null
                   }
@@ -113,6 +115,34 @@ const EmployeeForms = ({
                   error={!!(errors.phoneNumber && touched.phoneNumber)}
                 />
               </Grid>
+              {profileData?.role === "owner" &&
+              submitText !== "Save" &&
+              role === "Admin" ? (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <PasswordCustomField
+                      name="password"
+                      label="Password"
+                      handleChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      errors={errors}
+                      touched={touched}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <PasswordCustomField
+                      name="confirmPassword"
+                      label="Confirm password"
+                      handleChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.confirmPassword}
+                      errors={errors}
+                      touched={touched}
+                    />
+                  </Grid>
+                </>
+              ) : null}
               {/*User info*/}
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -258,68 +288,6 @@ const EmployeeForms = ({
                   Work info
                 </Typography>
               </Grid>
-              {profileData?.role === "owner" &&
-              initialState.role !== "admin" ? (
-                <>
-                  <Grid item xs={12}>
-                    <Grid item sm={6}>
-                      <FormControl
-                        fullWidth
-                        error={!!(errors.role && touched.role)}
-                      >
-                        <InputLabel id="type-role-select-label">
-                          Role
-                        </InputLabel>
-                        <Select
-                          labelId="type-gender-select-label"
-                          id="role"
-                          name="role"
-                          label="Role"
-                          fullWidth
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.role}
-                        >
-                          {typeRole.map((item) => (
-                            <MenuItem key={item.key} value={item.value}>
-                              {item.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                        {errors.role && touched.role ? (
-                          <FormHelperText error>{errors.role}</FormHelperText>
-                        ) : null}
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                  {values.role === "admin" ? (
-                    <>
-                      <Grid item xs={12} sm={6}>
-                        <PasswordCustomField
-                          name="password"
-                          label="Password"
-                          handleChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                          errors={errors}
-                          touched={touched}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <PasswordCustomField
-                          name="confirmPassword"
-                          label="Confirm password"
-                          handleChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.confirmPassword}
-                          errors={errors}
-                          touched={touched}
-                        />
-                      </Grid>
-                    </>
-                  ) : null}
-                </>
-              ) : null}
               <Grid item xs={12} sm={6}>
                 <TextField
                   id="skills"
