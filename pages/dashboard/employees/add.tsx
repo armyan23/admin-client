@@ -19,6 +19,7 @@ const AddEmployees = () => {
 
   const {
     errorMessage,
+    isCreateEmployeeRequest,
     isCreateEmployeeSuccess,
     isCreateEmployeeFailure,
     successMessage,
@@ -30,7 +31,6 @@ const AddEmployees = () => {
       isCreateEmployeeFailure,
     ]);
 
-  const [loading, setLoading] = useState(false);
   const [photoData, setPhotoData] = useState<File | undefined>();
 
   useEffect(() => {
@@ -44,7 +44,6 @@ const AddEmployees = () => {
         autoHideDuration: 1000,
       });
       Router.push("/dashboard/employees");
-      setLoading(false);
     }
   }, [
     successMessage,
@@ -62,7 +61,6 @@ const AddEmployees = () => {
           horizontal: "center",
         },
       });
-      setLoading(false);
     }
   }, [
     enqueueSnackbar,
@@ -72,7 +70,7 @@ const AddEmployees = () => {
   ]);
 
   const onFinish = (values: FormikValues) => {
-    setLoading(true);
+    console.log(values);
     const data = new FormData();
     if (photoData) {
       data.append("image", photoData);
@@ -91,7 +89,12 @@ const AddEmployees = () => {
           <Typography component="h1" variant="h5">
             Create Employee
           </Typography>
-          <EmployeeForms role="employee" onFinish={onFinish} loading={loading}>
+          <EmployeeForms
+            role="employee"
+            onFinish={onFinish}
+            loading={isCreateEmployeeRequest}
+            submitText="Create Employee"
+          >
             <Grid item sm={12}>
               <ImageCustomField
                 label="Upload Employee image"

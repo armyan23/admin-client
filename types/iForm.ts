@@ -46,7 +46,7 @@ export interface ICreateEmployee {
   firstName: string;
   lastName: string;
   patronymic: string;
-  role: string;
+  role?: string;
   skills: string;
   phoneNumber: string;
   gender: string;

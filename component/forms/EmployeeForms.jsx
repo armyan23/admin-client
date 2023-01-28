@@ -17,7 +17,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
 
-import { typeGender, typeRole } from "util/utils";
+import { typeGender } from "util/utils";
 import { initialEmployeeForm } from "util/Initial/InitialValue";
 import DateCustomField from "component/forms/formField/DateCustomField";
 import PasswordCustomField from "./formField/PasswordCustomField";
@@ -28,14 +28,14 @@ const EmployeeForms = ({
   children,
   onFinish,
   loading,
+  submitText,
   cancelText = false,
-  submitText = "Create employee",
   initialState = initialEmployeeForm,
 }) => {
   const { profileData } = useSelector((state) => state.profile);
 
   const onCancel = () => {
-    Router.push(`/dashboard/${role.toLowerCase()}s`);
+    Router.push(`/dashboard/${role.toLowerCase()}`);
   };
 
   return (
@@ -46,7 +46,6 @@ const EmployeeForms = ({
         firstName: Yup.string().required("Required"),
         lastName: Yup.string().required("Required"),
         patronymic: Yup.string().required("Required"),
-        role: Yup.string().required("Required"),
         skills: Yup.string().required("Required"),
         password: Yup.string().min(8, "Password must be at least 8 characters"),
         confirmPassword: Yup.string().oneOf(

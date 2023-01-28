@@ -52,7 +52,7 @@ function* loginFunction({ payload }: any) {
     putHeadersCompany(company);
     putHeadersToken(userToken);
 
-    yield put(postLoginSuccess(response.data));
+    yield put(postLoginSuccess(response.data.data));
   } catch (err: any) {
     const { data } = err.response;
     yield put(postLoginFailure(data.message));

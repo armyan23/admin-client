@@ -5,7 +5,6 @@ export const initialEmployeeForm: ICreateEmployee = {
   firstName: "",
   lastName: "",
   patronymic: "",
-  role: "",
   skills: "",
   phoneNumber: "",
   gender: "",

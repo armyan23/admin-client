@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
 import Router from "next/router";
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid, Tab, Typography } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { FormikValues } from "formik";
 import { useSnackbar } from "notistack";
 
@@ -25,7 +26,6 @@ const EmployeeEdit = () => {
 
   const {
     isEmployeeByIdSuccess,
-    isEditEmployeeRequest,
     isEditEmployeeSuccess,
     isEditEmployeeFailure,
     isDeleteEmployeeImageSuccess,
@@ -52,14 +52,15 @@ const EmployeeEdit = () => {
   const [employeeData, setEmployeeData] = useState<ICreateEmployee | false>(
     false
   );
+  const [loading, setLoading] = useState(false);
   const [photoData, setPhotoData] = useState<File | undefined>();
+  const [value, setValue] = React.useState(1);
 
   const { id } = Router.query;
 
   useEffect(() => {
     dispatch(employeeByIdRequest(id));
   }, [dispatch, id]);
-
   useEffect(() => {
     if (isEmployeeByIdSuccess && prevIsEmployeeByIdSuccess === false) {
       setEmployeeData({
@@ -75,7 +76,7 @@ const EmployeeEdit = () => {
         city: employeeByIdData?.city,
         image: employeeByIdData?.image,
         streetAddress: employeeByIdData?.streetAddress,
-        salary: employeeByIdData?.salary,
+        salary: employeeByIdData.salary,
         birthDate: employeeByIdData?.birthDate,
         startWork: employeeByIdData?.startWork,
         endWork: employeeByIdData?.endWork,
@@ -91,7 +92,7 @@ const EmployeeEdit = () => {
     ) {
       enqueueSnackbar(
         isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false
-          ? "Profile details successfully updated"
+          ? "Employee details successfully updated"
           : "Image successfully deleted",
         {
           variant: "success",
@@ -102,8 +103,9 @@ const EmployeeEdit = () => {
         }
       );
       if (isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false) {
-        Router.push(`/dashboard/employees/${id}`);
+        Router.push(`/dashboard/admin/${id}`);
       }
+      setLoading(false);
     }
   }, [
     successMessage,
@@ -128,6 +130,7 @@ const EmployeeEdit = () => {
           horizontal: "center",
         },
       });
+      setLoading(false);
     }
   }, [
     errorMessage,
@@ -143,6 +146,9 @@ const EmployeeEdit = () => {
   };
 
   const onFinish = (values: FormikValues) => {
+    console.log(values);
+    setLoading(true);
+    delete values.email;
     const data = new FormData();
     if (photoData) {
       data.append("image", photoData);
@@ -158,35 +164,51 @@ const EmployeeEdit = () => {
     <Card>
       <Box sx={{ p: 2, gap: "20px", display: "grid" }}>
         <Typography component="h1" variant="h5">
-          Edit employee information
+          Edit admin information
         </Typography>
-        {employeeData ? (
-          <EmployeeForms
-            role="employee"
-            onFinish={onFinish}
-            initialState={employeeData}
-            loading={isEditEmployeeRequest}
-            cancelText={true}
-            submitText="Save"
-          >
-            <Grid item sm={12}>
-              <ImageCustomField
-                label="Upload employee image"
-                photoData={photoData}
-                setPhotoData={setPhotoData}
+        <Box sx={{ width: "100%" }}>
+          <TabContext value={`${value}`}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList
+                onChange={(_, index: number) => setValue(index)}
+                aria-label="lab API tabs example"
               >
-                {employeeByIdData?.image && !photoData && (
-                  <EditImage
-                    imageUrl={employeeByIdData?.image}
-                    onDelete={onImageDelete}
-                  />
-                )}
-              </ImageCustomField>
-            </Grid>
-          </EmployeeForms>
-        ) : (
-          <Box>Loading</Box>
-        )}
+                <Tab label="Admin details" value="1" />
+                <Tab label="Change password" value="2" />
+              </TabList>
+            </Box>
+            <TabPanel value="1">
+              {employeeData ? (
+                <EmployeeForms
+                  role="Admin"
+                  onFinish={onFinish}
+                  initialState={employeeData}
+                  loading={loading}
+                  cancelText={true}
+                  submitText="Save"
+                >
+                  <Grid item sm={12}>
+                    <ImageCustomField
+                      label="Upload admin image"
+                      photoData={photoData}
+                      setPhotoData={setPhotoData}
+                    >
+                      {employeeByIdData?.image && !photoData && (
+                        <EditImage
+                          imageUrl={employeeByIdData?.image}
+                          onDelete={onImageDelete}
+                        />
+                      )}
+                    </ImageCustomField>
+                  </Grid>
+                </EmployeeForms>
+              ) : (
+                <Box>Loading</Box>
+              )}
+            </TabPanel>
+            <TabPanel value="2">Password changes</TabPanel>
+          </TabContext>
+        </Box>
       </Box>
     </Card>
   );
