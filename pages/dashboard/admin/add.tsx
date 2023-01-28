@@ -39,7 +39,7 @@ const AddAdmin = () => {
         },
         autoHideDuration: 1000,
       });
-      Router.push("/dashboard/admins");
+      Router.push("/dashboard/admin");
     }
   }, [prevIsCreateAdminSuccess, isCreateAdminSuccess, enqueueSnackbar]);
 

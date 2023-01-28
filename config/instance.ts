@@ -1,6 +1,7 @@
 import Router from "next/router";
 import axios, { AxiosInstance } from "axios";
 import { apiServer } from "./index";
+
 const headers = {};
 
 export const putLocalUserInfo = (item: object) => {
@@ -26,14 +27,6 @@ export const logoutAction = () => {
   delete instance.defaults.headers["token"];
   delete instance.defaults.headers["company"];
   Router.push("/");
-};
-
-export const loginAction = (data: any) => {
-  if (data.data.company) {
-    Router.push("/dashboard/home");
-  } else {
-    Router.push("/dashboard/company/add");
-  }
 };
 
 // instance.interceptors.response.use(

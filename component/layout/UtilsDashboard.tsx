@@ -42,7 +42,7 @@ export const ownerList = [
   {
     key: 5,
     name: "Admins",
-    link: "/dashboard/admins",
+    link: "/dashboard/admin",
     icon: <PeopleIcon />,
     owner: true,
   },

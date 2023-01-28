@@ -18,7 +18,7 @@ const AuthLayout = ({ children }: any) => {
     if (value !== router.asPath) {
       setValue(router.asPath);
     }
-  }, [router]);
+  }, [router, value]);
 
   return (
     <LoginMiddleware>

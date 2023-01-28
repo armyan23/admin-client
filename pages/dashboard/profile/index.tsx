@@ -1,38 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Router from "next/router";
 import { NextPage } from "next";
 import { Box, Card, Grid, IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import moment from "moment/moment";
 import { RootState } from "types/iReducer";
-import { profileDataRequest } from "store/profile/actions";
-import usePreviousList from "useHooks/usePreviousList";
 import ProfileImage from "component/ui/image/ProfileImage";
 import Dashboard from "component/layout/Dashboard";
 
 const MyProfile = () => {
-  const dispatch = useDispatch();
-
   const { isProfileDataSuccess, profileData }: any = useSelector(
     (state: RootState) => state.profile
   );
 
-  const [prevIsProfileDataSuccess] = usePreviousList<boolean>([
-    isProfileDataSuccess,
-  ]);
-
   const [profileInfo, setProfileData] = useState<any>({});
 
   useEffect(() => {
-    if (isProfileDataSuccess && prevIsProfileDataSuccess === false) {
+    if (isProfileDataSuccess) {
       setProfileData(profileData);
     }
-  }, [profileData, isProfileDataSuccess, prevIsProfileDataSuccess]);
-
-  useEffect(() => {
-    dispatch(profileDataRequest());
-  }, [dispatch]);
+  }, [profileData, isProfileDataSuccess]);
 
   const onEdit = () => {
     Router.push(`/personal/settings`);

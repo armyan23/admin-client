@@ -18,13 +18,12 @@ import {
 import { useSnackbar } from "notistack";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
-
-import { loginAction } from "config/instance";
 import { postLoginRequest } from "store/auth/action";
 import { RootState } from "types/iReducer";
 import { ILogin } from "types/iForm";
 import PasswordCustomField from "component/forms/formField/PasswordCustomField";
 import AuthLayout from "component/layout/AuthLayout";
+import Router from "next/router";
 
 const initialLogin: ILogin = {
   email: "",
@@ -43,10 +42,10 @@ const Login = () => {
 
   useEffect(() => {
     if (loginSuccess) {
-      loginAction(data);
+      Router.push("/dashboard/home");
       setLoading(false);
     }
-  }, [loginSuccess, enqueueSnackbar]);
+  }, [loginSuccess, enqueueSnackbar, data]);
 
   useEffect(() => {
     if (loginFailure) {

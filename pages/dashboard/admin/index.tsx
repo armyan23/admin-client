@@ -65,11 +65,11 @@ const Admins = () => {
   }, [dispatch]);
 
   const selectByEmployeeId = (id: number) => {
-    Router.push(`/dashboard/admins/${id}`);
+    Router.push(`/dashboard/admin/${id}`);
   };
 
   const onEdit = (id: number) => {
-    Router.push(`/dashboard/admins/edit/${id}`);
+    Router.push(`/dashboard/admin/edit/${id}`);
   };
 
   const openDeleteModal = (id: number) => {
@@ -104,7 +104,7 @@ const Admins = () => {
           </Typography>
           <Button
             variant="contained"
-            onClick={() => Router.push("/dashboard/admins/add")}
+            onClick={() => Router.push("/dashboard/admin/add")}
           >
             +
           </Button>

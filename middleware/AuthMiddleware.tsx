@@ -47,6 +47,7 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
       dispatch(postIsAuthenticatedRequest());
       // TODO: change below part
       dispatch(profileDataRequest());
+      setPageLoading(false);
     } else if (!user) {
       setTimeout(() => {
         Router.push("/login");
