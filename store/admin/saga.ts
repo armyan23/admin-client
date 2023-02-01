@@ -16,7 +16,7 @@ import instance from "config/instance";
 function* createAdmin({ payload }: any) {
   try {
     const response: AxiosResponse = yield call(() =>
-      instance.post("/api/admin/create", payload)
+      instance.post("/api/admin", payload)
     );
 
     yield put(createAdminSuccess(response.data));
@@ -29,7 +29,7 @@ function* createAdmin({ payload }: any) {
 function* getAdmins() {
   try {
     const response: AxiosResponse = yield call(() =>
-      instance.get(`/api/admin/all`)
+      instance.get(`/api/admin`)
     );
 
     yield put(allAdminsSuccess(response.data.data));
