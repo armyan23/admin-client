@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NextPage } from "next";
 import Router from "next/router";
+import * as Yup from "yup";
 import { Box, Card, Grid, Tab, Typography } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { FormikValues } from "formik";
+import { LoadingButton, TabContext, TabList, TabPanel } from "@mui/lab";
+import SendIcon from "@mui/icons-material/Send";
+import { Form, Formik, FormikValues } from "formik";
 import { useSnackbar } from "notistack";
 
 import usePreviousList from "useHooks/usePreviousList";
@@ -13,12 +15,14 @@ import {
   editEmployeeRequest,
   employeeByIdRequest,
 } from "store/employee/action";
+import { changeAdminPasswordRequest } from "store/admin/action";
 import { RootState } from "types/iReducer";
 import { ICreateEmployee } from "types/iForm";
 import Dashboard from "component/layout/Dashboard";
 import EditImage from "component/ui/image/EditImage";
 import EmployeeForms from "component/forms/EmployeeForms";
 import ImageCustomField from "component/forms/formField/ImageCustomField";
+import PasswordCustomField from "component/forms/formField/PasswordCustomField";
 
 const EmployeeEdit = () => {
   const dispatch = useDispatch();
@@ -35,18 +39,29 @@ const EmployeeEdit = () => {
     errorMessage,
   }: any = useSelector((state: RootState) => state.employee);
 
+  const {
+    isChangeAdminPasswordRequest,
+    isChangeAdminPasswordSuccess,
+    isChangeAdminPasswordFailure,
+    errorMessage: errorMessagePasswordChange,
+  } = useSelector((state: RootState) => state.admin);
+
   const [
     prevIsEmployeeByIdSuccess,
     prevIsEditEmployeeSuccess,
     prevIsEditEmployeeFailure,
     prevIsDeleteEmployeeImageSuccess,
     prevIsDeleteEmployeeImageFailure,
+    prevIsChangeAdminPasswordSuccess,
+    prevIsChangeAdminPasswordFailure,
   ] = usePreviousList<boolean>([
     isEmployeeByIdSuccess,
     isEditEmployeeSuccess,
     isEditEmployeeFailure,
     isDeleteEmployeeImageSuccess,
     isDeleteEmployeeImageFailure,
+    isChangeAdminPasswordSuccess,
+    isChangeAdminPasswordFailure,
   ]);
 
   const [employeeData, setEmployeeData] = useState<ICreateEmployee | false>(
@@ -61,6 +76,7 @@ const EmployeeEdit = () => {
   useEffect(() => {
     dispatch(employeeByIdRequest(id));
   }, [dispatch, id]);
+
   useEffect(() => {
     if (isEmployeeByIdSuccess && prevIsEmployeeByIdSuccess === false) {
       setEmployeeData({
@@ -88,7 +104,9 @@ const EmployeeEdit = () => {
     if (
       (isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false) ||
       (isDeleteEmployeeImageSuccess &&
-        prevIsDeleteEmployeeImageSuccess === false)
+        prevIsDeleteEmployeeImageSuccess === false) ||
+      (prevIsChangeAdminPasswordSuccess === false &&
+        isChangeAdminPasswordSuccess)
     ) {
       enqueueSnackbar(
         isEditEmployeeSuccess && prevIsEditEmployeeSuccess === false
@@ -114,6 +132,8 @@ const EmployeeEdit = () => {
     prevIsEditEmployeeSuccess,
     isDeleteEmployeeImageSuccess,
     prevIsDeleteEmployeeImageSuccess,
+    isChangeAdminPasswordSuccess,
+    prevIsChangeAdminPasswordSuccess,
     id,
   ]);
 
@@ -121,9 +141,11 @@ const EmployeeEdit = () => {
     if (
       (isEditEmployeeFailure && prevIsEditEmployeeFailure === false) ||
       (isDeleteEmployeeImageFailure &&
-        prevIsDeleteEmployeeImageFailure === false)
+        prevIsDeleteEmployeeImageFailure === false) ||
+      (isChangeAdminPasswordFailure &&
+        prevIsChangeAdminPasswordFailure === false)
     ) {
-      enqueueSnackbar(errorMessage, {
+      enqueueSnackbar(errorMessage || errorMessagePasswordChange, {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -139,6 +161,8 @@ const EmployeeEdit = () => {
     isEditEmployeeFailure,
     prevIsDeleteEmployeeImageFailure,
     prevIsEditEmployeeFailure,
+    isChangeAdminPasswordFailure,
+    prevIsChangeAdminPasswordFailure,
   ]);
 
   const onImageDelete = () => {
@@ -146,7 +170,6 @@ const EmployeeEdit = () => {
   };
 
   const onFinish = (values: FormikValues) => {
-    console.log(values);
     setLoading(true);
     delete values.email;
     const data = new FormData();
@@ -158,6 +181,10 @@ const EmployeeEdit = () => {
     }
 
     dispatch(editEmployeeRequest({ data, id }));
+  };
+
+  const onFinishPassword = (values: FormikValues) => {
+    dispatch(changeAdminPasswordRequest({ values, id }));
   };
 
   return (
@@ -206,7 +233,85 @@ const EmployeeEdit = () => {
                 <Box>Loading</Box>
               )}
             </TabPanel>
-            <TabPanel value="2">Password changes</TabPanel>
+            <TabPanel value="2">
+              <Formik
+                initialValues={{
+                  password: "",
+                  confirmPassword: "",
+                }}
+                validationSchema={Yup.object().shape({
+                  password: Yup.string().min(
+                    8,
+                    "Password must be at least 8 characters"
+                  ),
+                  confirmPassword: Yup.string().oneOf(
+                    [Yup.ref("password"), null],
+                    "Passwords must match"
+                  ),
+                })}
+                onSubmit={(values) => onFinishPassword(values)}
+              >
+                {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                }) => (
+                  <Form onSubmit={handleSubmit}>
+                    <Box sx={{ mt: 3 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <Typography variant="subtitle2" gutterBottom>
+                            Password change
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={24}>
+                          <Grid item sm={3}>
+                            <PasswordCustomField
+                              name="password"
+                              label="Password"
+                              handleChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.password}
+                              errors={errors}
+                              touched={touched}
+                            />
+                          </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Grid item sm={3}>
+                            <PasswordCustomField
+                              name="confirmPassword"
+                              label="Confirm password"
+                              handleChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.confirmPassword}
+                              errors={errors}
+                              touched={touched}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} className="d-flex j-end">
+                        <LoadingButton
+                          loading={isChangeAdminPasswordRequest}
+                          type="submit"
+                          startIcon={<SendIcon />}
+                          loadingPosition="start"
+                          sx={{ mt: 3, mb: 2 }}
+                          variant="contained"
+                        >
+                          Save
+                        </LoadingButton>
+                      </Grid>
+                    </Box>
+                  </Form>
+                )}
+              </Formik>
+            </TabPanel>
           </TabContext>
         </Box>
       </Box>

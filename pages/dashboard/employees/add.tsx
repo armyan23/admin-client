@@ -70,7 +70,6 @@ const AddEmployees = () => {
   ]);
 
   const onFinish = (values: FormikValues) => {
-    console.log(values);
     const data = new FormData();
     if (photoData) {
       data.append("image", photoData);

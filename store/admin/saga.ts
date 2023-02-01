@@ -7,6 +7,9 @@ import {
   allAdminsRequest,
   allAdminsSuccess,
   allAdminsFailure,
+  changeAdminPasswordRequest,
+  changeAdminPasswordSuccess,
+  changeAdminPasswordFailure,
   deleteAdminRequest,
   deleteAdminSuccess,
   deleteAdminFailure,
@@ -23,6 +26,19 @@ function* createAdmin({ payload }: any) {
   } catch (err: any) {
     const { data } = err.response;
     yield put(createAdminFailure(data.message));
+  }
+}
+
+function* changeAdminPassword({ payload }: any) {
+  try {
+    const response: AxiosResponse = yield call(() =>
+      instance.put(`/api/admin/${payload.id}`, payload.values)
+    );
+
+    yield put(changeAdminPasswordSuccess(response.data.data));
+  } catch (err: any) {
+    const { data } = err.response;
+    yield put(changeAdminPasswordFailure(data.message));
   }
 }
 
@@ -55,5 +71,6 @@ function* deleteAdmin({ payload }: any) {
 export default function* adminSaga() {
   yield takeLatest(createAdminRequest, createAdmin);
   yield takeLatest(allAdminsRequest, getAdmins);
+  yield takeLatest(changeAdminPasswordRequest, changeAdminPassword);
   yield takeLatest(deleteAdminRequest, deleteAdmin);
 }

@@ -66,6 +66,9 @@ export interface IAdmin {
   isDeleteAdminsRequest: boolean;
   isDeleteAdminsSuccess: boolean;
   isDeleteAdminsFailure: boolean;
+  isChangeAdminPasswordRequest: boolean;
+  isChangeAdminPasswordSuccess: boolean;
+  isChangeAdminPasswordFailure: boolean;
   adminsData: [];
   successMessage: string;
   errorMessage: string;

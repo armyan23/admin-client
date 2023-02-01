@@ -9,6 +9,9 @@ import {
   deleteAdminRequest,
   deleteAdminSuccess,
   deleteAdminFailure,
+  changeAdminPasswordRequest,
+  changeAdminPasswordSuccess,
+  changeAdminPasswordFailure,
 } from "./action";
 import { IAdmin } from "types/iReducer";
 
@@ -22,6 +25,10 @@ const initialValue: IAdmin = {
   isAllAdminsSuccess: false,
   isAllAdminsFailure: false,
   adminsData: [],
+  // Update Admin password
+  isChangeAdminPasswordRequest: false,
+  isChangeAdminPasswordSuccess: false,
+  isChangeAdminPasswordFailure: false,
   //   Delete Admin
   isDeleteAdminsRequest: false,
   isDeleteAdminsSuccess: false,
@@ -75,6 +82,26 @@ const adminReducer = handleActions(
       isAllAdminsFailure: true,
       errorMessage: payload,
     }),
+    // Update Admin password
+    [changeAdminPasswordRequest]: (state: IAdmin) => ({
+      ...state,
+      isChangeAdminPasswordRequest: true,
+      isChangeAdminPasswordSuccess: false,
+      isChangeAdminPasswordFailure: false,
+    }),
+    [changeAdminPasswordSuccess]: (state: IAdmin) => ({
+      ...state,
+      isChangeAdminPasswordRequest: false,
+      isChangeAdminPasswordSuccess: true,
+      isChangeAdminPasswordFailure: false,
+    }),
+    [changeAdminPasswordFailure]: (state: IAdmin, { payload }: any) => ({
+      ...state,
+      isChangeAdminPasswordRequest: false,
+      isChangeAdminPasswordSuccess: false,
+      isChangeAdminPasswordFailure: true,
+      errorMessage: payload,
+    }),
     // Delete Admin
     [deleteAdminRequest]: (state: IAdmin) => ({
       ...state,
@@ -82,12 +109,11 @@ const adminReducer = handleActions(
       isDeleteAdminsSuccess: false,
       isDeleteAdminsFailure: false,
     }),
-    [deleteAdminSuccess]: (state: IAdmin, { payload }: any) => ({
+    [deleteAdminSuccess]: (state: IAdmin) => ({
       ...state,
       isDeleteAdminsRequest: false,
       isDeleteAdminsSuccess: true,
       isDeleteAdminsFailure: false,
-      // adminsData: payload,
     }),
     [deleteAdminFailure]: (state: IAdmin, { payload }: any) => ({
       ...state,
