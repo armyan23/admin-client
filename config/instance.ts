@@ -36,7 +36,7 @@ export const logoutAction = () => {
 //   function (error) {
 //     // Router.push("/server-error");
 //     if (error.response.data.message === "Invalid token.") {
-//       Router.push("/login");
+//       Router.push("/");
 //       logoutAction();
 //     }
 //     return error;

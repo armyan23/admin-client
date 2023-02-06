@@ -50,7 +50,7 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
       setPageLoading(false);
     } else if (!user) {
       setTimeout(() => {
-        Router.push("/login");
+        Router.push("/");
       }, 1000);
     }
   }, [dispatch, isAuthenticated]);
@@ -58,7 +58,7 @@ const AuthMiddleware: ({ children }: { children: any }) => JSX.Element = ({
   useEffect(() => {
     if (isAuthenticatedFailure && prevIsAuthenticatedFailure === false) {
       setTimeout(() => {
-        Router.push("/login");
+        Router.push("/");
         logoutAction();
       }, 1000);
       setPageLoading(false);

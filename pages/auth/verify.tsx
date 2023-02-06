@@ -50,7 +50,7 @@ const Verify = () => {
           horizontal: "center",
         },
       });
-      Router.push("/login");
+      Router.push("/");
       setLoading(false);
     }
   }, [verifySuccess, successMessage, enqueueSnackbar]);
@@ -148,7 +148,7 @@ const Verify = () => {
                 >
                   Verify
                 </LoadingButton>
-                <Link href="pages/login#" variant="body2">
+                <Link href="pages/#" variant="body2">
                   Back to home
                 </Link>
               </Box>

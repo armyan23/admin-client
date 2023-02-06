@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
@@ -14,12 +13,6 @@ const AuthLayout = ({ children }: any) => {
     router.push(newValue);
   };
 
-  useEffect(() => {
-    if (value !== router.asPath) {
-      setValue(router.asPath);
-    }
-  }, [router, value]);
-
   return (
     <LoginMiddleware>
       <TabContext value={value}>
@@ -32,10 +25,7 @@ const AuthLayout = ({ children }: any) => {
           }}
         >
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Dashboard" value="/dashboard/home" />
-
-            <Tab label="Home" value="/" />
-            <Tab label="Login" value="/login" />
+            <Tab label="Login" value="/" />
             <Tab label="Register" value="/register" />
           </TabList>
         </Box>
